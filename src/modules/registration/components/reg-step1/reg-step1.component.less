@@ -1,0 +1,42 @@
+@import "../../../../style/variables.less";
+
+@img_height: 220px;
+@img_bgColor: #E8E8E8;
+
+.regStep1{
+  &__wrapper{
+    padding: @commonPadding;
+  }
+  &__title{
+
+  }
+  &__upload{
+    padding-top: 40px;
+  }
+  &__uploadTitle{
+
+  }
+  &__uploadImage{
+    position: relative;
+    margin: 10px 0px;
+    width: 100%;
+    height: @img_height;
+    &.empty{
+      background-color: @img_bgColor;
+    }
+    img{
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      margin: auto;
+    }
+  }
+  &__uploadInput{
+    padding-top: 15px;
+    position: relative;
+  }
+  &__uploadBtn{
+
+  }
+}

@@ -1,0 +1,92 @@
+@import "variables.less";
+@import "mixins.less";
+@import "typography.less";
+
+.btn{
+  display: inline-block;
+  text-transform: none;
+  border-radius: @btn_borderRadius;
+  @media @tablet{
+    border-radius: @btn_borderRadius_tablet;
+  }
+
+  background: @btn_bgColor__default;
+  color: @btn_color__default;
+  height: @btn_height__default;
+  line-height: @btn_height__default;
+  font-size: @btn_fontSize;
+  box-shadow: none;
+  padding: 0px 20px;
+  text-align: center;
+
+  &:hover{
+    box-shadow: inherit;
+    background-color: darken(@btn_bgColor__default, 20%);
+    color: darken(@btn_color__default, 20%);
+  }
+
+  &:focus, &:active{
+    background-color: darken(@btn_bgColor__default, 10%);
+    color: darken(@btn_color__default, 10%);
+  }
+
+  &__primary{
+    background-color: @btn_bgColor__primary;
+    color: @btn_color__primary;
+
+    &:hover{
+      background-color: darken(@btn_bgColor__primary, 20%);
+      color: @btn_color__primary;
+    }
+  
+    &:focus, &:active{
+      background-color: darken(@btn_bgColor__primary, 10%);
+      color: @btn_color__primary;
+    }
+  }
+
+  &__next{
+    margin-top: 10px;
+    font-size: @btn_fontSize__next;
+    background-color: @btn_bgColor__next;
+    color: @btn_color__next;
+    @media (max-width: 767px){
+      width: 100%;
+    }
+  }
+
+  &__skip{
+    background-color: @btn_bgColor__skip;
+    color: @btn_color__skip;
+  }
+
+  &[disabled]{
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.next{
+  padding: 0px 10px 10px;
+  .col{
+    &:first-child{
+      padding-left: 0px;
+    }
+    &:last-child{
+      padding-right: 0px;
+    }
+  }
+}
+
+.validationMessage{
+  font-size: 0.6rem;
+  position: absolute;
+  top: -10px;
+}
+
+.preloader-container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -1,0 +1,92 @@
+<div class="regStep1">
+  <form [formGroup]="form" class="regStep1__wrapper">
+    <div class="regStep1__title demibold">
+      Заселиться в отель<br>за 30 секунд
+    </div>
+    <div class="regStep1__upload">
+      <div class="regStep1__uploadTitle">
+        Главный разворот паспорта
+      </div>
+      <div class="regStep1__uploadImage" [class.empty]="!mainPassportUrl">
+        <ng-container *ngIf="isMainLoading">
+          <div class="preloader-container">
+            <div class="preloader-wrapper big active">
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!isMainLoading">
+          <img [src]="mainPassportUrl" alt="">
+        </ng-container>
+      </div>
+      <div class="regStep1__uploadInput">
+        <div class="validationMessage red-text" *ngIf="form.controls['mainPassport'].errors?.wrongExtension">
+          {{validationMessages.wrongExtension}}{{ALLOWED_EXTENSIONS.join(', ')}}
+        </div>
+        <label class="waves-effect waves-light btn btn__primary regstep1__uploadBtn" for="mainPassport">Прикрепить...</label>
+        <input type="file" id="mainPassport" (change)="onMainChange($event)" hidden>
+        <input type="text" formControlName="mainPassport" hidden>
+      </div>
+    </div>
+    <div class="regStep1__upload">
+      <div class="regStep1__uploadTitle">
+        Регистрация
+      </div>
+      <div class="regStep1__uploadImage" [class.empty]="!secondPassportUrl">
+        <ng-container *ngIf="isSecondLoading">
+          <div class="preloader-container">
+            <div class="preloader-wrapper big active">
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!isSecondLoading">
+          <img [src]="secondPassportUrl" alt="">
+        </ng-container>
+      </div>
+      <div class="regStep1__uploadInput">
+        <div class="validationMessage red-text" *ngIf="form.controls['secondPassport'].errors?.wrongExtension">
+          {{validationMessages.wrongExtension}}{{ALLOWED_EXTENSIONS.join(', ')}}
+        </div>
+        <label class="waves-effect waves-light btn btn__primary regstep1__uploadBtn" for="secondPassport">Прикрепить...</label>
+        <input type="file" id="secondPassport" (change)="onSecondChange($event)" hidden>
+        <input type="text" formControlName="secondPassport" hidden="hidden">
+      </div>
+    </div>
+  </form>
+  <div class="row next">
+    <div class="col s6">
+      <a href="javascript:void(0)" [routerLink]="['/step2']" class="waves-effect waves-light btn btn__next btn__skip">
+        Пропустить
+      </a>
+    </div>
+    <!-- !.col.s6 -->
+    <div class="col s6">
+      <button class="waves-effect waves-light btn btn__next" (click)="submitForm($event)" [disabled]="form.invalid">
+        Далее
+      </button>
+    </div>
+    <!-- !.col.s6 -->
+  </div>
+  <!-- !.row.next -->
+</div>
