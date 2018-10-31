@@ -1,30 +1,46 @@
 <div class="regStep2">
-  <div class="regStep2__wrapper">
+  <form [formGroup]="form" class="regStep2__wrapper">
     <div class="regStep2__title">
-      Проверьте распознанные данные вашего паспорта
+      {{heading}}
     </div>
     <div class="input-field regStep2__inputGroup">
-      <label for="name" class="regStep2__label">Имя</label>
-      <input type="text" name="name" id="name" class="regStep2__input">
+      <label for="name" class="regStep2__label" [class.active]="preFilled">Имя</label>
+      <input type="text" formControlName="name" name="name" id="name" class="regStep2__input">
     </div>
     <div class="input-field regStep2__inputGroup">
-      <label for="name" class="regStep2__label">Фамилия</label>
-      <input type="text" name="name" id="name" class="regStep2__input">
+      <label for="surname" class="regStep2__label" [class.active]="preFilled">Фамилия</label>
+      <input type="text" formControlName="surname" name="surname" id="surname" class="regStep2__input">
     </div>
     <div class="input-field regStep2__inputGroup">
-      <label for="name" class="regStep2__label">Отчество</label>
-      <input type="text" name="name" id="name" class="regStep2__input">
+      <label for="middlNname" class="regStep2__label" [class.active]="preFilled">Отчество</label>
+      <input type="text" formControlName="middleName" name="middleName" id="middleName" class="regStep2__input">
     </div>
     <div class="input-field regStep2__inputGroup">
-      <label for="name" class="regStep2__label">Дата рождения</label>
-      <input type="text" name="name" id="name" class="regStep2__input">
+      <label for="birth" class="regStep2__label active" [class.active]="preFilled">Дата рождения</label>
+      <input type="date" class="regStep2__input regStep2__dateInput" formControlName="birth" name="birth" id="birth">
     </div>
     <div class="input-field regStep2__inputGroup">
-      <label for="name" class="regStep2__label">Серия и номер паспорта</label>
-      <input type="text" name="name" id="name" mask='0000 000000' class="regStep2__input">
+      <label for="passportNumber" class="regStep2__label" [class.active]="preFilled">Серия и номер паспорта</label>
+      <input type="text" formControlName="passportNumber" name="passportNumber" id="passportNumber" [showMaskTyped]="showPassportMaskType"
+        mask='0000 000000' class="regStep2__input" (focus)="showPassportMaskType = true" (blur)="showPassportMaskType = false">
     </div>
+  </form>
+  <div class="row next">
+    <div class="col s6">
+      <a href="javascript:void(0)" (click)="back($event)" class="waves-effect waves-light btn btn__next btn__skip">
+        Назад
+      </a>
+    </div>
+    <!-- !.col.s6 -->
+    <div class="col s6">
+      <button class="waves-effect waves-light btn btn__next" (click)="submitForm($event)" [disabled]="form.invalid">
+        Далее
+      </button>
+    </div>
+    <!-- !.col.s6 -->
   </div>
-  <div class="next">
+  <!-- !.row.next -->
+  <!-- <div class="next">
     <button type="submit" class="waves-effect waves-light btn btn__next">Далее</button>
-  </div>
+  </div> -->
 </div>

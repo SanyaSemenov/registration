@@ -53,6 +53,15 @@
     @media (max-width: 767px){
       width: 100%;
     }
+    &:hover{
+      background-color: darken(@btn_bgColor__next, 20%);
+      color: @btn_color__next;
+    }
+  
+    &:focus, &:active{
+      background-color: darken(@btn_bgColor__next, 10%);
+      color: @btn_color__next;
+    }
   }
 
   &__skip{

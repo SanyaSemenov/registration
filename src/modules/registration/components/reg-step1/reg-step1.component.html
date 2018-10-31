@@ -7,7 +7,7 @@
       <div class="regStep1__uploadTitle">
         Главный разворот паспорта
       </div>
-      <div class="regStep1__uploadImage" [class.empty]="!mainPassportUrl">
+      <div class="regStep1__uploadImage" [class.empty]="!mainUrl">
         <ng-container *ngIf="isMainLoading">
           <div class="preloader-container">
             <div class="preloader-wrapper big active">
@@ -26,7 +26,7 @@
           </div>
         </ng-container>
         <ng-container *ngIf="!isMainLoading">
-          <img [src]="mainPassportUrl" alt="">
+          <img [src]="mainUrl ? mainUrl : ''" alt="">
         </ng-container>
       </div>
       <div class="regStep1__uploadInput">
@@ -42,7 +42,7 @@
       <div class="regStep1__uploadTitle">
         Регистрация
       </div>
-      <div class="regStep1__uploadImage" [class.empty]="!secondPassportUrl">
+      <div class="regStep1__uploadImage" [class.empty]="!secondUrl">
         <ng-container *ngIf="isSecondLoading">
           <div class="preloader-container">
             <div class="preloader-wrapper big active">
@@ -61,7 +61,7 @@
           </div>
         </ng-container>
         <ng-container *ngIf="!isSecondLoading">
-          <img [src]="secondPassportUrl" alt="">
+          <img [src]="secondUrl ? secondUrl : ''" alt="">
         </ng-container>
       </div>
       <div class="regStep1__uploadInput">
@@ -76,7 +76,7 @@
   </form>
   <div class="row next">
     <div class="col s6">
-      <a href="javascript:void(0)" [routerLink]="['/step2']" class="waves-effect waves-light btn btn__next btn__skip">
+      <a href="javascript:void(0)" (click)="skipStep($event)" class="waves-effect waves-light btn btn__next btn__skip">
         Пропустить
       </a>
     </div>

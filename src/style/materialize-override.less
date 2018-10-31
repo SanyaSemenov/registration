@@ -1,0 +1,60 @@
+@import "variables.less";
+
+
+.input-field>label:not(.label-icon).active{
+  transform: translateY(-0.5rem);
+  color: @input_color__active;
+}
+
+input:not([type]),
+input[type=text]:not(.browser-default),
+input[type=password]:not(.browser-default),
+input[type=email]:not(.browser-default),
+input[type=url]:not(.browser-default),
+input[type=time]:not(.browser-default),
+input[type=date]:not(.browser-default),
+input[type=datetime]:not(.browser-default),
+input[type=datetime-local]:not(.browser-default),
+input[type=tel]:not(.browser-default),
+input[type=number]:not(.browser-default),
+input[type=search]:not(.browser-default), 
+textarea.materialize-textarea{
+  height: 3rem;
+  margin: 8px 0 0 0;
+  color: @input_color__default;
+  font-size: @fontSize__global;
+  border-bottom: 1px solid @input_color__default;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  box-sizing: border-box; 
+  @media @tablet{
+    font-size: @fontSize_tablet__global;
+  }
+}
+
+input:not([type]):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=url]:not(.browser-default):focus:not([readonly]),
+input[type=time]:not(.browser-default):focus:not([readonly]),
+input[type=date]:not(.browser-default):focus:not([readonly]),
+input[type=datetime]:not(.browser-default):focus:not([readonly]),
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input[type=tel]:not(.browser-default):focus:not([readonly]),
+input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]){
+  border-bottom: 1px solid @input_color__active;
+  box-shadow: none;
+}
+
+.input-field{
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.input-field>label{
+  color: @input_color__default;
+  transform: translateY(1rem);
+}

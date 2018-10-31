@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from '../../../../validators';
+import { RegistrationService } from '../../registration.service';
 
 @Component({
   selector: 'app-reg-step1',
@@ -12,41 +13,30 @@ export class RegStep1Component implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
-  ) {
-    this.form = this.fb.group({
-      mainPassport: [
-        '', [
-          Validators.required,
-          CustomValidators.imageExtensions(this.ALLOWED_EXTENSIONS)
-        ]
-      ],
-      secondPassport: [
-        '', [
-          Validators.required,
-          CustomValidators.imageExtensions(this.ALLOWED_EXTENSIONS)
-        ]
-      ]
-    });
-  }
+    private $service: RegistrationService
+  ) { }
 
-  readonly ALLOWED_EXTENSIONS = [
-    'jpg',
-    'png',
-    'jpeg'
-  ];
-
+  // tslint:disable-next-line:no-output-on-prefix
+  @Output('onNavigate')
+  onNavigate: EventEmitter<boolean> = new EventEmitter<boolean>();
   readonly validationMessages = {
     wrongExtension: 'Допустимые форматы файла: '
   };
 
   form: FormGroup;
-  mainPassportUrl = '';
-  secondPassportUrl = '';
   isMainLoading = false;
   isSecondLoading = false;
 
+  get mainUrl() {
+    return this.$service.mainPassportUrl;
+  }
+
+  get secondUrl() {
+    return this.$service.secondPassportUrl;
+  }
+
   ngOnInit() {
+    this.form = this.$service.passportImageForm;
   }
 
   onMainChange(e) {
@@ -55,13 +45,15 @@ export class RegStep1Component implements OnInit {
       this.form.controls['mainPassport'].patchValue(filename);
       const reader = new FileReader();
 
-      if (this.ALLOWED_EXTENSIONS.filter(x => filename.indexOf(x) > -1).length > 0) {
+      if (this.$service.ALLOWED_EXTENSIONS.filter(x => filename.indexOf(x) > -1).length > 0) {
         this.isMainLoading = true;
         reader.readAsDataURL(e.target.files[0]);
+      } else {
+        this.$service.mainPassportUrl = '';
       }
 
       reader.onload = (event: any) => {
-        this.mainPassportUrl = event.target.result;
+        this.$service.mainPassportUrl = event.target.result;
         this.isMainLoading = false;
       };
     }
@@ -74,14 +66,14 @@ export class RegStep1Component implements OnInit {
       this.form.controls['secondPassport'].patchValue(filename);
       const reader = new FileReader();
 
-      if (this.ALLOWED_EXTENSIONS.filter(x => filename.indexOf(x) > -1).length > 0) {
+      if (this.$service.ALLOWED_EXTENSIONS.filter(x => filename.indexOf(x) > -1).length > 0) {
         this.isSecondLoading = true;
         reader.readAsDataURL(e.target.files[0]);
+      } else {
+        this.$service.secondPassportUrl = '';
       }
-
-
       reader.onload = (event: any) => {
-        this.secondPassportUrl = event.target.result;
+        this.$service.secondPassportUrl = event.target.result;
         this.isSecondLoading = false;
       };
     }
@@ -90,6 +82,11 @@ export class RegStep1Component implements OnInit {
 
   submitForm(e) {
     console.log(this.form.value);
-    this.router.navigate(['step2']);
+    // this.router.navigate(['step2']);
+    this.onNavigate.emit(true);
+  }
+
+  skipStep(e) {
+    this.onNavigate.emit(false);
   }
 }
