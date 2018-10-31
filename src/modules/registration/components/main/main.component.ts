@@ -9,7 +9,7 @@ import { LocationState, State, LocationStateService } from '../../lib';
 export class MainComponent implements OnInit {
 
   constructor(
-    private location: LocationStateService
+    public location: LocationStateService
   ) { }
 
   preFilled = false;
