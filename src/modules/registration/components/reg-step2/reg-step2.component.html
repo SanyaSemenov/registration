@@ -5,15 +5,15 @@
     </div>
     <div class="input-field regStep2__inputGroup">
       <input type="text" formControlName="name" name="name" id="name" class="regStep2__input">
-      <label for="name" class="regStep2__label" [class.active]="preFilled">Имя</label>
+      <label for="name" class="regStep2__label" [class.active]="isFilled">Имя</label>
     </div>
     <div class="input-field regStep2__inputGroup">
       <input type="text" formControlName="surname" name="surname" id="surname" class="regStep2__input">
-      <label for="surname" class="regStep2__label" [class.active]="preFilled">Фамилия</label>
+      <label for="surname" class="regStep2__label" [class.active]="isFilled">Фамилия</label>
     </div>
     <div class="input-field regStep2__inputGroup">
       <input type="text" formControlName="middleName" name="middleName" id="middleName" class="regStep2__input">
-      <label for="middlNname" class="regStep2__label" [class.active]="preFilled">Отчество</label>
+      <label for="middlNname" class="regStep2__label" [class.active]="isFilled">Отчество</label>
     </div>
     <!-- <div class="input-field regStep2__inputGroup">
       <select formControlName="gender" name="gender" id="gender" materialize="material_select">
@@ -37,12 +37,12 @@
     <div class="input-field regStep2__inputGroup">
       <input type="text" formControlName="passportNumber" name="passportNumber" id="passportNumber" [showMaskTyped]="showPassportMaskType"
         mask='0000 000000' class="regStep2__input" (focus)="showPassportMaskType = true" (blur)="showPassportMaskType = false">
-      <label for="passportNumber" class="regStep2__label" [class.active]="preFilled">Серия и номер паспорта</label>
+      <label for="passportNumber" class="regStep2__label" [class.active]="isFilled">Серия и номер паспорта</label>
     </div>
 
     <div class="input-field regStep2__inputGroup">
       <input type="text" formControlName="passportByWhom" name="passportByWhom" id="passportByWhom" class="regStep2__input">
-      <label for="passportByWhom" class="regStep2__label" [class.active]="preFilled">Кем выдан</label>
+      <label for="passportByWhom" class="regStep2__label" [class.active]="isFilled">Кем выдан</label>
     </div>
     <div class="input-field regStep2__inputGroup">
       <input type="date" class="regStep2__input regStep2__dateInput" formControlName="passportDate" name="passportDate"
@@ -53,7 +53,7 @@
       <input type="text" formControlName="passportCode" name="passportCode" id="passportCode" [showMaskTyped]="showPassportCodeaskType"
         mask='000-000' class="regStep2__input" [dropSpecialCharacters]="false" (focus)="showPassportCodeaskType = true"
         (blur)="showPassportCodeaskType = false">
-      <label for="passportCode" class="regStep2__label" [class.active]="preFilled">Серия и номер паспорта</label>
+      <label for="passportCode" class="regStep2__label" [class.active]="isFilled">Серия и номер паспорта</label>
     </div>
   </form>
   <div class="row next">
