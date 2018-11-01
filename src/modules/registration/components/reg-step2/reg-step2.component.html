@@ -1,28 +1,59 @@
 <div class="regStep2">
   <form [formGroup]="form" class="regStep2__wrapper">
-    <div class="regStep2__title">
+    <div class="regStep2__title demibold">
       {{heading}}
     </div>
     <div class="input-field regStep2__inputGroup">
-      <label for="name" class="regStep2__label" [class.active]="preFilled">Имя</label>
       <input type="text" formControlName="name" name="name" id="name" class="regStep2__input">
+      <label for="name" class="regStep2__label" [class.active]="preFilled">Имя</label>
     </div>
     <div class="input-field regStep2__inputGroup">
-      <label for="surname" class="regStep2__label" [class.active]="preFilled">Фамилия</label>
       <input type="text" formControlName="surname" name="surname" id="surname" class="regStep2__input">
+      <label for="surname" class="regStep2__label" [class.active]="preFilled">Фамилия</label>
     </div>
     <div class="input-field regStep2__inputGroup">
-      <label for="middlNname" class="regStep2__label" [class.active]="preFilled">Отчество</label>
       <input type="text" formControlName="middleName" name="middleName" id="middleName" class="regStep2__input">
+      <label for="middlNname" class="regStep2__label" [class.active]="preFilled">Отчество</label>
     </div>
+    <!-- <div class="input-field regStep2__inputGroup">
+      <select formControlName="gender" name="gender" id="gender" materialize="material_select">
+        <option value="" disabled selected>Выберите</option>
+        <option value="муж">муж</option>
+        <option value="жен">жен</option>
+      </select>
+      <label for="gender" class="regStep2__label">Ваш пол</label>
+    </div> -->
+    <mat-form-field>
+      <mat-select formControlName="gender" placeholder="Ваш пол">
+        <mat-option *ngFor="let gender of genderList" [value]="gender.value">
+          {{gender.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <div class="input-field regStep2__inputGroup">
-      <label for="birth" class="regStep2__label active" [class.active]="preFilled">Дата рождения</label>
       <input type="date" class="regStep2__input regStep2__dateInput" formControlName="birth" name="birth" id="birth">
+      <label for="birth" class="regStep2__label active">Дата рождения</label>
     </div>
     <div class="input-field regStep2__inputGroup">
-      <label for="passportNumber" class="regStep2__label" [class.active]="preFilled">Серия и номер паспорта</label>
       <input type="text" formControlName="passportNumber" name="passportNumber" id="passportNumber" [showMaskTyped]="showPassportMaskType"
         mask='0000 000000' class="regStep2__input" (focus)="showPassportMaskType = true" (blur)="showPassportMaskType = false">
+      <label for="passportNumber" class="regStep2__label" [class.active]="preFilled">Серия и номер паспорта</label>
+    </div>
+
+    <div class="input-field regStep2__inputGroup">
+      <input type="text" formControlName="passportByWhom" name="passportByWhom" id="passportByWhom" class="regStep2__input">
+      <label for="passportByWhom" class="regStep2__label" [class.active]="preFilled">Кем выдан</label>
+    </div>
+    <div class="input-field regStep2__inputGroup">
+      <input type="date" class="regStep2__input regStep2__dateInput" formControlName="passportDate" name="passportDate"
+        id="passportDate">
+      <label for="passportDate" class="regStep2__label active">Когда выдан</label>
+    </div>
+    <div class="input-field regStep2__inputGroup">
+      <input type="text" formControlName="passportCode" name="passportCode" id="passportCode" [showMaskTyped]="showPassportCodeaskType"
+        mask='000-000' class="regStep2__input" [dropSpecialCharacters]="false" (focus)="showPassportCodeaskType = true"
+        (blur)="showPassportCodeaskType = false">
+      <label for="passportCode" class="regStep2__label" [class.active]="preFilled">Серия и номер паспорта</label>
     </div>
   </form>
   <div class="row next">

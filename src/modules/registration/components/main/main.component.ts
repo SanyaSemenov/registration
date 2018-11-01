@@ -12,7 +12,7 @@ export class MainComponent implements OnInit {
     public location: LocationStateService
   ) { }
 
-  preFilled = false;
+  isFilled = false;
 
   ngOnInit() {
     console.log(this.location.currentLocation);
@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
   navigate(e: boolean) {
     if (this.location.currentLocation.step1) {
       this.location.navigate(1);
-      this.preFilled = e;
+      this.isFilled = e;
       return;
     }
     this.location.navigate(e ? 1 : -1);

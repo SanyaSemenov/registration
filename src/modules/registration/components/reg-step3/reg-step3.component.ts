@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -9,6 +9,13 @@ import { HttpClient } from '@angular/common/http';
 export class RegStep3Component implements OnInit {
   constructor() {
   }
+
+  // tslint:disable-next-line:no-output-on-prefix
+  @Output('onNavigate')
+  onNavigate: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Input()
+  isFilled: boolean;
 
   ngOnInit() {
   }

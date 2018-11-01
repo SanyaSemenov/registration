@@ -16,6 +16,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { LocationStateService } from './lib';
 import { PipesModule } from './lib/pipes/pipes.module';
 import { FakeApiService } from '../../api/fake-api.service';
+import { MatSelectModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmStepComponent } from './components/confirm-step/confirm-step.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   imports: [
@@ -24,6 +28,9 @@ import { FakeApiService } from '../../api/fake-api.service';
     ReactiveFormsModule,
     HttpClientModule,
     PipesModule,
+    MatSelectModule,
+    BrowserAnimationsModule,
+    PdfViewerModule,
     NgxMaskModule.forRoot(),
     RouterModule.forChild(routes)
   ],
@@ -32,7 +39,8 @@ import { FakeApiService } from '../../api/fake-api.service';
     RegStep1Component,
     RegStep2Component,
     RegStep3Component,
-    MainComponent
+    MainComponent,
+    ConfirmStepComponent
   ],
   providers: [
     FormBuilder,

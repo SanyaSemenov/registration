@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { RegistrationService } from '../../registration.service';
 import { MainPassportData } from '../../lib';
+import { M } from 'materialize-css';
 
 @Component({
   selector: 'app-reg-step2',
@@ -18,23 +19,35 @@ export class RegStep2Component implements OnInit {
   }
 
   showPassportMaskType = false;
+  showPassportCodeaskType = false;
 
   get heading() {
-    return this.preFilled ? 'Проверьте распознанные данные вашего паспорта' : 'Введите ваши паспортные данные';
+    return this.isFilled ? 'Проверьте распознанные данные вашего паспорта' : 'Введите ваши паспортные данные';
   }
   // tslint:disable-next-line:no-output-on-prefix
   @Output('onNavigate')
   onNavigate: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input()
-  preFilled: boolean;
+  isFilled: boolean;
 
   form: FormGroup;
+  genderList = [
+    { value: 'муж', viewValue: 'муж' },
+    { value: 'жен', viewValue: 'жен' }
+  ];
   ngOnInit() {
-    if (this.preFilled) {
-      this.$service.getMainRecognizedData().subscribe((data: MainPassportData) => {
-        this.form.patchValue(data);
-      });
+    // document.addEventListener('DOMContentLoaded', function () {
+    // const elems = document.querySelectorAll('select');
+    // console.log(M);
+    // const instances = M.FormSelect.init(elems, {});
+    // });
+    if (this.isFilled) {
+      if (!this.$service.mainPassportDataFilled) {
+        this.$service.getMainRecognizedData().subscribe((data: MainPassportData) => {
+          this.form.patchValue(data);
+        });
+      }
     } else {
       this.$service.clearMainPassportForm();
       this.form.reset();
@@ -46,6 +59,6 @@ export class RegStep2Component implements OnInit {
   }
 
   submitForm(event) {
-
+    this.onNavigate.emit(true);
   }
 }

@@ -1,7 +1,10 @@
 @import "variables.less";
 
 
-.input-field>label:not(.label-icon).active{
+.input-field>label:not(.label-icon).active,
+.input-field>input[type]:-webkit-autofill:not(.browser-default):not([type="search"])+label,
+.input-field>input[type=date]:not(.browser-default)+label,
+.input-field>input[type=time]:not(.browser-default)+label{
   transform: translateY(-0.5rem);
   color: @input_color__active;
 }
@@ -49,6 +52,22 @@ textarea.materialize-textarea:focus:not([readonly]){
   box-shadow: none;
 }
 
+input:not([type]):focus:not([readonly])+label,
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=password]:not(.browser-default):focus:not([readonly])+label,
+input[type=email]:not(.browser-default):focus:not([readonly])+label,
+input[type=url]:not(.browser-default):focus:not([readonly])+label,
+input[type=time]:not(.browser-default):focus:not([readonly])+label,
+input[type=date]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,
+input[type=tel]:not(.browser-default):focus:not([readonly])+label,
+input[type=number]:not(.browser-default):focus:not([readonly])+label,
+input[type=search]:not(.browser-default):focus:not([readonly])+label,
+textarea.materialize-textarea:focus:not([readonly])+label{
+  color: @input_color__active;
+}
+
 .input-field{
   margin-top: 0.8rem;
   margin-bottom: 0.8rem;
@@ -57,4 +76,36 @@ textarea.materialize-textarea:focus:not([readonly]){
 .input-field>label{
   color: @input_color__default;
   transform: translateY(1rem);
+}
+
+.mat-form-field{
+  font-family: inherit;
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label,
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
+  transform: translateY(-1.25rem);
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple{
+  background-color: @input_color__default;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label{
+  color: @input_color__default;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-ripple{
+  height: 1px;
+}
+
+input.ng-pristine.ng-invalid.ng-touched{
+  border-color: @input_color__invalid;
+  &+label{
+    color: @input_color__invalid;
+  }
+}
+
+.mat-select-value{
+  color: @input_color__default;
 }

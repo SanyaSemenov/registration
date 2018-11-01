@@ -1,0 +1,26 @@
+<div class="reg_stepConfirm">
+  <div class="reg_stepConfirm__wrapper">
+    <div class="reg_stepConfirm__title demibold">
+      Соглашение об обработке персональных данных
+    </div>
+    <div class="reg_stepConfirm__pdfViewer">
+      <div class="reg_stepConfirm__pdfWrapper">
+        <pdf-viewer [src]="pdfSrc ? pdfSrc : ''" [fit-to-page]="true" [render-text]="true" style="display: block;"></pdf-viewer>
+      </div>
+    </div>
+  </div>
+  <div class="row next">
+    <div class="col s6">
+      <a href="javascript:void(0)" (click)="back($event)" class="waves-effect waves-light btn btn__next btn__skip">
+        Назад
+      </a>
+    </div>
+    <!-- !.col.s6 -->
+    <div class="col s6">
+      <button class="waves-effect waves-light btn btn__next" (click)="next($event)">
+        Далее
+      </button>
+    </div>
+    <!-- !.col.s6 -->
+  </div>
+</div>

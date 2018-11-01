@@ -31,8 +31,12 @@ export class RegistrationService {
       name: ['', Validators.required],
       surname: ['', Validators.required],
       middleName: ['', Validators.required],
+      gender: ['', Validators.required],
       birth: [new Date(), Validators.required],
-      passportNumber: ['', Validators.required]
+      passportNumber: ['', Validators.required],
+      passportByWhom: ['', Validators.required],
+      passportDate: ['', Validators.required],
+      passportCode: ['', Validators.required]
     });
   }
 
@@ -47,8 +51,10 @@ export class RegistrationService {
   passportImageForm: FormGroup;
   mainPassportForm: FormGroup;
   mainPassportData: MainPassportData;
+  mainPassportDataFilled = false;
 
   getMainRecognizedData() {
+    this.mainPassportDataFilled = true;
     return this.apiService.getMainPassportData();
     // this.apiService.getMainPassportData().subscribe((data: MainPassportData) => {
     //   this.mainPassportData = data;

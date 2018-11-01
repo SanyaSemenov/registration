@@ -13,7 +13,7 @@ export class RegStep1Component implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private $service: RegistrationService
+    public $service: RegistrationService
   ) { }
 
   // tslint:disable-next-line:no-output-on-prefix
