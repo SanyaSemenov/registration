@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { SignatureDialogComponent } from '../../dialogs';
 
 @Component({
   selector: 'app-confirm-step',
@@ -7,8 +9,23 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class ConfirmStepComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog
+  ) { }
 
+  _agreed = false;
+  get agreed(){
+    return this._agreed;
+  }
+  set agreed(value){
+    if(this._agreed === value){
+      return;
+    }
+    this._agreed = value;
+    if(this._agreed){
+      this.showConfirmDialog();
+    }
+  }
   pdfSrc = 'assets/ece_DH_actual_12.09.17 (1).pdf';
 
   // tslint:disable-next-line:no-output-on-prefix
@@ -24,6 +41,13 @@ export class ConfirmStepComponent implements OnInit {
 
   back(e: boolean) {
     this.onNavigate.emit(false);
+  }
+
+  showConfirmDialog(){
+    const dialogConfig: MatDialogConfig = {
+      closeOnNavigation: true
+    };
+    this.dialog.open(SignatureDialogComponent, dialogConfig);
   }
 
 }

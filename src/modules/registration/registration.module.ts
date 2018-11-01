@@ -16,10 +16,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { LocationStateService } from './lib';
 import { PipesModule } from './lib/pipes/pipes.module';
 import { FakeApiService } from '../../api/fake-api.service';
-import { MatSelectModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmStepComponent } from './components/confirm-step/confirm-step.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { SignatureDialogComponent } from './dialogs/signature-dialog/signature-dialog.component';
+import { RegistrationMaterialModule } from './registration.material.module';
+import { AngularSignaturePadModule } from 'angular-signature-pad/src/angular-signature-pad.module';
 
 @NgModule({
   imports: [
@@ -28,9 +29,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ReactiveFormsModule,
     HttpClientModule,
     PipesModule,
-    MatSelectModule,
-    BrowserAnimationsModule,
+    RegistrationMaterialModule,
     PdfViewerModule,
+    AngularSignaturePadModule.forRoot(),
     NgxMaskModule.forRoot(),
     RouterModule.forChild(routes)
   ],
@@ -40,13 +41,17 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     RegStep2Component,
     RegStep3Component,
     MainComponent,
-    ConfirmStepComponent
+    ConfirmStepComponent,
+    SignatureDialogComponent
   ],
   providers: [
     FormBuilder,
     RegistrationService,
     LocationStateService,
     FakeApiService
+  ],
+  entryComponents: [
+    SignatureDialogComponent
   ]
 })
 export class RegistrationModule { }
