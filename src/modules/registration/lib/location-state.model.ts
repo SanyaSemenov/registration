@@ -32,6 +32,9 @@ export class LocationState {
   get confirm() {
     return this.checkState(State.confirm);
   }
+  get pay() {
+    return this.checkState(State.pay);
+  }
   get step4() {
     return this.checkState(State.step4);
   }
@@ -47,6 +50,7 @@ export enum State {
   step1 = 1,
   step2 = 2,
   confirm = 3,
+  pay = 4,
   // step3 = 3,
-  step4 = 4
+  step4 = 5
 }

@@ -21,6 +21,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { SignatureDialogComponent } from './dialogs/signature-dialog/signature-dialog.component';
 import { RegistrationMaterialModule } from './registration.material.module';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { PayStepComponent } from './components/pay-step/pay-step.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     RegStep3Component,
     MainComponent,
     ConfirmStepComponent,
-    SignatureDialogComponent
+    SignatureDialogComponent,
+    PayStepComponent
   ],
   providers: [
     FormBuilder,
