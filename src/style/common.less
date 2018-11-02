@@ -2,14 +2,14 @@
 @import "mixins.less";
 @import "typography.less";
 
+.pageWrapper{
+  min-height: 50vh;
+}
+
 .btn{
   display: inline-block;
   text-transform: none;
   border-radius: @btn_borderRadius;
-  @media @tablet{
-    border-radius: @btn_borderRadius_tablet;
-  }
-
   background: @btn_bgColor__default;
   color: @btn_color__default;
   height: @btn_height__default;
@@ -18,6 +18,19 @@
   box-shadow: none;
   padding: 0px 20px;
   text-align: center;
+  @media @tablet{
+    border-radius: @btn_borderRadius_tablet;
+    font-size: @btn_fontSize__tablet;
+    height: @btn_height__tablet;
+    line-height: @btn_height__tablet;
+    padding: 0 28px;
+  }
+  @media @desktop{
+    font-size: @btn_fontSize__desktop;
+    height: @btn_height__desktop;
+    line-height: @btn_height__desktop;
+    padding: 0 35px;
+  }
 
   &:hover{
     box-shadow: inherit;
@@ -50,8 +63,14 @@
     font-size: @btn_fontSize__next;
     background-color: @btn_bgColor__next;
     color: @btn_color__next;
-    @media (max-width: 767px){
+    @media (max-width: 600px){
       width: 100%;
+    }
+    @media @tablet{
+      font-size: inherit;
+    }
+    @media @desktop{
+      font-size: inherit;
     }
     &:hover{
       background-color: darken(@btn_bgColor__next, 20%);
@@ -67,6 +86,14 @@
   &__skip{
     background-color: @btn_bgColor__skip;
     color: @btn_color__skip;
+
+    &:hover{
+      background-color: darken(@btn_bgColor__skip, 20%);
+    }
+  
+    &:focus, &:active{
+      background-color: darken(@btn_bgColor__skip, 10%);
+    }
   }
 
   &[disabled]{
@@ -98,4 +125,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+signature-pad canvas{
+  // width: 100%;
+  border: 1px solid @input_color__default;
 }

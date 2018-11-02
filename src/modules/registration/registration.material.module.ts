@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { MatSelectModule, MatDialogModule } from '@angular/material';
+import { MatSelectModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-const modules: Array<any> = [
+const modules = [
   BrowserAnimationsModule,
   MatSelectModule,
-  MatDialogModule
+  MatDialogModule,
+  MatCheckboxModule
 ];
 
 @NgModule({

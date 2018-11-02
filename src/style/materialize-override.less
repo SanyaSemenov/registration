@@ -1,6 +1,9 @@
 @import "variables.less";
 
-
+.col .row{
+  margin-left: auto;
+  margin-right: auto;
+}
 .input-field>label:not(.label-icon).active,
 .input-field>input[type]:-webkit-autofill:not(.browser-default):not([type="search"])+label,
 .input-field>input[type=date]:not(.browser-default)+label,
@@ -80,6 +83,8 @@ textarea.materialize-textarea:focus:not([readonly])+label{
 
 .mat-form-field{
   font-family: inherit;
+  font-weight: inherit;
+  width: 100%;
 }
 
 .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label,
@@ -99,6 +104,14 @@ textarea.materialize-textarea:focus:not([readonly])+label{
   height: 1px;
 }
 
+.mat-form-field-appearance-legacy .mat-form-field-label{
+  color: @input_color__default;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label{
+  color: @input_color__active;
+}
+
 input.ng-pristine.ng-invalid.ng-touched{
   border-color: @input_color__invalid;
   &+label{
@@ -107,5 +120,29 @@ input.ng-pristine.ng-invalid.ng-touched{
 }
 
 .mat-select-value{
+  color: @input_color__default;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: @input_color__default !important;
+}
+
+.mat-ripple-element {
+  background: @input_color__default !important;
+}
+
+.mat-checkbox-layout {
+  white-space: normal !important;
+}
+
+.mat-checkbox-inner-container{
+  margin-top: 8px !important;
+}
+
+.mat-select-arrow{
+  color: @input_color__default;
+}
+
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow{
   color: @input_color__default;
 }

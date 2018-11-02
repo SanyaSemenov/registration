@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { routes } from './registration.routing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxMaskModule } from 'ngx-mask';
 import {
@@ -20,18 +20,19 @@ import { ConfirmStepComponent } from './components/confirm-step/confirm-step.com
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { SignatureDialogComponent } from './dialogs/signature-dialog/signature-dialog.component';
 import { RegistrationMaterialModule } from './registration.material.module';
-import { AngularSignaturePadModule } from 'angular-signature-pad/src/angular-signature-pad.module';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     PipesModule,
     RegistrationMaterialModule,
     PdfViewerModule,
-    AngularSignaturePadModule.forRoot(),
+    SignaturePadModule,
     NgxMaskModule.forRoot(),
     RouterModule.forChild(routes)
   ],

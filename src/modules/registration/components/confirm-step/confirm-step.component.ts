@@ -13,16 +13,17 @@ export class ConfirmStepComponent implements OnInit {
     private dialog: MatDialog
   ) { }
 
+  imageData: any;
   _agreed = false;
-  get agreed(){
+  get agreed() {
     return this._agreed;
   }
-  set agreed(value){
-    if(this._agreed === value){
+  set agreed(value) {
+    if (this._agreed === value) {
       return;
     }
     this._agreed = value;
-    if(this._agreed){
+    if (this._agreed) {
       this.showConfirmDialog();
     }
   }
@@ -43,11 +44,15 @@ export class ConfirmStepComponent implements OnInit {
     this.onNavigate.emit(false);
   }
 
-  showConfirmDialog(){
+  showConfirmDialog() {
     const dialogConfig: MatDialogConfig = {
-      closeOnNavigation: true
+      closeOnNavigation: true,
+      autoFocus: false
     };
-    this.dialog.open(SignatureDialogComponent, dialogConfig);
+    const dialogref = this.dialog.open(SignatureDialogComponent, dialogConfig);
+    dialogref.afterClosed().subscribe(data => {
+      this.imageData = data;
+    });
   }
 
 }

@@ -8,7 +8,7 @@
         <pdf-viewer [src]="pdfSrc ? pdfSrc : ''" [fit-to-page]="true" [render-text]="true" style="display: block;"></pdf-viewer>
       </div>
     </div>
-    <mat-checkbox [(ngModel)]="agreed">Я соглашаюсь</mat-checkbox>
+    <mat-checkbox [(ngModel)]="agreed">Прочитал и согласен на обработку моих персональных данных</mat-checkbox>
   </div>
   <div class="row next">
     <div class="col s6">
@@ -18,7 +18,7 @@
     </div>
     <!-- !.col.s6 -->
     <div class="col s6">
-      <button class="waves-effect waves-light btn btn__next" (click)="next($event)">
+      <button class="waves-effect waves-light btn btn__next pull-right" (click)="next($event)">
         Далее
       </button>
     </div>
