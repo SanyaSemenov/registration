@@ -25,13 +25,15 @@ export class CustomValidators {
   // }
 
   public static passportCode(control: AbstractControl) {
-    const matched = PASSPORT_CODE.test(control.value);
+    const value = control.value.indexOf('-') > -1 ? control.value.split('-').join() : control.value;
+    const matched = PASSPORT_CODE.test(value);
     return matched ? null : { 'wrongPassportCode': true };
   }
 
   public static passportNumber(control: AbstractControl) {
-    const value = control.value.indexOf('-') > -1 ? control.value.split('-').join() : control.value;
-    const matched = PASSPORT_NUMBER.test(value);
+    const matched = PASSPORT_NUMBER.test(control.value);
     return matched ? null : { 'wrongPassportNumber': true };
   }
+
+  // TODO: Proper Validation
 }
