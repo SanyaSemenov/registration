@@ -33,10 +33,22 @@ export class RegistrationService {
       middleName: ['', Validators.required],
       gender: ['', Validators.required],
       birth: [new Date(), Validators.required],
-      passportNumber: ['', Validators.required],
+      passportNumber: [
+        '', [
+          Validators.required
+        ]
+      ],
       passportByWhom: ['', Validators.required],
       passportDate: ['', Validators.required],
-      passportCode: ['', Validators.required]
+      passportCode: [
+        '', [
+          Validators.required
+        ]
+      ]
+    });
+
+    this.mainPassportForm.valueChanges.subscribe((data) => {
+      console.log(this.mainPassportForm);
     });
   }
 
@@ -63,5 +75,9 @@ export class RegistrationService {
 
   clearMainPassportForm() {
     this.mainPassportForm.reset();
+  }
+
+  getPaymentAmount() {
+    return this.apiService.getPaymentAmount();
   }
 }

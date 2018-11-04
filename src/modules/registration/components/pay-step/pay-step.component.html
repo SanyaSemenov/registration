@@ -1,11 +1,17 @@
 <div class="reg_stepPay">
-  <div class="reg_stepPay__title demibold">
-
+  <div class="reg_stepPay__message">
+    <div class="reg_stepPay__messageText">
+      Для завершения быстрой регистрации оплатите
+    </div>
+    <div class="reg_stepPay__amount">
+      {{amount}} рублей
+    </div>
+    <div class="reg_stepPay__amount"></div>
   </div>
   <div class="row next">
     <div class="col s6">
-      <a href="javascript:void(0)" (click)="back($event)" class="waves-effect waves-light btn btn__next btn__skip">
-        Назад
+      <a href="javascript:void(0)" (click)="next($event)" class="waves-effect waves-light btn btn__next btn__skip">
+        Пропустить
       </a>
     </div>
     <!-- !.col.s6 -->

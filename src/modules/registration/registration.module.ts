@@ -9,19 +9,20 @@ import {
   MainComponent,
   RegStep1Component,
   RegStep2Component,
-  RegStep3Component
+  RegStep3Component,
+  ConfirmStepComponent,
+  PayStepComponent,
+  FinishComponent
 } from './components';
 import { RegistrationService } from './registration.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LocationStateService } from './lib';
 import { PipesModule } from './lib/pipes/pipes.module';
 import { FakeApiService } from '../../api/fake-api.service';
-import { ConfirmStepComponent } from './components/confirm-step/confirm-step.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { SignatureDialogComponent } from './dialogs/signature-dialog/signature-dialog.component';
 import { RegistrationMaterialModule } from './registration.material.module';
 import { SignaturePadModule } from 'angular2-signaturepad';
-import { PayStepComponent } from './components/pay-step/pay-step.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { PayStepComponent } from './components/pay-step/pay-step.component';
     MainComponent,
     ConfirmStepComponent,
     SignatureDialogComponent,
-    PayStepComponent
+    PayStepComponent,
+    FinishComponent
   ],
   providers: [
     FormBuilder,

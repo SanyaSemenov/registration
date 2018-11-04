@@ -25,4 +25,8 @@ export class FakeApiService {
     }
     return of(successResponse);
   }
+
+  getPaymentAmount() {
+    return of(100);
+  }
 }

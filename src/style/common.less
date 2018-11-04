@@ -3,7 +3,11 @@
 @import "typography.less";
 
 .pageWrapper{
+  position: relative;
   min-height: 50vh;
+  @media (max-width: 600px){
+    min-height: 100vh;
+  }
 }
 
 .btn{
@@ -103,7 +107,10 @@
 }
 
 .next{
-  padding: 0px 10px 10px;
+  padding: 0px 10px 20px;
+  @media @tablet{
+    margin-bottom: 10px;
+  }
   .col{
     &:first-child{
       padding-left: 0px;
@@ -112,6 +119,10 @@
       padding-right: 0px;
     }
   }
+}
+
+.row.next{
+  margin-bottom: 0px;
 }
 
 .validationMessage{
@@ -130,4 +141,16 @@
 signature-pad canvas{
   // width: 100%;
   border: 1px solid @input_color__default;
+}
+
+.row .col.card-container{
+  @media (max-width: 600px){
+    padding: 0;
+  }
+}
+
+.card-row{
+  @media (max-width: 600px){
+    margin: 0;
+  }
 }

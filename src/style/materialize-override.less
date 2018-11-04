@@ -112,9 +112,12 @@ textarea.materialize-textarea:focus:not([readonly])+label{
   color: @input_color__active;
 }
 
-input.ng-pristine.ng-invalid.ng-touched{
+input.ng-invalid.ng-touched{
   border-color: @input_color__invalid;
   &+label{
+    &.active{
+      color: @input_color__invalid;
+    }
     color: @input_color__invalid;
   }
 }
@@ -145,4 +148,17 @@ input.ng-pristine.ng-invalid.ng-touched{
 
 .mat-form-field.mat-focused.mat-primary .mat-select-arrow{
   color: @input_color__default;
+}
+
+.card{
+  @media (max-width: 600px){
+    margin: 0;
+  }
+}
+
+.card .card-content{
+  padding: 0;
+  @media @tablet{
+    padding: 24px!;
+  }
 }

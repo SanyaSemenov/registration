@@ -3,3 +3,4 @@
 <!-- <app-reg-step3 *ngIf="location.currentLocation.step3" (onNavigate)="navigate($event)" [isFilled]="isFilled"></app-reg-step3> -->
 <app-confirm-step *ngIf="location.currentLocation.confirm" (onNavigate)="navigate($event)"></app-confirm-step>
 <app-pay-step *ngIf="location.currentLocation.pay" (onNavigate)="navigate($event)"></app-pay-step>
+<app-finish *ngIf="location.currentLocation.finish" (onNavigate)="navigate($event)"></app-finish>

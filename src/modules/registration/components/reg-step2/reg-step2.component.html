@@ -51,8 +51,7 @@
     </div>
     <div class="input-field regStep2__inputGroup">
       <input type="text" formControlName="passportCode" name="passportCode" id="passportCode" [showMaskTyped]="showPassportCodeaskType"
-        mask='000-000' class="regStep2__input" [dropSpecialCharacters]="false" (focus)="showPassportCodeaskType = true"
-        (blur)="showPassportCodeaskType = false">
+        mask='000-000' class="regStep2__input" (focus)="showPassportCodeaskType = true" (blur)="showPassportCodeaskType = false">
       <label for="passportCode" class="regStep2__label" [class.active]="isFilled">Серия и номер паспорта</label>
     </div>
   </form>

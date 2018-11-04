@@ -59,6 +59,7 @@ export class RegStep2Component implements OnInit {
   }
 
   submitForm(event) {
+    console.log(this.form.value);
     this.onNavigate.emit(true);
   }
 }

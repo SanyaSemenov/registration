@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { RegistrationService } from '../../registration.service';
 
 @Component({
   selector: 'app-pay-step',
@@ -7,12 +8,20 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class PayStepComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private $service: RegistrationService
+  ) {
+    this.$service.getPaymentAmount().subscribe((data) => {
+      this.amount = data;
+    });
+  }
+
+  amount: number;
 
   // tslint:disable-next-line:no-output-on-prefix
   @Output('onNavigate')
   onNavigate: EventEmitter<boolean> = new EventEmitter<boolean>();
-  
+
   ngOnInit() {
   }
 
