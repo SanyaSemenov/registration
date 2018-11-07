@@ -23,6 +23,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { SignatureDialogComponent } from './dialogs/signature-dialog/signature-dialog.component';
 import { RegistrationMaterialModule } from './registration.material.module';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { ApiService } from '../../api/api.service';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     FormBuilder,
     RegistrationService,
     LocationStateService,
-    FakeApiService
+    FakeApiService,
+    ApiService
   ],
   entryComponents: [
     SignatureDialogComponent

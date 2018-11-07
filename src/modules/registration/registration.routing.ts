@@ -3,13 +3,13 @@ import { RegStep1Component, RegStep2Component, RegStep3Component, MainComponent 
 
 export const routes: Routes = [
   {
-    path: 'step1', component: RegStep1Component
+    path: 'registration/step1', component: RegStep1Component
   },
   {
-    path: 'step2', component: RegStep2Component
+    path: 'registration/step2', component: RegStep2Component
   },
   {
-    path: 'step3', component: RegStep3Component
+    path: 'registration/step3', component: RegStep3Component
   },
   // {
   //   path: '',
@@ -17,7 +17,7 @@ export const routes: Routes = [
   //   pathMatch: 'full'
   // },
   {
-    path: '',
+    path: 'registration',
     component: MainComponent
   }
 ];

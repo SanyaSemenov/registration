@@ -8,8 +8,9 @@
     padding: @commonPadding;
   }
   &__pdfViewer {
+    position: relative;
     overflow-y: auto;
-    max-height: 50vh;
+    height: 50vh;
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 20px;
@@ -17,5 +18,12 @@
   }
 
   &__pdfWrapper {
+  }
+
+  &__preloaderWrapper{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }

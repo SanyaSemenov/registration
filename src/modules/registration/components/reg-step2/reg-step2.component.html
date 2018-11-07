@@ -23,7 +23,7 @@
       </select>
       <label for="gender" class="regStep2__label">Ваш пол</label>
     </div> -->
-    <mat-form-field>
+    <mat-form-field [class.label-active]="form.controls['gender']?.value">
       <mat-select formControlName="gender" placeholder="Ваш пол">
         <mat-option *ngFor="let gender of genderList" [value]="gender.value">
           {{gender.viewValue}}

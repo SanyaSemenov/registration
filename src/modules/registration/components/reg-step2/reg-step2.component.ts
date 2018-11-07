@@ -37,11 +37,6 @@ export class RegStep2Component implements OnInit {
     { value: 'жен', viewValue: 'жен' }
   ];
   ngOnInit() {
-    // document.addEventListener('DOMContentLoaded', function () {
-    // const elems = document.querySelectorAll('select');
-    // console.log(M);
-    // const instances = M.FormSelect.init(elems, {});
-    // });
     if (this.isFilled) {
       if (!this.$service.mainPassportDataFilled) {
         this.$service.getMainRecognizedData().subscribe((data: MainPassportData) => {

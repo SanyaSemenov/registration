@@ -2,147 +2,217 @@
 @import "mixins.less";
 @import "typography.less";
 
-.pageWrapper{
-  position: relative;
-  min-height: 50vh;
-  @media (max-width: 600px){
-    min-height: 100vh;
-  }
-}
-
-.btn{
-  display: inline-block;
-  text-transform: none;
-  border-radius: @btn_borderRadius;
-  background: @btn_bgColor__default;
-  color: @btn_color__default;
-  height: @btn_height__default;
-  line-height: @btn_height__default;
-  font-size: @btn_fontSize;
-  box-shadow: none;
-  padding: 0px 20px;
-  text-align: center;
-  @media @tablet{
-    border-radius: @btn_borderRadius_tablet;
-    font-size: @btn_fontSize__tablet;
-    height: @btn_height__tablet;
-    line-height: @btn_height__tablet;
-    padding: 0 28px;
-  }
-  @media @desktop{
-    font-size: @btn_fontSize__desktop;
-    height: @btn_height__desktop;
-    line-height: @btn_height__desktop;
-    padding: 0 35px;
-  }
-
-  &:hover{
-    box-shadow: inherit;
-    background-color: darken(@btn_bgColor__default, 20%);
-    color: darken(@btn_color__default, 20%);
-  }
-
-  &:focus, &:active{
-    background-color: darken(@btn_bgColor__default, 10%);
-    color: darken(@btn_color__default, 10%);
-  }
-
-  &__primary{
-    background-color: @btn_bgColor__primary;
-    color: @btn_color__primary;
-
-    &:hover{
-      background-color: darken(@btn_bgColor__primary, 20%);
-      color: @btn_color__primary;
-    }
-  
-    &:focus, &:active{
-      background-color: darken(@btn_bgColor__primary, 10%);
-      color: @btn_color__primary;
-    }
-  }
-
-  &__next{
-    margin-top: 10px;
-    font-size: @btn_fontSize__next;
-    background-color: @btn_bgColor__next;
-    color: @btn_color__next;
+.reg{
+  .pageWrapper{
+    position: relative;
+    min-height: 50vh;
     @media (max-width: 600px){
-      width: 100%;
+      min-height: 100vh;
     }
+  }
+  
+  .btn{
+    display: inline-block;
+    text-transform: none;
+    border-radius: @btn_borderRadius;
+    background: @btn_bgColor__default;
+    color: @btn_color__default;
+    height: @btn_height__default;
+    line-height: @btn_height__default;
+    font-size: @btn_fontSize;
+    box-shadow: none;
+    padding: 0px 20px;
+    text-align: center;
     @media @tablet{
-      font-size: inherit;
+      border-radius: @btn_borderRadius_tablet;
+      font-size: @btn_fontSize__tablet;
+      height: @btn_height__tablet;
+      line-height: @btn_height__tablet;
+      padding: 0 28px;
     }
     @media @desktop{
-      font-size: inherit;
+      font-size: @btn_fontSize__desktop;
+      height: @btn_height__desktop;
+      line-height: @btn_height__desktop;
+      padding: 0 35px;
     }
+  
     &:hover{
-      background-color: darken(@btn_bgColor__next, 20%);
-      color: @btn_color__next;
+      box-shadow: inherit;
+      background-color: darken(@btn_bgColor__default, 20%);
+      color: darken(@btn_color__default, 20%);
     }
   
     &:focus, &:active{
-      background-color: darken(@btn_bgColor__next, 10%);
-      color: @btn_color__next;
-    }
-  }
-
-  &__skip{
-    background-color: @btn_bgColor__skip;
-    color: @btn_color__skip;
-
-    &:hover{
-      background-color: darken(@btn_bgColor__skip, 20%);
+      background-color: darken(@btn_bgColor__default, 10%);
+      color: darken(@btn_color__default, 10%);
     }
   
-    &:focus, &:active{
-      background-color: darken(@btn_bgColor__skip, 10%);
+    &__primary{
+      background-color: @btn_bgColor__primary;
+      color: @btn_color__primary;
+  
+      &:hover{
+        background-color: darken(@btn_bgColor__primary, 20%);
+        color: @btn_color__primary;
+      }
+    
+      &:focus, &:active{
+        background-color: darken(@btn_bgColor__primary, 10%);
+        color: @btn_color__primary;
+      }
+    }
+  
+    &__next{
+      margin-top: 10px;
+      font-size: @btn_fontSize__next;
+      background-color: @btn_bgColor__next;
+      color: @btn_color__next;
+      @media (max-width: 600px){
+        width: 100%;
+      }
+      @media @tablet{
+        font-size: inherit;
+      }
+      @media @desktop{
+        font-size: inherit;
+      }
+      &:hover{
+        background-color: darken(@btn_bgColor__next, 20%);
+        color: @btn_color__next;
+      }
+    
+      &:focus, &:active{
+        background-color: darken(@btn_bgColor__next, 10%);
+        color: @btn_color__next;
+      }
+    }
+  
+    &__skip{
+      background-color: @btn_bgColor__skip;
+      color: @btn_color__skip;
+  
+      &:hover{
+        background-color: darken(@btn_bgColor__skip, 20%);
+      }
+    
+      &:focus, &:active{
+        background-color: darken(@btn_bgColor__skip, 10%);
+      }
+    }
+  
+    &[disabled]{
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+  
+  .next{
+    padding: 0px 10px 20px;
+    @media @tablet{
+      margin-bottom: 10px;
+    }
+    .col{
+      &:first-child{
+        padding-left: 0px;
+      }
+      &:last-child{
+        padding-right: 0px;
+      }
+    }
+  }
+  
+  .row.next{
+    margin-bottom: 0px;
+  }
+  
+  .validationMessage{
+    font-size: 0.6rem;
+    position: absolute;
+    top: -10px;
+  }
+  
+  .preloader-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  signature-pad canvas{
+    // width: 100%;
+    border: 1px solid @input_color__default;
+  }
+
+  .input-field{
+    &>label{
+      transform: translateY(1em);
+      font-size: 1em;
     }
   }
 
-  &[disabled]{
-    opacity: 0.5;
-    cursor: not-allowed;
+  input:not([type]),
+  input[type=text]:not(.browser-default),
+  input[type=password]:not(.browser-default),
+  input[type=email]:not(.browser-default),
+  input[type=url]:not(.browser-default),
+  input[type=time]:not(.browser-default),
+  input[type=date]:not(.browser-default),
+  input[type=datetime]:not(.browser-default),
+  input[type=datetime-local]:not(.browser-default),
+  input[type=tel]:not(.browser-default),
+  input[type=number]:not(.browser-default),
+  input[type=search]:not(.browser-default),
+  textarea.materialize-textarea{
+    height: 3em;
   }
-}
 
-.next{
-  padding: 0px 10px 20px;
-  @media @tablet{
-    margin-bottom: 10px;
+  .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus + .mat-form-field-label-wrapper .mat-form-field-label,
+  .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
+    transform: translateY(-1.25em);
   }
-  .col{
-    &:first-child{
-      padding-left: 0px;
+
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper{
+    padding-bottom: 1.25em;
+    padding-top: 0.5em;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-infix{
+    padding-bottom: 1em;
+  }
+
+  .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
+    width: 100%;
+  }
+
+  .reg_stepConfirm{
+    .mat-checkbox-layout{
+      font-size: 1em;
+      color: black;
     }
-    &:last-child{
-      padding-right: 0px;
+    .mat-checkbox-layout .mat-checkbox-label{
+      line-height: 1.4;
+    }
+    .mat-ripple-element{
+      left: 0!important;
+      top: 0!important;
+    }
+    .mat-checkbox-inner-container{
+      @media @tablet{
+        transform: scale(1.5);
+        transform-origin: left;
+        margin-right: 18px;
+      }
+    }
+    .mat-checkbox-background, .mat-checkbox-frame{
+      border: none;
+      border-radius: 0px;
+      border-color: transparent;
+      background: @img_bgColor;
     }
   }
 }
-
-.row.next{
-  margin-bottom: 0px;
-}
-
-.validationMessage{
-  font-size: 0.6rem;
-  position: absolute;
-  top: -10px;
-}
-
-.preloader-container{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-signature-pad canvas{
-  // width: 100%;
-  border: 1px solid @input_color__default;
-}
-
+  
 .row .col.card-container{
   @media (max-width: 600px){
     padding: 0;

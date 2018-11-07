@@ -4,8 +4,28 @@
       Соглашение об обработке персональных данных
     </div>
     <div class="reg_stepConfirm__pdfViewer">
+      <div class="reg_stepConfirm__preloaderWrapper">
+        <div class="preloader-wrapper big active">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+            <!-- .circle-cliper -->
+          </div>
+          <!-- .spinner-layer -->
+        </div>
+        <!-- .preloader-wrapper -->
+      </div>
+      <!-- .reg_stepConfirm__preloaderWrapper -->
       <div class="reg_stepConfirm__pdfWrapper">
-        <pdf-viewer [src]="pdfSrc ? pdfSrc : ''" [fit-to-page]="true" [render-text]="true" style="display: block;"></pdf-viewer>
+        <pdf-viewer [src]="pdfSrc ? pdfSrc : ''" [original-size]="false" [fit-to-page]="true" [render-text]="true"
+          style="display: block;"></pdf-viewer>
       </div>
     </div>
     <mat-checkbox [(ngModel)]="agreed">Прочитал и согласен на обработку моих персональных данных</mat-checkbox>
@@ -18,7 +38,7 @@
     </div>
     <!-- !.col.s6 -->
     <div class="col s6">
-      <button class="waves-effect waves-light btn btn__next pull-right" (click)="next($event)">
+      <button class="waves-effect waves-light btn btn__next pull-right" [disabled]="!imageData" (click)="next($event)">
         Далее
       </button>
     </div>

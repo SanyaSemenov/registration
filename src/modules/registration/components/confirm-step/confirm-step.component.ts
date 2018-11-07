@@ -47,7 +47,8 @@ export class ConfirmStepComponent implements OnInit {
   showConfirmDialog() {
     const dialogConfig: MatDialogConfig = {
       closeOnNavigation: true,
-      autoFocus: false
+      autoFocus: false,
+      panelClass: 'signature-dialog'
     };
     const dialogref = this.dialog.open(SignatureDialogComponent, dialogConfig);
     dialogref.afterClosed().subscribe(data => {

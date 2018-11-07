@@ -1,0 +1,302 @@
+<div class="root-container">
+  <div class="container m-auto">
+    <div class="row">
+      <header>
+        <div class="container">
+          <div class="row mb-0 logo-wrapper">
+            <img src="assets/Content/Logos/logo.svg" alt="logo">
+          </div>
+          <div class="row mb-0 header-image-wrapper">
+            <img src="assets/Content/Images/main_background1.png" alt="invend">
+          </div>
+        </div>
+      </header>
+      <div class="main-section">
+        <section class="container">
+          <div class="row">
+            <h2 class="h2"><span class="header-anton">Антон Андриянов, </span><br>вы планируете заезд в отель Ареал
+              завтра, 24 сентября</h2>
+          </div>
+          <div class="row">
+            <p class="p">Хотим рассказать, как сэкономить 15 минут вашего времени на регистрации. Для этого подойдите к
+              терминалу самостоятельной регистрации Check.Invend и просканируйте QR-код</p>
+          </div>
+          <div class="row qr-code-wrapper">
+            <img class="text-center" src="assets/Content/Images/qrcode_norm.png">
+          </div>
+          <div class="row text-center">
+            <p>Отправить код на электронную почту</p>
+          </div>
+          <div class="row text-center">
+            <form class="inline-block email-form">
+              <input class="email-input col" name="email" type="email" placeholder="Эл. почта">
+              <button class="browser-default button-send col" type="submit">Отправить</button>
+            </form>
+          </div>
+          <div class="row"></div>
+          <div class="row"></div>
+          <div class="row pay-buttons-row">
+            <div class="col s6">
+              <button class="browser-default btn-pay">
+                <div class="container">
+                  <div class="row mb-0">
+                    <div class="col col-icon no-padding">
+                      <img src="assets/Content/Icons/wallet.png" alt="">
+                    </div>
+                    <div class="col col-label">
+                      <span>Добавить</span>
+                      <br>
+                      <span>в Apple Wallet</span>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </div>
+            <div class="col s6">
+              <button class="browser-default btn-pay">
+                <div class="container">
+                  <div class="row mb-0">
+                    <div class="col col-icon no-padding">
+                      <img src="assets/Content/Icons/download.png" alt="">
+                    </div>
+                    <div class="col col-label">
+                      <span>Сохранить </span>
+                      <br class="br-tablet">
+                      <span>как </span>
+                      <br class="br-mobile">
+                      <span>изображение</span>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </section>
+        <section class="container registration-container">
+          <div class="row">
+            <h1 class="h1">
+              <span class="bold">Самостоятельная <br>регистрация — это быстро</span>
+            </h1>
+          </div>
+          <div class="row wide">
+            <div class="col s12 m6 no-padding col-reg">
+              <div class="reg-image-wrapper">
+                <img class="reg-wide-image" src="assets/Content/Images/registration.png" alt="">
+              </div>
+              <div class="reg-label">
+                <p>Регистрация гостя <br class="tablet">администратором отеля <br class="br-tablet">длится около 3—5
+                  минут</p>
+              </div>
+            </div>
+            <div class="col s12 m6 no-padding col-reg">
+              <div class="reg-image-wrapper simple-reg-image-wrapper">
+                <img class="reg-image" src="assets/Content/Images/main_background.png" alt="">
+              </div>
+              <div class="reg-label">
+                <p>С терминалом Check.Invend <br class="mobile">ваша регистрация займет 1 минуту</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="container video-container">
+          <!-- <a href="#" class="row play-video center">
+              <img class="video-poster" src="Content/Images/video.jpg" alt="video">
+              <div class="video-play-btn-wrapper">
+                <img class="video-play-btn" src="Content/Icons/play.png">
+                <p>Смотрите демонстрацию работы киоска</p>
+              </div>
+            </a> -->
+          <!-- <div class="row play-video">
+              <video id="main-video" preload="auto" poster="Content/video/transparent.png" onclick="playVideo(this)">
+                <source src="Content/video/main.mp4" type="video/mp4" /> Your browser doesn't support video player
+              </video>
+            </div> -->
+          <div class="row youtube-video-wrapper" (click)="playYoutubeVideo()">
+            <iframe src="https://www.youtube.com/embed/atdlSoDXyZY" frameborder="0" allow="autoplay; encrypted-media"
+              allowfullscreen class="youtube-video" id="video_frame"></iframe>
+            <div class="youtube-poster" id="youtube_poster">
+              <!-- <img class="video-poster" src="Content/Images/video.jpg" alt="video">
+                <div class="video-play-btn-wrapper">
+                  <img class="video-play-btn" src="Content/Icons/play.png">
+                  <p>Смотрите демонстрацию работы киоска</p>
+                </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <h2 class="h2 h2-list">Как самостоятельно <br class="br-small">зарегистрироваться <br class="br-small">с
+              помощью киоска <br class="br-small">Check.INVEND</h2>
+            <div class="row"></div>
+            <ol>
+              <li>
+                <div class="container">
+                  <div class="row">
+                    <div class="col s2 m1 text-right">
+                      <p>1.</p>
+                    </div>
+                    <div class="col s10 m11 list-item-content">
+                      <p>Подойдите к киоску</p>
+                      <p>самостоятельной регистрации</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="container">
+                  <div class="row">
+                    <div class="col s2 m1 text-right">
+                      <p>2.</p>
+                    </div>
+                    <div class="col s10 m11 list-item-content">
+                      <p>Нажмите «Регистрация гостя»</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="container">
+                  <div class="row">
+                    <div class="col s2 m1 text-right">
+                      <p>3.</p>
+                    </div>
+                    <div class="col s10 m11 list-item-content">
+                      <p>Следуйте подсказкам на экране.</p>
+                      <p>Регистрация займет несколько минут.</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="container">
+                  <div class="row">
+                    <div class="col s2 m1 text-right">
+                      <p>4.</p>
+                    </div>
+                    <div class="col s10 m11 list-item-content">
+                      <p>Заберите выданную ключ-карту от номера</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </section>
+        <section class="container posibilities-container">
+          <div class="row">
+            <h2 class="h2 bold">
+              <b>Возможности терминала</b>
+            </h2>
+          </div>
+          <div class="row pos-row">
+            <div class="col s6">
+              <div class="pos-image-wrapper">
+                <img src="assets/Content/Images/main_background.png" alt="легко платить">
+              </div>
+              <div class="row"></div>
+              <div class="row"></div>
+              <div class="pos-title bold">
+                <p><b>Легкий способ оплаты</b></p>
+              </div>
+              <div class="pos-content">
+                <p>Принимает наличные,
+                  <br class="br-tablet">выдает сдачу купюрами
+                  <br class="br-tablet">100, 500, 1 000 рублей
+                  <br class="br-tablet">или монетами</p>
+              </div>
+            </div>
+            <div class="col s6">
+              <div class="pos-image-wrapper">
+                <img src="assets/Content/Images/registration.png" alt="ключ-карта">
+              </div>
+              <div class="row"></div>
+              <div class="row"></div>
+              <div class="pos-title bold">
+                <p><b>Выдает ключ-карту</b></p>
+              </div>
+              <div class="pos-content">
+                <p>После прохождения быстрой самостоятельной регистрации</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row"></div>
+
+          <div class="row all-pay-row">
+            <img src="assets/Content/Icons/all_pay.png" alt="способы оплаты">
+          </div>
+        </section>
+        <section class="container kiosk-container">
+          <div class="row">
+            <h2 class="h2 bold">
+              <b>Как найти киоск в отеле</b>
+            </h2>
+          </div>
+          <div class="row"></div>
+          <div class="row kiosk-row">
+            <img src="assets/Content/Images/kiosk1.png" alt="киоск">
+          </div>
+          <div class="row"></div>
+          <div class="row">
+            <p>Киоск самостоятельной регистрации находится <br class="br-tablet">в холле отеля рядом со стойкой
+              администратора</p>
+          </div>
+        </section>
+        <section class="container footer-container">
+          <div class="row text-center">
+            <h2 class="h2">Отсканируйте ваш QR-код <br>для самостоятельной регистрации</h2>
+          </div>
+          <div class="row qr-code-wrapper">
+            <img class="text-center" src="assets/Content/Images/qrcode_norm.png">
+          </div>
+          <div class="row text-center">
+            <p>Отправить код на электронную почту</p>
+          </div>
+          <div class="row text-center">
+            <form class="inline-block email-form">
+              <input class="email-input col" name="email" type="email" placeholder="Эл. почта">
+              <button class="browser-default button-send col" type="submit">Отправить</button>
+            </form>
+          </div>
+          <div class="row"></div>
+          <div class="row"></div>
+          <div class="row pay-buttons-row">
+            <div class="col s6">
+              <button class="browser-default btn-pay">
+                <div class="container">
+                  <div class="row mb-0">
+                    <div class="col col-icon no-padding">
+                      <img src="assets/Content/Icons/wallet.png" alt="">
+                    </div>
+                    <div class="col col-label">
+                      <span>Добавить</span>
+                      <br>
+                      <span>в Apple Wallet</span>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </div>
+            <div class="col s6">
+              <button class="browser-default btn-pay">
+                <div class="container">
+                  <div class="row mb-0">
+                    <div class="col col-icon no-padding">
+                      <img src="assets/Content/Icons/download.png" alt="">
+                    </div>
+                    <div class="col col-label">
+                      <span>Сохранить </span>
+                      <br class="br-tablet">
+                      <span>как </span>
+                      <br class="br-mobile">
+                      <span>изображение</span>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+</div>

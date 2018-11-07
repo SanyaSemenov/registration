@@ -35,14 +35,16 @@ export class RegistrationService {
       birth: [new Date(), Validators.required],
       passportNumber: [
         '', [
-          Validators.required
+          Validators.required,
+          Validators.minLength(10),
         ]
       ],
       passportByWhom: ['', Validators.required],
       passportDate: ['', Validators.required],
       passportCode: [
         '', [
-          Validators.required
+          Validators.required,
+          Validators.minLength(6)
         ]
       ]
     });
@@ -68,9 +70,6 @@ export class RegistrationService {
   getMainRecognizedData() {
     this.mainPassportDataFilled = true;
     return this.apiService.getMainPassportData();
-    // this.apiService.getMainPassportData().subscribe((data: MainPassportData) => {
-    //   this.mainPassportData = data;
-    // });
   }
 
   clearMainPassportForm() {

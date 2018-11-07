@@ -10,6 +10,7 @@ import { routes } from './app.routing';
 import { RegistrationModule } from '../modules';
 import { AppMaterialModule } from './app.material.module';
 import { MatSelectModule } from '@angular/material';
+import { AuthModule } from '../modules/_auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { MatSelectModule } from '@angular/material';
     RouterModule.forRoot(routes),
     RegistrationModule,
     BrowserAnimationsModule,
+    AuthModule
     // AppMaterialModule,
     // MatSelectModule
     // MaterializeModule

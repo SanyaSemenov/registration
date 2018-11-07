@@ -18,6 +18,7 @@ export class SignatureDialogComponent implements OnInit, AfterViewInit {
   @ViewChild('title') title: ElementRef;
 
   private result: any;
+  public dirty = false;
 
   public signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
     'minWidth': 0.1,
@@ -30,10 +31,14 @@ export class SignatureDialogComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const titleWidth = this.title.nativeElement.offsetWidth;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const result = windowWidth / windowHeight > 1 ? windowHeight * 9 / 10 - 200 : windowWidth * 9 / 10;
     console.log(titleWidth);
     this.signaturePad.set('minWidth', 0.1);
     this.signaturePad.set('maxWidth', 2);
     this.signaturePad.set('canvasWidth', titleWidth);
+    this.signaturePad.set('canvasHeight', result);
     this.signaturePad.clear();
   }
 
@@ -43,6 +48,7 @@ export class SignatureDialogComponent implements OnInit, AfterViewInit {
   }
 
   drawStart() {
+    this.dirty = true;
     console.log('begin drawing');
   }
 
@@ -51,6 +57,8 @@ export class SignatureDialogComponent implements OnInit, AfterViewInit {
   }
 
   save() {
-    this.dialogRef.close(this.result);
+    if (this.dirty) {
+      this.dialogRef.close(this.result);
+    }
   }
 }

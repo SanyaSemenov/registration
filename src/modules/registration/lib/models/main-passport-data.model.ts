@@ -4,10 +4,12 @@ export class MainPassportData {
   name: string;
   surname: string;
   middleName: string;
-  birth: Date;
+  birth: string;
+  // birth: Date;
   gender: Gender;
   passportNumber: string;
-  passportDate: Date;
+  passportDate: string;
+  // passportDate: Date;
   passportByWhom: string;
   passportCode: string;
 }
