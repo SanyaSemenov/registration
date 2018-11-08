@@ -24,6 +24,11 @@
           <div class="row qr-code-wrapper" *ngIf="qrcode">
             <img class="text-center" src="assets/Content/Images/qrcode_norm.png">
           </div>
+          <div class="row text-center" *ngIf="qrcode">
+            <a href="javascript:void(0)" class="register-link" routerLink="/registration">
+              Отменить регистрацию
+            </a>
+          </div>
           <div class="row text-center" *ngIf="!qrcode">
             <a href="javascript:void(0)" class="register-link" routerLink="/registration">
               Пройти регистрацию
@@ -117,7 +122,7 @@
               </video>
             </div> -->
           <div class="row youtube-video-wrapper" (click)="playYoutubeVideo()">
-            <iframe src="https://www.youtube.com/embed/atdlSoDXyZY" frameborder="0" allow="autoplay; encrypted-media"
+            <iframe src="https://www.youtube.com/embed/Z1ccGR84KRM" frameborder="0" allow="autoplay; encrypted-media"
               allowfullscreen class="youtube-video" id="video_frame"></iframe>
             <div class="youtube-poster" id="youtube_poster">
               <!-- <img class="video-poster" src="Content/Images/video.jpg" alt="video">
@@ -250,12 +255,17 @@
             <h2 class="h2">Отсканируйте ваш QR-код <br>для самостоятельной регистрации</h2>
           </div>
           <div class="row text-center" *ngIf="!qrcode">
-            <a href="javascript:void(0)" class="register-link">
+            <a href="javascript:void(0)" class="register-link" routerLink="/registration">
               Пройти регистрацию
             </a>
           </div>
           <div class="row qr-code-wrapper" *ngIf="qrcode">
             <img class="text-center" src="assets/Content/Images/qrcode_norm.png">
+          </div>
+          <div class="row text-center" *ngIf="qrcode">
+            <a href="javascript:void(0)" class="register-link" routerLink="/registration">
+              Отменить регистрацию
+            </a>
           </div>
           <!-- <div class="row text-center" *ngIf="qrcode">
             <p>Отправить код на электронную почту</p>
