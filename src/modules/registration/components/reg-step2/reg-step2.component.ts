@@ -47,6 +47,7 @@ export class RegStep2Component implements OnInit {
       //   });
       // }
       if (this.$service.recognitionError) {
+        this.isFilled = false;
         alert('Не удалось распонать данные паспорта');
       }
     } else {
