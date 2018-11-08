@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocationStateService } from '../../lib';
 
 @Component({
   selector: 'app-finish',
@@ -9,7 +10,8 @@ import { Router } from '@angular/router';
 export class FinishComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private location: LocationStateService
   ) { }
 
   // tslint:disable-next-line:no-output-on-prefix

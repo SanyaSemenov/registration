@@ -17,4 +17,8 @@ export class LocationStateService {
   get currentLocation(): LocationState {
     return this.location;
   }
+
+  setStart(){
+    this.location = new LocationState(State.step1);
+  }
 }

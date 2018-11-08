@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocationStateService } from 'src/modules/registration/lib';
 
 @Component({
   selector: 'app-landing',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private location: LocationStateService
+  ) { }
 
   video;
   poster;
@@ -15,13 +18,10 @@ export class LandingComponent implements OnInit {
   qrcode = false;
 
   ngOnInit() {
-    const received = localStorage.getItem('qrcode:received');
-    if (received === '1') {
-      this.qrcode = true;
-    }
+    this.checkForQr();
   }
 
-  playYoutubeVideo() {
+  public playYoutubeVideo() {
     if (!this.isInitialized) {
       this.video = document.getElementById('video_frame');
       this.poster = document.getElementById('youtube_poster');
@@ -32,4 +32,18 @@ export class LandingComponent implements OnInit {
     }
   }
 
+  private checkForQr(){
+    const received = localStorage.getItem('qrcode:received');
+    if (received === '1') {
+      this.qrcode = true;
+      this.location.setStart();
+    } else {
+      this.qrcode = false;
+    }
+  }
+
+  public cancelRegistration(e){
+    localStorage.setItem('qrcode:received', '0');
+    this.checkForQr();
+  }
 }
