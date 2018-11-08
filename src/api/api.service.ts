@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RequestParameter } from './request-parameter';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 
-const rootUrl = 'http://ch-invend0.1gb.ru/api/';
+const rootUrl = 'https://ch.invend.ru/api';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,10 @@ export class ApiService {
     } else {
       return this.http.get(rootUrl + request);
     }
+  }
+
+  postRegula(body) {
+    const reqHeader = new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'No-Auth': 'True' });
+    return this.http.post(rootUrl + '/regula/', body, { headers: reqHeader });
   }
 }

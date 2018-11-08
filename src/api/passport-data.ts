@@ -3,12 +3,12 @@ import { MainPassportData, Gender } from '../modules/registration/lib/models';
 export const mainPassportData: MainPassportData = {
   name: 'Константин',
   surname: 'Константинов',
-  middleName: 'Константинович',
+  patronymic: 'Константинович',
   gender: Gender.male,
-  birth: '2018-11-05',
-  // birth: new Date(1990, 1, 1, 0, 0, 0, 0).toISOString().substring(0, 10),
-  passportNumber: '7903555788',
-  passportDate: new Date(2010, 2, 1, 0, 0, 0, 0).toISOString().substring(0, 10),
-  passportByWhom: 'ГУ МВД России по г.Москве',
-  passportCode: '210-098'
+  dateOfBirth: '2018-11-05',
+  // dateOfBirth: new Date(1990, 1, 1, 0, 0, 0, 0).toISOString().substring(0, 10),
+  serialNumber: '7903555788',
+  dateOfIssue: new Date(2010, 2, 1, 0, 0, 0, 0).toISOString().substring(0, 10),
+  placeOfIssue: 'ГУ МВД России по г.Москве',
+  issuerCode: '210-098'
 };

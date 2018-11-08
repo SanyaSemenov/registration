@@ -26,16 +26,30 @@ input[type=number]:not(.browser-default),
 input[type=search]:not(.browser-default), 
 textarea.materialize-textarea{
   height: 3rem;
-  margin: 8px 0 0 0;
+  margin: 18px 0 0 0;
   color: @input_color__default;
-  font-size: @fontSize__global;
+  font-size: inherit;
+  // font-size: @fontSize__global;
   border-bottom: 1px solid @input_color__default;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   box-sizing: border-box; 
   @media @tablet{
-    font-size: @fontSize_tablet__global;
+    // font-size: @fontSize_tablet__global;
+    font-size: inherit;
   }
+}
+
+input:not([type]),
+input[type=text]:not(.browser-default),
+input[type=password]:not(.browser-default),
+input[type=email]:not(.browser-default),
+input[type=url]:not(.browser-default),
+input[type=tel]:not(.browser-default),
+input[type=number]:not(.browser-default),
+input[type=search]:not(.browser-default), 
+textarea.materialize-textarea{
+  text-transform: capitalize;
 }
 
 input:not([type]):focus:not([readonly]),

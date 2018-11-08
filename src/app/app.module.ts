@@ -18,7 +18,7 @@ import { AuthModule } from '../modules/_auth/auth.module';
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { useHash: true }),
     RegistrationModule,
     BrowserAnimationsModule,
     AuthModule

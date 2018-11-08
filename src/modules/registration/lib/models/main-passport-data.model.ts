@@ -3,13 +3,13 @@ import { Gender } from './gender.enum';
 export class MainPassportData {
   name: string;
   surname: string;
-  middleName: string;
-  birth: string;
-  // birth: Date;
+  patronymic: string;
+  dateOfBirth: string;
+  // dateOfBirth: Date;
   gender: Gender;
-  passportNumber: string;
-  passportDate: string;
-  // passportDate: Date;
-  passportByWhom: string;
-  passportCode: string;
+  serialNumber: string;
+  dateOfIssue: string;
+  // dateOfIssue: Date;
+  placeOfIssue: string;
+  issuerCode: string;
 }

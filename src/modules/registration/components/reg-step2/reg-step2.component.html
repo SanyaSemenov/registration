@@ -1,58 +1,72 @@
-<div class="regStep2">
+<ng-container *ngIf="$service.loading">
+  <div class="preloader-container">
+
+    <div class="preloader-wrapper big active">
+
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</ng-container>
+<div class="regStep2" *ngIf="!$service.loading">
   <form [formGroup]="form" class="regStep2__wrapper">
     <div class="regStep2__title demibold">
       {{heading}}
     </div>
     <div class="input-field regStep2__inputGroup">
       <input type="text" formControlName="name" name="name" id="name" class="regStep2__input">
-      <label for="name" class="regStep2__label" [class.active]="isFilled">Имя</label>
+      <label for="name" class="regStep2__label" [class.active]="isFilled">Имя<span class="text-red">*</span></label>
     </div>
     <div class="input-field regStep2__inputGroup">
       <input type="text" formControlName="surname" name="surname" id="surname" class="regStep2__input">
-      <label for="surname" class="regStep2__label" [class.active]="isFilled">Фамилия</label>
+      <label for="surname" class="regStep2__label" [class.active]="isFilled">Фамилия<span class="text-red">*</span></label>
     </div>
     <div class="input-field regStep2__inputGroup">
-      <input type="text" formControlName="middleName" name="middleName" id="middleName" class="regStep2__input">
-      <label for="middlNname" class="regStep2__label" [class.active]="isFilled">Отчество</label>
+      <input type="text" formControlName="patronymic" name="patronymic" id="patronymic" class="regStep2__input">
+      <label for="middlNname" class="regStep2__label" [class.active]="isFilled">Отчество<span class="text-red">*</span></label>
     </div>
-    <!-- <div class="input-field regStep2__inputGroup">
-      <select formControlName="gender" name="gender" id="gender" materialize="material_select">
-        <option value="" disabled selected>Выберите</option>
-        <option value="муж">муж</option>
-        <option value="жен">жен</option>
-      </select>
-      <label for="gender" class="regStep2__label">Ваш пол</label>
-    </div> -->
     <mat-form-field [class.label-active]="form.controls['gender']?.value">
-      <mat-select formControlName="gender" placeholder="Ваш пол">
+      <mat-select formControlName="gender" placeholder="Ваш пол*">
         <mat-option *ngFor="let gender of genderList" [value]="gender.value">
           {{gender.viewValue}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <div class="input-field regStep2__inputGroup">
-      <input type="date" class="regStep2__input regStep2__dateInput" formControlName="birth" name="birth" id="birth">
-      <label for="birth" class="regStep2__label active">Дата рождения</label>
+      <input type="date" class="regStep2__input regStep2__dateInput" formControlName="dateOfBirth" name="dateOfBirth"
+        id="dateOfBirth">
+      <label for="dateOfBirth" class="regStep2__label active">Дата рождения<span class="text-red">*</span></label>
     </div>
     <div class="input-field regStep2__inputGroup">
-      <input type="text" formControlName="passportNumber" name="passportNumber" id="passportNumber" [showMaskTyped]="showPassportMaskType"
+      <input type="text" formControlName="serialNumber" name="serialNumber" id="serialNumber" [showMaskTyped]="showPassportMaskType"
         mask='0000 000000' class="regStep2__input" (focus)="showPassportMaskType = true" (blur)="showPassportMaskType = false">
-      <label for="passportNumber" class="regStep2__label" [class.active]="isFilled">Серия и номер паспорта</label>
+      <label for="serialNumber" class="regStep2__label" [class.active]="isFilled">Серия и номер паспорта<span class="text-red">*</span></label>
     </div>
 
     <div class="input-field regStep2__inputGroup">
-      <input type="text" formControlName="passportByWhom" name="passportByWhom" id="passportByWhom" class="regStep2__input">
-      <label for="passportByWhom" class="regStep2__label" [class.active]="isFilled">Кем выдан</label>
+      <input type="text" formControlName="placeOfIssue" name="placeOfIssue" id="placeOfIssue" class="regStep2__input">
+      <label for="placeOfIssue" class="regStep2__label" [class.active]="isFilled">Кем выдан<span class="text-red">*</span></label>
     </div>
     <div class="input-field regStep2__inputGroup">
-      <input type="date" class="regStep2__input regStep2__dateInput" formControlName="passportDate" name="passportDate"
-        id="passportDate">
-      <label for="passportDate" class="regStep2__label active">Когда выдан</label>
+      <input type="date" class="regStep2__input regStep2__dateInput" formControlName="dateOfIssue" name="dateOfIssue"
+        id="dateOfIssue">
+      <label for="dateOfIssue" class="regStep2__label active">Когда выдан<span class="text-red">*</span></label>
     </div>
     <div class="input-field regStep2__inputGroup">
-      <input type="text" formControlName="passportCode" name="passportCode" id="passportCode" [showMaskTyped]="showPassportCodeaskType"
-        mask='000-000' class="regStep2__input" (focus)="showPassportCodeaskType = true" (blur)="showPassportCodeaskType = false">
-      <label for="passportCode" class="regStep2__label" [class.active]="isFilled">Серия и номер паспорта</label>
+      <input type="text" formControlName="issuerCode" name="issuerCode" id="issuerCode" [showMaskTyped]="showissuerCodeaskType"
+        mask='000-000' class="regStep2__input" (focus)="showissuerCodeaskType = true" (blur)="showissuerCodeaskType = false">
+      <label for="issuerCode" class="regStep2__label" [class.active]="isFilled">Код подразделения<span class="text-red">*</span></label>
     </div>
   </form>
   <div class="row next">

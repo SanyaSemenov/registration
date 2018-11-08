@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { RegistrationService } from '../../registration.service';
 import { MainPassportData } from '../../lib';
 import { M } from 'materialize-css';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-reg-step2',
@@ -13,13 +15,14 @@ export class RegStep2Component implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private $service: RegistrationService
+    public $service: RegistrationService
   ) {
     this.form = $service.mainPassportForm;
   }
 
   showPassportMaskType = false;
-  showPassportCodeaskType = false;
+  showissuerCodeaskType = false;
+  ngUnsubscribe = new Subject<void>();
 
   get heading() {
     return this.isFilled ? 'Проверьте распознанные данные вашего паспорта' : 'Введите ваши паспортные данные';
@@ -31,17 +34,20 @@ export class RegStep2Component implements OnInit {
   @Input()
   isFilled: boolean;
 
-  form: FormGroup;
+  public form: FormGroup;
   genderList = [
     { value: 'муж', viewValue: 'муж' },
     { value: 'жен', viewValue: 'жен' }
   ];
   ngOnInit() {
     if (this.isFilled) {
-      if (!this.$service.mainPassportDataFilled) {
-        this.$service.getMainRecognizedData().subscribe((data: MainPassportData) => {
-          this.form.patchValue(data);
-        });
+      // if (!this.$service.mainPassportDataFilled) {
+      //   this.$service.getMainRecognizedData().subscribe((data: MainPassportData) => {
+      //     this.form.patchValue(data);
+      //   });
+      // }
+      if (this.$service.recognitionError) {
+        alert('Не удалось распонать данные паспорта');
       }
     } else {
       this.$service.clearMainPassportForm();

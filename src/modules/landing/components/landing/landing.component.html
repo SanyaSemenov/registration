@@ -21,21 +21,26 @@
             <p class="p">Хотим рассказать, как сэкономить 15 минут вашего времени на регистрации. Для этого подойдите к
               терминалу самостоятельной регистрации Check.Invend и просканируйте QR-код</p>
           </div>
-          <div class="row qr-code-wrapper">
+          <div class="row qr-code-wrapper" *ngIf="qrcode">
             <img class="text-center" src="assets/Content/Images/qrcode_norm.png">
           </div>
-          <div class="row text-center">
+          <div class="row text-center" *ngIf="!qrcode">
+            <a href="javascript:void(0)" class="register-link" routerLink="/registration">
+              Пройти регистрацию
+            </a>
+          </div>
+          <!-- <div class="row text-center" *ngIf="qrcode">
             <p>Отправить код на электронную почту</p>
           </div>
-          <div class="row text-center">
+          <div class="row text-center" *ngIf="qrcode">
             <form class="inline-block email-form">
               <input class="email-input col" name="email" type="email" placeholder="Эл. почта">
               <button class="browser-default button-send col" type="submit">Отправить</button>
             </form>
-          </div>
-          <div class="row"></div>
-          <div class="row"></div>
-          <div class="row pay-buttons-row">
+          </div> -->
+          <div class="row" *ngIf="qrcode"></div>
+          <div class="row" *ngIf="qrcode"></div>
+          <div class="row pay-buttons-row" *ngIf="qrcode">
             <div class="col s6">
               <button class="browser-default btn-pay">
                 <div class="container">
@@ -241,24 +246,29 @@
           </div>
         </section>
         <section class="container footer-container">
-          <div class="row text-center">
+          <div class="row text-center" *ngIf="qrcode">
             <h2 class="h2">Отсканируйте ваш QR-код <br>для самостоятельной регистрации</h2>
           </div>
-          <div class="row qr-code-wrapper">
+          <div class="row text-center" *ngIf="!qrcode">
+            <a href="javascript:void(0)" class="register-link">
+              Пройти регистрацию
+            </a>
+          </div>
+          <div class="row qr-code-wrapper" *ngIf="qrcode">
             <img class="text-center" src="assets/Content/Images/qrcode_norm.png">
           </div>
-          <div class="row text-center">
+          <!-- <div class="row text-center" *ngIf="qrcode">
             <p>Отправить код на электронную почту</p>
           </div>
-          <div class="row text-center">
+          <div class="row text-center" *ngIf="qrcode">
             <form class="inline-block email-form">
               <input class="email-input col" name="email" type="email" placeholder="Эл. почта">
               <button class="browser-default button-send col" type="submit">Отправить</button>
             </form>
-          </div>
-          <div class="row"></div>
-          <div class="row"></div>
-          <div class="row pay-buttons-row">
+          </div> -->
+          <div class="row" *ngIf="qrcode"></div>
+          <div class="row" *ngIf="qrcode"></div>
+          <div class="row pay-buttons-row" *ngIf="qrcode">
             <div class="col s6">
               <button class="browser-default btn-pay">
                 <div class="container">

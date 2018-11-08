@@ -10,29 +10,29 @@ export class CustomValidators {
     };
   }
 
-  // public static passportCode(): ValidatorFn {
+  // public static issuerCode(): ValidatorFn {
   //   return (control: AbstractControl): { [key: string]: any } | null => {
   //     const matched = PASSPORT_CODE.test(control.value);
-  //     return matched ? null : { 'wrongPassportCode': true };
+  //     return matched ? null : { 'wrongissuerCode': true };
   //   };
   // }
 
-  // public static passportNumber(): ValidatorFn {
+  // public static serialNumber(): ValidatorFn {
   //   return (control: AbstractControl): { [key: string]: any } | null => {
   //     const matched = PASSPORT_NUMBER.test(control.value);
-  //     return matched ? null : { 'wrongPassportNumber': true };
+  //     return matched ? null : { 'wrongserialNumber': true };
   //   };
   // }
 
-  public static passportCode(control: AbstractControl) {
+  public static issuerCode(control: AbstractControl) {
     const value = control.value.indexOf('-') > -1 ? control.value.split('-').join() : control.value;
     const matched = PASSPORT_CODE.test(value);
-    return matched ? null : { 'wrongPassportCode': true };
+    return matched ? null : { 'wrongissuerCode': true };
   }
 
-  public static passportNumber(control: AbstractControl) {
+  public static serialNumber(control: AbstractControl) {
     const matched = PASSPORT_NUMBER.test(control.value);
-    return matched ? null : { 'wrongPassportNumber': true };
+    return matched ? null : { 'wrongserialNumber': true };
   }
 
   // TODO: Proper Validation

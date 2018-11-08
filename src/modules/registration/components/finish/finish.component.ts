@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-finish',
@@ -7,7 +8,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class FinishComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   // tslint:disable-next-line:no-output-on-prefix
   @Output('onNavigate')
@@ -17,6 +20,8 @@ export class FinishComponent implements OnInit {
   }
 
   finish(e: boolean) {
-    alert('returned');
+    localStorage.setItem('qrcode:received', '1');
+    this.router.navigate(['']);
+    // alert('returned');
   }
 }

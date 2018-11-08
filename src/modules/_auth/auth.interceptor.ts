@@ -42,10 +42,10 @@ export class AuthInterceptor implements HttpInterceptor {
             succ => { },
             err => {
               if (err.status === 401) {
-                this.router.navigateByUrl('/login');
+                // this.router.navigateByUrl('/login');
               }
               if (err.status === 403) {
-                this.router.navigateByUrl('/login');
+                // this.router.navigateByUrl('/login');
               }
 
               localStorage.removeItem('userToken');
@@ -59,7 +59,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   Logout() {
-    this.router.navigateByUrl('/login');
+    // this.router.navigateByUrl('/login');
     localStorage.removeItem('userToken');
     // localStorage.removeItem('userRoles');
   }

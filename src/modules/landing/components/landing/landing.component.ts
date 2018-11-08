@@ -12,8 +12,13 @@ export class LandingComponent implements OnInit {
   video;
   poster;
   isInitialized = false;
+  qrcode = false;
 
   ngOnInit() {
+    const received = localStorage.getItem('qrcode:received');
+    if (received === '1') {
+      this.qrcode = true;
+    }
   }
 
   playYoutubeVideo() {

@@ -27,7 +27,10 @@ export class ConfirmStepComponent implements OnInit {
       this.showConfirmDialog();
     }
   }
-  pdfSrc = 'assets/ece_DH_actual_12.09.17 (1).pdf';
+  get enabled() {
+    return this.agreed && !!this.imageData;
+  }
+  pdfSrc = 'assets/agreement.pdf';
 
   // tslint:disable-next-line:no-output-on-prefix
   @Output('onNavigate')
@@ -52,6 +55,9 @@ export class ConfirmStepComponent implements OnInit {
     };
     const dialogref = this.dialog.open(SignatureDialogComponent, dialogConfig);
     dialogref.afterClosed().subscribe(data => {
+      if (!data) {
+        this.agreed = false;
+      }
       this.imageData = data;
     });
   }

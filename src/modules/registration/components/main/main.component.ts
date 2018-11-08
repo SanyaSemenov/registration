@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationState, State, LocationStateService } from '../../lib';
+import { RegistrationService } from '../../registration.service';
 
 @Component({
   selector: 'app-main',
@@ -9,7 +10,8 @@ import { LocationState, State, LocationStateService } from '../../lib';
 export class MainComponent implements OnInit {
 
   constructor(
-    public location: LocationStateService
+    public location: LocationStateService,
+    public $service: RegistrationService
   ) { }
 
   isFilled = false;
