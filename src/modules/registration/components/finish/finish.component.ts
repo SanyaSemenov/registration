@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { QRCODE_STATE_KEY } from '../../registration.service';
 
 @Component({
   selector: 'app-finish',
@@ -20,7 +21,7 @@ export class FinishComponent implements OnInit {
   }
 
   finish(e: boolean) {
-    localStorage.setItem('qrcode:received', '1');
+    localStorage.setItem(QRCODE_STATE_KEY, '1');
     this.router.navigate(['']);
     // alert('returned');
   }

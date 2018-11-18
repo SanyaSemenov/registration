@@ -6,6 +6,8 @@ import { FakeApiService } from '../../api/fake-api.service';
 import { ApiService } from '../../api/api.service';
 import { BehaviorSubject } from 'rxjs';
 
+export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,8 +25,13 @@ export class RegistrationService {
   public readonly SMS_STATE_RECIEVED = 'SMS_STATE_RECIEVED';
   public readonly SMS_STATE_INIT = 'SMS_STATE_INIT';
   public readonly SMS_STATE_EXPIRED = 'SMS_STATE_EXPIRED';
+  public readonly SMS_STATE_ATTEMPTS_WASTED = 'SMS_STATE_ATTEMPTS_WASTED';
   public readonly SMS_STATE_KEY = 'SMS_STATE_KEY';
   public readonly SMS_EXPIRING_TIME_KEY = 'SMS_EXPIRING_TIME_KEY';
+  public readonly SMS_ATTEMPTS_KEY = 'SMS_ATTEMPTS_KEY';
+
+  private readonly attempts_factor = 9913;
+  private readonly attempts_add = 76712;
 
   readonly ALLOWED_EXTENSIONS = [
     'jpg',
@@ -127,6 +134,10 @@ export class RegistrationService {
     return localStorage.getItem(this.SMS_STATE_KEY) === this.SMS_STATE_RECIEVED;
   }
 
+  isInit(): boolean {
+    return localStorage.getItem(this.SMS_STATE_KEY) === this.SMS_STATE_INIT;
+  }
+
   setExpiringSeconds(seconds) {
     localStorage.setItem(this.SMS_EXPIRING_TIME_KEY, (new Date().getTime() + seconds * 1000).toString());
   }
@@ -135,5 +146,15 @@ export class RegistrationService {
     const now = new Date().getTime();
     const expiring = Number(localStorage.getItem(this.SMS_EXPIRING_TIME_KEY));
     return Math.floor((expiring - now) / 1000);
+  }
+
+  setAttempts(attempts: number) {
+    const store = attempts * this.attempts_factor + this.attempts_add;
+    localStorage.setItem(this.SMS_ATTEMPTS_KEY, store.toString());
+  }
+
+  getAttempts(): number {
+    const attempts = (Number(localStorage.getItem(this.SMS_ATTEMPTS_KEY)) - this.attempts_add) / this.attempts_factor;
+    return attempts;
   }
 }

@@ -51,7 +51,11 @@ export class SmsStepComponent implements OnInit {
 
   get isCodeRecieved(): boolean {
     // return this._isCodeRecieved;
-    return this.service$.getSmsState();
+    const isRecieved = this.service$.getSmsState();
+    if (this.service$.isInit()) {
+      this.error = '';
+    }
+    return isRecieved;
   }
 
   ngOnInit() {
@@ -60,10 +64,14 @@ export class SmsStepComponent implements OnInit {
     }
     // this.isCodeRecieved = this.service$.getSmsState();
     this.leftSeconds = this.service$.getExpiringSeconds();
+    this.attempts = this.service$.getAttempts();
     if (!this.leftSeconds || this.leftSeconds < 0) {
       this.service$.setSmsState(this.service$.SMS_STATE_INIT);
       // this.isCodeRecieved = this.service$.getSmsState();
     } else {
+      if (!this.attempts || this.attempts < 0) {
+        this.error = this.ERROR_SMS_ATTEMPTS;
+      }
       this.setTimer();
     }
   }
@@ -95,6 +103,7 @@ export class SmsStepComponent implements OnInit {
         // this.expiringSeconds = resolve.expiringSeconds;
         this.leftSeconds = resolve.expiringSeconds;
         this.attempts = resolve.attempts;
+        this.service$.setAttempts(this.attempts);
         this.service$.setExpiringSeconds(this.leftSeconds);
         // this.isCodeRecieved = true;
         this.service$.setSmsState(this.service$.SMS_STATE_RECIEVED);
@@ -108,7 +117,10 @@ export class SmsStepComponent implements OnInit {
   sendCode(event) {
     if (this.attempts) {
       this.attempts--;
+      this.service$.setAttempts(this.attempts);
       if (this.attempts < 1) {
+        this.service$.setSmsState(this.service$.SMS_STATE_ATTEMPTS_WASTED);
+        this.update();
         this.error = this.ERROR_SMS_ATTEMPTS;
       } else {
         this.isLoading = true;

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LocationStateService } from '../../../registration/lib';
+import { QRCODE_STATE_KEY } from '../../../registration/registration.service';
 
 @Component({
   selector: 'app-landing',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private location$: LocationStateService
+  ) { }
 
   video;
   poster;
@@ -15,7 +19,7 @@ export class LandingComponent implements OnInit {
   qrcode = false;
 
   ngOnInit() {
-    const received = localStorage.getItem('qrcode:received');
+    const received = localStorage.getItem(QRCODE_STATE_KEY);
     if (received === '1') {
       this.qrcode = true;
     }
@@ -32,4 +36,9 @@ export class LandingComponent implements OnInit {
     }
   }
 
+  resetRegistration() {
+    this.location$.updateLocation(true);
+    this.qrcode = false;
+    localStorage.setItem(QRCODE_STATE_KEY, '0');
+  }
 }

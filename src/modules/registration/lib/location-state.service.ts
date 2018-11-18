@@ -11,16 +11,27 @@ export class LocationStateService {
   constructor(
     private service$: RegistrationService
   ) {
+    this.updateLocation(false);
+  }
+  private location: LocationState;
+
+  public updateLocation(isInit: boolean) {
+    if (isInit) {
+      this.init();
+    }
     const location = Number(localStorage.getItem(NAVIGATION_STATE_KEY));
     if (Number.isNaN(location) || !location) {
-      this.service$.setSmsState(this.service$.SMS_STATE_INIT);
-      this.location = new LocationState(State.sms);
-      localStorage.setItem(NAVIGATION_STATE_KEY, this.currentLocation.state.toString());
+      this.init();
     } else {
       this.location = new LocationState(location);
     }
   }
-  private location: LocationState;
+
+  private init() {
+    this.service$.setSmsState(this.service$.SMS_STATE_INIT);
+    this.location = new LocationState(State.sms);
+    localStorage.setItem(NAVIGATION_STATE_KEY, this.currentLocation.state.toString());
+  }
 
   public navigate(step): void {
     this.location.switchState(step);

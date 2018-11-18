@@ -25,7 +25,7 @@
             <img class="text-center" src="assets/Content/Images/qrcode_norm.png">
           </div>
           <div class="row text-center" *ngIf="qrcode">
-            <a href="javascript:void(0)" class="register-link" routerLink="/registration">
+            <a href="javascript:void(0)" class="register-link" (click)="resetRegistration()">
               Отменить регистрацию
             </a>
           </div>
