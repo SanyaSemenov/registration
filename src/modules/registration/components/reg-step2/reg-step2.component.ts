@@ -41,11 +41,6 @@ export class RegStep2Component implements OnInit {
   ];
   ngOnInit() {
     if (this.isFilled) {
-      // if (!this.$service.mainPassportDataFilled) {
-      //   this.$service.getMainRecognizedData().subscribe((data: MainPassportData) => {
-      //     this.form.patchValue(data);
-      //   });
-      // }
       if (this.$service.recognitionError) {
         this.isFilled = false;
         alert('Не удалось распонать данные паспорта');

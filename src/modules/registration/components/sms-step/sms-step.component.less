@@ -1,0 +1,28 @@
+@import "../../../../style/variables.less";
+
+.sms {
+  &__phoneNumberForm {
+    padding: @commonPadding;
+  }
+
+  &__info {
+    font-size: 0.8em;
+  }
+
+  &__infoText {
+    margin-top: 10px;
+
+    &--error {
+      margin-top: 0px;
+      font-size: 0.8em;
+      color: @color__error;
+    }
+  }
+
+  &__link {
+    display: inline-block;
+    color: @color__primary;
+    line-height: 1;
+    border-bottom: 1px solid @color__primary;
+  }
+}

@@ -3,6 +3,7 @@
     <div class="card">
       <div class="card-content reg">
         <section class="pageWrapper">
+          <app-sms-step *ngIf="location.currentLocation.sms" (onNavigate)="navigate($event)"></app-sms-step>
           <app-reg-step1 *ngIf="location.currentLocation.step1" (onNavigate)="navigate($event)"></app-reg-step1>
           <app-reg-step2 *ngIf="location.currentLocation.step2" (onNavigate)="navigate($event)" [isFilled]="isFilled"></app-reg-step2>
           <app-reg-step3 *ngIf="location.currentLocation.step3" (onNavigate)="navigate($event)"></app-reg-step3>

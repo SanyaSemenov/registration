@@ -1,5 +1,5 @@
 <ng-container *ngIf="$service.loading">
-  <div class="preloader-container">
+  <!-- <div class="preloader-container">
 
     <div class="preloader-wrapper big active">
 
@@ -17,7 +17,8 @@
 
     </div>
 
-  </div>
+  </div> -->
+  <app-loader></app-loader>
 </ng-container>
 <div class="regStep2" *ngIf="!$service.loading">
   <form [formGroup]="form" class="regStep2__wrapper">

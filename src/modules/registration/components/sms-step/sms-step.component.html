@@ -1,0 +1,64 @@
+<ng-container *ngIf="isLoading">
+  <app-loader></app-loader>
+</ng-container>
+<ng-container *ngIf="!isLoading">
+  <div class="sms">
+    <ng-container *ngIf="!isCodeRecieved">
+      <form [formGroup]="phoneForm" class="sms__phoneNumberForm" ngSubmit="getCode($event)">
+        <div class="input-field sms__inputGroup">
+          <input type="tel" formControlName="phoneNumber" name="phoneNumber" id="phoneNumber" [showMaskTyped]="true"
+            prefix="+7" mask='(000) 000-00-00' class="sms__input" autofocus>
+          <label for="phoneNumber" class="sms__label" [class.active]="!isCodeRecieved">Введите норма телефона<span
+              class="text-red">*</span></label>
+        </div>
+        <div class="sms__info">
+          <div class="sms__infoText sms__infoText--error" *ngIf="error">
+            {{error}}
+          </div>
+        </div>
+      </form>
+
+      <div class="row next">
+        <div class="col s12">
+          <button (click)="getCode($event)" class="waves-effect waves-light btn btn__next" [disabled]="phoneForm.invalid">
+            Получить sms-код
+          </button>
+        </div>
+        <!-- !.col.s6 -->
+      </div>
+    </ng-container>
+    <ng-container *ngIf="isCodeRecieved">
+      <form [formGroup]="codeForm" class="sms__phoneNumberForm" ngSubmit="getCode($event)">
+        <div class="input-field sms__inputGroup">
+          <input type="text" formControlName="code" name="code" id="code" mask='0000' class="sms__input" autofocus>
+          <label for="code" class="sms__label">Введите полученный код<span class="text-red">*</span></label>
+        </div>
+        <div class="sms__info">
+          <div class="sms__infoText sms__infoText--error" *ngIf="error">
+            {{error}}
+          </div>
+          <div class="sms__infoText">
+            sms-код активен в течение {{ leftSeconds | time }}
+          </div>
+          <div class="sms__infoText" *ngIf="attempts">
+            количество попыток ввода: {{ attempts }}
+          </div>
+          <div class="sms__infoText">
+            нажмите <a class="sms__link" href="javascript:void(0)" (click)="getCode($event)">сюда</a> в случае, если
+            сообщение не было получено
+          </div>
+        </div>
+      </form>
+
+      <div class="row next">
+        <div class="col s12">
+          <button (click)="sendCode($event)" class="waves-effect waves-light btn btn__next" [disabled]="codeForm.invalid">
+            Отправить
+          </button>
+        </div>
+        <!-- !.col.s6 -->
+      </div>
+    </ng-container>
+  </div>
+
+</ng-container>

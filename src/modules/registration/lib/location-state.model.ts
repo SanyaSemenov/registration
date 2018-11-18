@@ -20,6 +20,9 @@ export class LocationState {
     return this.state === step;
   }
 
+  get sms() {
+    return this.checkState(State.sms);
+  }
   get step1() {
     return this.checkState(State.step1);
   }
@@ -50,11 +53,12 @@ export class LocationState {
 }
 
 export enum State {
-  step1 = 1,
-  step2 = 2,
-  step3 = 3,
-  confirm = 4,
-  pay = 5,
-  finish = 6,
-  step4 = 7
+  sms = 1,
+  confirm = 2,
+  step1 = 3,
+  step2 = 4,
+  step3 = 5,
+  pay = 6,
+  finish = 7,
+  step4 = 8
 }

@@ -20,6 +20,11 @@ export class RegistrationService {
   public mainPassportDataFilled = false;
   public recognitionError = false;
   public behaviorRecognitionError = new BehaviorSubject<boolean>(false);
+  public readonly SMS_STATE_RECIEVED = 'SMS_STATE_RECIEVED';
+  public readonly SMS_STATE_INIT = 'SMS_STATE_INIT';
+  public readonly SMS_STATE_EXPIRED = 'SMS_STATE_EXPIRED';
+  public readonly SMS_STATE_KEY = 'SMS_STATE_KEY';
+  public readonly SMS_EXPIRING_TIME_KEY = 'SMS_EXPIRING_TIME_KEY';
 
   readonly ALLOWED_EXTENSIONS = [
     'jpg',
@@ -103,5 +108,32 @@ export class RegistrationService {
       imageExtension: 'png'
     };
     return this.api.postRegula(body);
+  }
+
+  getCode(phoneNumber) {
+    // TODO: заменить на реальную апишку
+    return this.apiService.getCode(phoneNumber);
+  }
+
+  sendCode(code) {
+    return this.apiService.sendCode(code);
+  }
+
+  setSmsState(state: string) {
+    localStorage.setItem(this.SMS_STATE_KEY, state);
+  }
+
+  getSmsState(): boolean {
+    return localStorage.getItem(this.SMS_STATE_KEY) === this.SMS_STATE_RECIEVED;
+  }
+
+  setExpiringSeconds(seconds) {
+    localStorage.setItem(this.SMS_EXPIRING_TIME_KEY, (new Date().getTime() + seconds * 1000).toString());
+  }
+
+  getExpiringSeconds(): number {
+    const now = new Date().getTime();
+    const expiring = Number(localStorage.getItem(this.SMS_EXPIRING_TIME_KEY));
+    return Math.floor((expiring - now) / 1000);
   }
 }

@@ -1,0 +1,15 @@
+<div class="dialog">
+  <div class="dialog__wrapper">
+    <div class="dialog__backdrop" (click)="close($event)"></div>
+    <div class="dialog__content">
+      <div class="dialog__title">
+        <h2 class="demibold">
+          {{title}}
+        </h2>
+      </div>
+      <div class="dialog__body">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

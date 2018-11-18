@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from '../modules/_auth/auth.guard';
+import { NotFoundComponent } from '../components';
 
 export const routes: Routes = [
   {
@@ -13,6 +14,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: ''
+    // redirectTo: ''
+    component: NotFoundComponent
   }
 ];

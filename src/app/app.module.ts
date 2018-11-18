@@ -1,16 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// import 'materialize-css';
-import { MaterializeModule } from 'angular2-materialize';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routing';
 import { RegistrationModule } from '../modules';
-import { AppMaterialModule } from './app.material.module';
-import { MatSelectModule } from '@angular/material';
 import { AuthModule } from '../modules/_auth/auth.module';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -21,10 +18,8 @@ import { AuthModule } from '../modules/_auth/auth.module';
     RouterModule.forRoot(routes, { useHash: true }),
     RegistrationModule,
     BrowserAnimationsModule,
-    AuthModule
-    // AppMaterialModule,
-    // MatSelectModule
-    // MaterializeModule
+    AuthModule,
+    ComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
