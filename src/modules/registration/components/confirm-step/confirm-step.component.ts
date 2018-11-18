@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewContainerRef } from '@angular/core';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { SignatureDialogComponent } from '../../dialogs';
+import { ModalDialogService } from 'ngx-modal-dialog';
 
 @Component({
   selector: 'app-confirm-step',
@@ -10,9 +11,12 @@ import { SignatureDialogComponent } from '../../dialogs';
 export class ConfirmStepComponent implements OnInit {
 
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private modalService: ModalDialogService,
+    private viewRef: ViewContainerRef
   ) { }
 
+  isDialogOpened = false;
   imageData: any;
   _agreed = false;
   get agreed() {
@@ -48,18 +52,31 @@ export class ConfirmStepComponent implements OnInit {
   }
 
   showConfirmDialog() {
-    const dialogConfig: MatDialogConfig = {
-      closeOnNavigation: true,
-      autoFocus: false,
-      panelClass: 'signature-dialog'
-    };
-    const dialogref = this.dialog.open(SignatureDialogComponent, dialogConfig);
-    dialogref.afterClosed().subscribe(data => {
-      if (!data) {
-        this.agreed = false;
-      }
-      this.imageData = data;
-    });
+    // const dialogConfig: MatDialogConfig = {
+    //   closeOnNavigation: true,
+    //   autoFocus: false,
+    //   panelClass: 'signature-dialog'
+    // };
+    // const dialogref = this.dialog.open(SignatureDialogComponent, dialogConfig);
+    // dialogref.afterClosed().subscribe(data => {
+    //   if (!data) {
+    //     this.agreed = false;
+    //   }
+    //   this.imageData = data;
+    // });
+    // this.modalService.openDialog(this.viewRef, {
+    //   title: 'Some modal title',
+    //   childComponent: SignatureDialogComponent
+    // });
+    this.isDialogOpened = true;
   }
 
+  onDialogClose(data) {
+    if (!data) {
+      this.agreed = false;
+    }
+    this.imageData = data;
+    this.isDialogOpened = false;
+    console.log(data);
+  }
 }

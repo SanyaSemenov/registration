@@ -1,3 +1,18 @@
-<app-dialog [title]="'Пожалуйста, нарисуйте вашу подпись'">
-
+<app-dialog [isOpened]="isOpened">
+  <h2 class="demibold" #title>Пожалуйста, нарисуйте вашу подпись</h2>
+  <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
+  <div class="row next">
+    <div class="col s6">
+      <a href="javascript:void(0)" (click)="close()" class="waves-effect waves-light btn btn__next btn__skip">
+        Отмена
+      </a>
+    </div>
+    <!-- !.col.s6 -->
+    <div class="col s6">
+      <button class="waves-effect waves-light btn btn__next pull-right" [disabled]="!dirty" (click)="save()">
+        Ок
+      </button>
+    </div>
+    <!-- !.col.s6 -->
+  </div>
 </app-dialog>

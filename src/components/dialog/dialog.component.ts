@@ -10,6 +10,9 @@ export class DialogComponent implements OnInit {
   @Input()
   title: string;
 
+  @Input()
+  isOpened = false;
+
   @Output()
   bacdropClicked = new EventEmitter<any>();
 

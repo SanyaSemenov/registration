@@ -1,7 +1,7 @@
-<div class="dialog">
+<div class="dialog" [class.dialog--opened]="isOpened">
   <div class="dialog__wrapper">
-    <div class="dialog__backdrop" (click)="close($event)"></div>
-    <div class="dialog__content">
+    <div class="dialog__backdrop" [class.dialog__backdrop--opened]="isOpened" (click)="close($event)"></div>
+    <div class="dialog__content" [class.dialog__content--opened]="isOpened">
       <div class="dialog__title">
         <h2 class="demibold">
           {{title}}

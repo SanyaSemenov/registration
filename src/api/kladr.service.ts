@@ -24,7 +24,7 @@ export class KladrService {
   }
 
   getRegions(query) {
-    const params = [
+    const params: RequestParameter[] = [
       {
         name: 'contentType',
         value: 'region'
@@ -36,6 +36,28 @@ export class KladrService {
       {
         name: 'query',
         value: query
+      }
+    ];
+    return this.BASE_GetRequest(params);
+  }
+
+  getCities(query, regionId) {
+    const params: RequestParameter[] = [
+      {
+        name: 'contentType',
+        value: 'region'
+      },
+      {
+        name: 'limit',
+        value: 5
+      },
+      {
+        name: 'query',
+        value: query
+      },
+      {
+        name: 'regionId',
+        value: regionId
       }
     ];
     return this.BASE_GetRequest(params);
