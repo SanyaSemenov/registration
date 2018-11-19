@@ -25,7 +25,7 @@ export class LandingComponent implements OnInit {
     }
   }
 
-  playYoutubeVideo() {
+  public playYoutubeVideo() {
     if (!this.isInitialized) {
       this.video = document.getElementById('video_frame');
       this.poster = document.getElementById('youtube_poster');
