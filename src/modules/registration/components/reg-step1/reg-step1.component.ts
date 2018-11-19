@@ -73,10 +73,10 @@ export class RegStep1Component implements OnInit {
               name: data.firstName.toLowerCase(),
               surname: data.surName.toLowerCase(),
               patronymic: data.patronymic.toLowerCase(),
-              dateOfBirth: data.dateOfBirth.replace('/', '-'),
+              dateOfBirth: this.convertDate(data.dateOfBirth),
               gender: data.gender.toLowerCase(),
               serialNumber: data.serialNumber,
-              dateOfIssue: data.dateOfIssue,
+              dateOfIssue: this.convertDate(data.dateOfIssue),
               placeOfIssue: data.placeOfIssue,
               issuerCode: data.issuerCode
             };
@@ -84,7 +84,7 @@ export class RegStep1Component implements OnInit {
               this.$service.mainPassportForm.patchValue(this.$service.mainPassportData);
             }
             this.$service.loading = false;
-            console.log(data);
+            console.log(this.$service.mainPassportData);
           },
             (error: HttpErrorResponse) => {
               this.$service.recognitionError = true;
@@ -95,6 +95,15 @@ export class RegStep1Component implements OnInit {
       };
     }
     console.log(this.form);
+  }
+
+  convertDate(date: string): string {
+    const components = date.split('/');
+    const output = [];
+    output.push(components[2]);
+    output.push(components[0].length > 1 ? components[0] : '0' + components[0]);
+    output.push(components[1].length > 1 ? components[1] : '0' + components[1]);
+    return output.join('-');
   }
 
   onSecondChange(e) {

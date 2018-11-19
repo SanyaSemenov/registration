@@ -1,5 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { RegistrationService } from '../../registration.service';
 

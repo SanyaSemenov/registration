@@ -67,6 +67,7 @@ export class SignatureModalComponent implements OnInit, AfterViewInit {
   save() {
     if (this.dirty) {
       // this.dialogRef.close(this.result);
+      this.signaturePad.clear();
       this.onClose.emit(this.result);
       this.isOpened = false;
     }

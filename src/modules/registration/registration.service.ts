@@ -5,6 +5,7 @@ import { MainPassportData } from './lib';
 import { FakeApiService } from '../../api/fake-api.service';
 import { ApiService } from '../../api/api.service';
 import { BehaviorSubject } from 'rxjs';
+import { KladrService } from '../../api/kladr.service';
 
 export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
 
@@ -42,7 +43,8 @@ export class RegistrationService {
   constructor(
     private fb: FormBuilder,
     private apiService: FakeApiService,
-    private api: ApiService
+    private api: ApiService,
+    private kladr$: KladrService
   ) {
     this.passportImageForm = this.fb.group({
       mainPassport: [
@@ -156,5 +158,22 @@ export class RegistrationService {
   getAttempts(): number {
     const attempts = (Number(localStorage.getItem(this.SMS_ATTEMPTS_KEY)) - this.attempts_add) / this.attempts_factor;
     return attempts;
+  }
+
+  // KLADR API
+  getRegions(query) {
+    return this.kladr$.getRegionsList(query);
+  }
+
+  getCities(query, regionId) {
+    return this.kladr$.getCitiesList(query, regionId);
+  }
+
+  getStreets(query, cityId) {
+    return this.kladr$.getStreetsList(query, cityId);
+  }
+
+  getBuildings(query, streetId) {
+    return this.kladr$.getBuildingsList(query, streetId);
   }
 }

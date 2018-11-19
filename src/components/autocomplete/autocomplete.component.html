@@ -1,0 +1,9 @@
+<mat-form-field class="example-full-width">
+  <input type="text" placeholder="Область/регион" aria-label="Область/регион" matInput formControlName="region"
+    [formControl]="region" name="controlName" id="controlName" [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayRegions">
+    <mat-option *ngFor="let option of regions" [value]="option">
+      {{option.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

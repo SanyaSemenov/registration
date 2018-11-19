@@ -7,6 +7,15 @@
       <input type="text" formControlName="region" name="region" id="region" class="regStep3__input" autofocus>
       <label for="region" class="regStep3__label">Область/регион<span class="text-red">*</span></label>
     </div>
+    <!-- <mat-form-field class="example-full-width">
+      <input type="text" placeholder="Область/регион" aria-label="Область/регион" matInput formControlName="region"
+        [formControl]="region" name="region" id="region" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayRegions">
+        <mat-option *ngFor="let option of regions" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field> -->
     <div class="input-field regStep3__inputGroup">
       <input type="text" formControlName="locality" name="locality" id="locality" class="regStep3__input">
       <label for="locality" class="regStep3__label">Населенный пункт<span class="text-red">*</span></label>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoaderComponent } from './loader/loader.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { MatAutocompleteModule } from '@angular/material';
 
 const components = [
   NotFoundComponent,
@@ -12,7 +13,8 @@ const components = [
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    MatAutocompleteModule
   ],
   declarations: components,
   exports: components

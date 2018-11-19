@@ -52,7 +52,7 @@ export class SmsStepComponent implements OnInit {
   get isCodeRecieved(): boolean {
     // return this._isCodeRecieved;
     const isRecieved = this.service$.getSmsState();
-    if (this.service$.isInit()) {
+    if (this.service$.isInit() || this.service$.getSmsState()) {
       this.error = '';
     }
     return isRecieved;
