@@ -7,22 +7,22 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./autocomplete.component.less']
 })
 export class AutocompleteComponent implements OnInit {
-  @Input()
-  placeholder: string;
+  // @Input()
+  // placeholder: string;
 
-  @Input()
-  controlName: string;
+  // @Input()
+  // controlName: string;
 
-  @Input()
-  formControl: FormControl;
+  // @Input()
+  // formControl: FormControl;
 
-  @Input()
-  list: any[];
+  // @Input()
+  // list: any[];
 
-  @Output()
-  controlValueChange = new EventEmitter<any>();
+  // @Output()
+  // controlValueChange = new EventEmitter<any>();
 
-  constructor() { }
+  // constructor() { }
 
   ngOnInit() {
   }
