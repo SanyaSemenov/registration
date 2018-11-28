@@ -35,20 +35,29 @@ import {
 import { ComponentsModule } from '../../components';
 import { ModalDialogModule } from 'ngx-modal-dialog';
 import { DirectivesModule } from './lib/directives/directives.module';
+import { MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatButtonModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { KladrModule } from '../../../../../../kladr package/angular-kladr/dist';
 
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     PipesModule,
     RegistrationMaterialModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatButtonModule,
     PdfViewerModule,
     SignaturePadModule,
     ComponentsModule,
     DirectivesModule,
+    KladrModule,
     ModalDialogModule.forRoot(),
     NgxMaskModule.forRoot(),
     RouterModule.forChild(routes)

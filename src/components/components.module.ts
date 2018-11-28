@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoaderComponent } from './loader/loader.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { MatAutocompleteModule } from '@angular/material';
+import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RegistrationMaterialModule } from '../modules/registration/registration.material.module';
 
 const components = [
   NotFoundComponent,
@@ -16,7 +18,9 @@ const components = [
 @NgModule({
   imports: [
     CommonModule,
-    MatAutocompleteModule
+    FormsModule,
+    ReactiveFormsModule,
+    RegistrationMaterialModule
   ],
   declarations: components,
   exports: components

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidators } from '../../validators';
-import { MainPassportData } from './lib';
+import { MainPassportData, BaseResponse } from './lib';
 import { FakeApiService } from '../../api/fake-api.service';
 import { ApiService } from '../../api/api.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { KladrService } from '../../api/kladr.service';
+import { takeUntil, debounceTime, switchMap } from 'rxjs/operators';
 
 export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
 
@@ -31,6 +32,8 @@ export class RegistrationService {
   public readonly SMS_EXPIRING_TIME_KEY = 'SMS_EXPIRING_TIME_KEY';
   public readonly SMS_ATTEMPTS_KEY = 'SMS_ATTEMPTS_KEY';
 
+  public readonly DEBOUNCE_TIME = 300;
+
   private readonly attempts_factor = 9913;
   private readonly attempts_add = 76712;
 
@@ -39,6 +42,8 @@ export class RegistrationService {
     'png',
     'jpeg'
   ];
+
+  private ngUnsubscribe = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -93,8 +98,17 @@ export class RegistrationService {
       buildingNumber: ['', Validators.required],
       housing: [''],
       structure: [''],
-      appartment: ['']
+      apartment: ['']
     });
+
+    // this.registrationPassportForm.get('region').valueChanges
+    //   .pipe(
+    //     // takeUntil(this.ngUnsubscribe),
+    //     debounceTime(this.DEBOUNCE_TIME),
+    //     switchMap(value => {
+    //       return this.getRegions(value);
+    //     })
+    //   );
   }
 
   getMainRecognizedData() {
@@ -161,7 +175,7 @@ export class RegistrationService {
   }
 
   // KLADR API
-  getRegions(query) {
+  getRegions(query): Observable<BaseResponse> {
     return this.kladr$.getRegionsList(query);
   }
 

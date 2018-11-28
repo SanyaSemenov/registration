@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { RequestParameter } from './request-parameter';
-import { SearchContext, ContentType } from '../modules/registration/lib';
+import { SearchContext, ContentType, BaseResponse, BaseModel } from '../modules/registration/lib';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 const rootUrl = 'https://kladr-api.ru/api.php';
 const LIMIT = 5;
@@ -25,15 +27,43 @@ export class KladrService {
   //   }
   // }
 
-  BASE_KLADR_GET(context: SearchContext) {
+  BASE_KLADR_GET(context: SearchContext): Observable<BaseResponse> {
     if (context) {
       const params = new HttpParams();
+      let paramString = '?';
       Object.keys(context).forEach(key => {
         params.set(key, context[key]);
+        paramString += `${key}=${context[key]}&`;
       });
-      return this.http.get(rootUrl, { params });
+      paramString = paramString.slice(0, paramString.length - 1);
+      // return this.http.get(rootUrl, { params });
+      return this.http.get<BaseResponse>('assets/m.json', {
+        headers: {
+          'No-Auth': 'True',
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
+      // return this.http.get<BaseResponse>(rootUrl + paramString, {
+      //   headers: {
+      //     'No-Auth': 'True',
+      //     'Access-Control-Allow-Origin': '*'
+      //   }
+      // })
+        .pipe(
+          tap((response: BaseResponse) => {
+            response.result = response.result
+              .map(item => item as BaseModel);
+            // Not filtering in the server since in-memory-web-api has somewhat restricted api
+            // .filter(user => user.name.includes(filter.name))
+            console.log(response.result);
+            return response;
+          },
+            (error: any) => console.log(error),
+            () => console.log('complete')
+          )
+        );
     } else {
-      return this.http.get(rootUrl);
+      return this.http.get<BaseResponse>(rootUrl);
     }
   }
 
@@ -77,7 +107,7 @@ export class KladrService {
   //   return this.BASE_GetRequest(params);
   // }
 
-  getRegionsList(query) {
+  getRegionsList(query): Observable<BaseResponse> {
     const context: SearchContext = {
       contentType: ContentType.region,
       limit: LIMIT,

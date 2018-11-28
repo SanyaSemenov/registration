@@ -5,5 +5,5 @@ export class RegistrationPassportData {
   buildingNumber: string;
   housing: string;
   structure: string;
-  appartment: string;
+  apartment: string;
 }

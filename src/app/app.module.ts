@@ -18,7 +18,7 @@ import { ComponentsModule } from '../components/components.module';
     RouterModule.forRoot(routes, { useHash: true }),
     RegistrationModule,
     BrowserAnimationsModule,
-    AuthModule,
+    // AuthModule,
     ComponentsModule
   ],
   providers: [],
