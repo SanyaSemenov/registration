@@ -1,9 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RegistrationService } from '../../registration.service';
-import { BaseModel, BaseResponse } from '../../lib';
+// import { BaseModel, BaseResponse } from '../../lib';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil, debounceTime, switchMap } from 'rxjs/operators';
+import { BaseResponse, BaseModel } from 'angular-kladr/dist';
 
 @Component({
   selector: 'app-reg-step3',
@@ -45,14 +46,14 @@ export class RegStep3Component implements OnInit {
           return this.service$.getRegions(value);
         })
       );
-    this.cities = this.form.get('city').valueChanges
-      .pipe(
-        takeUntil(this.ngUnsubscribe),
-        debounceTime(DEBOUNCE_TIME),
-        switchMap(value => {
-          return this.service$.getCities(value, 0);
-        })
-      );
+    // this.cities = this.form.get('city').valueChanges
+    //   .pipe(
+    //     takeUntil(this.ngUnsubscribe),
+    //     debounceTime(DEBOUNCE_TIME),
+    //     switchMap(value => {
+    //       return this.service$.getCities(value, 0);
+    //     })
+    //   );
   }
 
   displayFn(item: BaseModel) {

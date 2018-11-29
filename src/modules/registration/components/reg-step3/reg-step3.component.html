@@ -12,14 +12,14 @@
         <span>{{ region.name }}</span>
       </mat-option>
     </mat-autocomplete>
-    <mat-form-field autoComplete="off" class="example-full-width reStep3__autocomplete">
+    <!-- <mat-form-field autoComplete="off" class="example-full-width reStep3__autocomplete">
       <input matInput autoComplete="off" placeholder="Choose a region" [matAutocomplete]="auto" formControlName='region'>
     </mat-form-field>
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let region of (regions | async)?.result" [value]="region">
         <span>{{ region.name }}</span>
       </mat-option>
-    </mat-autocomplete>
+    </mat-autocomplete> -->
     <div class="input-field regStep3__inputGroup">
       <input type="text" formControlName="locality" name="locality" id="locality" class="regStep3__input">
       <label for="locality" class="regStep3__label">Населенный пункт<span class="text-red">*</span></label>

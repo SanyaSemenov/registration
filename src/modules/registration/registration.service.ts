@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidators } from '../../validators';
-import { MainPassportData, BaseResponse } from './lib';
+import { MainPassportData } from './lib';
 import { FakeApiService } from '../../api/fake-api.service';
 import { ApiService } from '../../api/api.service';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
-import { KladrService } from '../../api/kladr.service';
 import { takeUntil, debounceTime, switchMap } from 'rxjs/operators';
+import { KladrService, BaseResponse, ContentType } from 'angular-kladr/dist';
 
 export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
 
@@ -176,18 +176,19 @@ export class RegistrationService {
 
   // KLADR API
   getRegions(query): Observable<BaseResponse> {
-    return this.kladr$.getRegionsList(query);
+    // return this.kladr$.getRegionsList(query);
+    return this.kladr$.api({ limit: 5, contentType: ContentType.region, query: query });
   }
 
   getCities(query, regionId) {
-    return this.kladr$.getCitiesList(query, regionId);
+    // return this.kladr$.getCitiesList(query, regionId);
   }
 
   getStreets(query, cityId) {
-    return this.kladr$.getStreetsList(query, cityId);
+    // return this.kladr$.getStreetsList(query, cityId);
   }
 
   getBuildings(query, streetId) {
-    return this.kladr$.getBuildingsList(query, streetId);
+    // return this.kladr$.getBuildingsList(query, streetId);
   }
 }
