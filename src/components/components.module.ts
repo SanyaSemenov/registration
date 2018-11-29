@@ -12,7 +12,7 @@ const components = [
   NotFoundComponent,
   LoaderComponent,
   DialogComponent,
-  AutocompleteComponent
+  // AutocompleteComponent
 ];
 
 @NgModule({

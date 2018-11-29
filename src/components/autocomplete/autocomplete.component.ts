@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BaseModel } from '../../modules/registration/lib';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { BaseModel } from 'angular-kladr';
 
 @Component({
   selector: 'app-autocomplete',

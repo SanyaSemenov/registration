@@ -5,41 +5,41 @@
       Введите адрес вашей регистрации
     </div>
     <mat-form-field autoComplete="off" class="example-full-width reStep3__autocomplete">
-      <input matInput autoComplete="off" placeholder="Область/регион" [matAutocomplete]="auto" formControlName='region'>
+      <input matInput autoComplete="off" placeholder="Область/регион" [matAutocomplete]="autoRegions" formControlName='region'>
     </mat-form-field>
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-autocomplete #autoRegions="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let region of (regions | async)?.result" [value]="region">
-        <span>{{ region.name }}</span>
+        <span>{{region.type}} {{ region.name }}</span>
       </mat-option>
     </mat-autocomplete>
-    <!-- <mat-form-field autoComplete="off" class="example-full-width reStep3__autocomplete">
-      <input matInput autoComplete="off" placeholder="Choose a region" [matAutocomplete]="auto" formControlName='region'>
+    <mat-form-field autoComplete="off" class="example-full-width reStep3__autocomplete">
+      <input matInput autoComplete="off" placeholder="Населенный пункт" [matAutocomplete]="autoCities" formControlName='locality'>
     </mat-form-field>
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let region of (regions | async)?.result" [value]="region">
-        <span>{{ region.name }}</span>
+    <mat-autocomplete #autoCities="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let city of (cities | async)?.result" [value]="city">
+        <span>{{ city.name }}</span>
       </mat-option>
-    </mat-autocomplete> -->
-    <div class="input-field regStep3__inputGroup">
-      <input type="text" formControlName="locality" name="locality" id="locality" class="regStep3__input">
-      <label for="locality" class="regStep3__label">Населенный пункт<span class="text-red">*</span></label>
-    </div>
-    <div class="input-field regStep3__inputGroup">
-      <input type="text" formControlName="street" name="street" id="street" class="regStep3__input">
-      <label for="street" class="regStep3__label">Улица<span class="text-red">*</span></label>
-    </div>
-    <div class="input-field regStep3__inputGroup">
+    </mat-autocomplete>
+    <mat-form-field autoComplete="off" class="example-full-width reStep3__autocomplete">
+      <input matInput autoComplete="off" placeholder="Улица" [matAutocomplete]="autoStreets" formControlName='street'>
+    </mat-form-field>
+    <mat-autocomplete #autoStreets="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let street of (streets | async)?.result" [value]="street">
+        <span>{{ street.type }} {{ street.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+    <mat-form-field autoComplete="off" class="example-full-width reStep3__autocomplete">
+      <input matInput autoComplete="off" placeholder="Дом" [matAutocomplete]="autoBuildings" formControlName="buildingNumber">
+    </mat-form-field>
+    <mat-autocomplete #autoBuildings="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let building of (buildings | async)?.result" [value]="building">
+        <span>{{ building.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+    <!-- <div class="input-field regStep3__inputGroup">
       <input type="text" formControlName="buildingNumber" name="buildingNumber" id="buildingNumber" class="regStep3__input">
       <label for="buildingNumber" class="regStep3__label">Дом<span class="text-red">*</span></label>
-    </div>
-    <div class="input-field regStep3__inputGroup">
-      <input type="text" formControlName="housing" name="housing" id="housing" class="regStep3__input">
-      <label for="housing" class="regStep3__label">Корпус</label>
-    </div>
-    <div class="input-field regStep3__inputGroup">
-      <input type="text" formControlName="structure" name="structure" id="structure" class="regStep3__input">
-      <label for="structure" class="regStep3__label">Строение</label>
-    </div>
+    </div> -->
     <div class="input-field regStep3__inputGroup">
       <input type="text" formControlName="apartment" name="apartment" id="apartment" class="regStep3__input">
       <label for="apartment" class="regStep3__label">Квартира</label>

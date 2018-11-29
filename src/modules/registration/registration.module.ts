@@ -37,7 +37,7 @@ import { ModalDialogModule } from 'ngx-modal-dialog';
 import { DirectivesModule } from './lib/directives/directives.module';
 import { MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { KladrModule } from 'angular-kladr/dist';
+import { KladrModule } from 'angular-kladr';
 
 @NgModule({
   imports: [

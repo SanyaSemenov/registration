@@ -6,7 +6,7 @@ import { FakeApiService } from '../../api/fake-api.service';
 import { ApiService } from '../../api/api.service';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { takeUntil, debounceTime, switchMap } from 'rxjs/operators';
-import { KladrService, BaseResponse, ContentType } from 'angular-kladr/dist';
+import { KladrService, BaseResponse, ContentType, SearchContext } from 'angular-kladr';
 
 export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
 
@@ -32,7 +32,7 @@ export class RegistrationService {
   public readonly SMS_EXPIRING_TIME_KEY = 'SMS_EXPIRING_TIME_KEY';
   public readonly SMS_ATTEMPTS_KEY = 'SMS_ATTEMPTS_KEY';
 
-  public readonly DEBOUNCE_TIME = 300;
+  public readonly DEBOUNCE_TIME = 100;
 
   private readonly attempts_factor = 9913;
   private readonly attempts_add = 76712;
@@ -96,19 +96,8 @@ export class RegistrationService {
       locality: ['', Validators.required],
       street: ['', Validators.required],
       buildingNumber: ['', Validators.required],
-      housing: [''],
-      structure: [''],
       apartment: ['']
     });
-
-    // this.registrationPassportForm.get('region').valueChanges
-    //   .pipe(
-    //     // takeUntil(this.ngUnsubscribe),
-    //     debounceTime(this.DEBOUNCE_TIME),
-    //     switchMap(value => {
-    //       return this.getRegions(value);
-    //     })
-    //   );
   }
 
   getMainRecognizedData() {
@@ -176,19 +165,42 @@ export class RegistrationService {
 
   // KLADR API
   getRegions(query): Observable<BaseResponse> {
-    // return this.kladr$.getRegionsList(query);
-    return this.kladr$.api({ limit: 5, contentType: ContentType.region, query: query });
+    const context: SearchContext = {
+      limit: 5,
+      contentType: ContentType.region,
+      query: query
+    };
+    this.kladr$.api(context).subscribe(data => console.log(data));
+    return this.kladr$.api(context);
   }
 
   getCities(query, regionId) {
-    // return this.kladr$.getCitiesList(query, regionId);
+    const context: SearchContext = {
+      limit: 5,
+      contentType: ContentType.city,
+      query: query,
+      regionId: regionId
+    };
+    return this.kladr$.api(context);
   }
 
   getStreets(query, cityId) {
-    // return this.kladr$.getStreetsList(query, cityId);
+    const context: SearchContext = {
+      limit: 5,
+      contentType: ContentType.street,
+      query: query,
+      cityId: cityId
+    };
+    return this.kladr$.api(context);
   }
 
   getBuildings(query, streetId) {
-    // return this.kladr$.getBuildingsList(query, streetId);
+    const context: SearchContext = {
+      limit: 5,
+      contentType: ContentType.building,
+      query: query,
+      streetId: streetId
+    };
+    return this.kladr$.api(context);
   }
 }

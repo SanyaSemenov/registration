@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^6.0.3",
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
-    "angular-kladr": "0.0.0",
+    "angular-kladr": "0.0.2",
     "angular-router-meta": "^0.1.2",
     "angular2-materialize": "^15.1.10",
     "angular2-signaturepad": "^2.8.0",
