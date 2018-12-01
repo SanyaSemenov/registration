@@ -1,0 +1,54 @@
+{
+    "searchContext": {
+        "contentType": "region",
+        "query": "М",
+        "limit": 5
+    },
+    "result": [
+        {
+            "id": "4900000000000",
+            "name": "Магаданская",
+            "zip": null,
+            "type": "Область",
+            "typeShort": "обл",
+            "okato": "44000000000",
+            "contentType": "region"
+        },
+        {
+            "id": "1200000000000",
+            "name": "Марий Эл",
+            "zip": null,
+            "type": "Республика",
+            "typeShort": "Респ",
+            "okato": "88000000000",
+            "contentType": "region"
+        },
+        {
+            "id": "1300000000000",
+            "name": "Мордовия",
+            "zip": null,
+            "type": "Республика",
+            "typeShort": "Респ",
+            "okato": "89000000000",
+            "contentType": "region"
+        },
+        {
+            "id": "7700000000000",
+            "name": "Москва",
+            "zip": null,
+            "type": "Город",
+            "typeShort": "г",
+            "okato": "45000000000",
+            "contentType": "region"
+        },
+        {
+            "id": "5000000000000",
+            "name": "Московская",
+            "zip": null,
+            "type": "Область",
+            "typeShort": "обл",
+            "okato": "46000000000",
+            "contentType": "region"
+        }
+    ]
+}
