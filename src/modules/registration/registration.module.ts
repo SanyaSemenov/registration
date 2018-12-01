@@ -38,11 +38,13 @@ import { DirectivesModule } from './lib/directives/directives.module';
 import { MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KladrModule } from 'angular-kladr';
+import { TokenResolver } from 'src/resolvers/token.resolver';
+import { AuthModule } from '../_auth/auth.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    BrowserModule,
+    // BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -58,6 +60,7 @@ import { KladrModule } from 'angular-kladr';
     ComponentsModule,
     DirectivesModule,
     KladrModule,
+    AuthModule,
     ModalDialogModule.forRoot(),
     NgxMaskModule.forRoot(),
     RouterModule.forChild(routes)
@@ -80,7 +83,8 @@ import { KladrModule } from 'angular-kladr';
     RegistrationService,
     LocationStateService,
     FakeApiService,
-    ApiService
+    ApiService,
+    TokenResolver
   ],
   entryComponents: [
     SignatureDialogComponent,

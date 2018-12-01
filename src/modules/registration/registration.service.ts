@@ -31,6 +31,7 @@ export class RegistrationService {
   public readonly SMS_STATE_KEY = 'SMS_STATE_KEY';
   public readonly SMS_EXPIRING_TIME_KEY = 'SMS_EXPIRING_TIME_KEY';
   public readonly SMS_ATTEMPTS_KEY = 'SMS_ATTEMPTS_KEY';
+  public readonly USER_TOKEN_KEY = 'USER_TOKEN_KEY';
 
   public readonly DEBOUNCE_TIME = 100;
 
@@ -98,6 +99,15 @@ export class RegistrationService {
       buildingNumber: ['', Validators.required],
       apartment: ['']
     });
+  }
+
+  public setToken(token) {
+    localStorage.setItem(this.USER_TOKEN_KEY, token);
+  }
+
+  public getToken(): string {
+    const token = localStorage.getItem(this.USER_TOKEN_KEY);
+    return typeof token !== 'undefined' && token && token !== 'undefined' ? token : '';
   }
 
   getMainRecognizedData() {

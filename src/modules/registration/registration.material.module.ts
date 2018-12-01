@@ -10,7 +10,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const modules = [
-  BrowserAnimationsModule,
+  // BrowserAnimationsModule,
   MatSelectModule,
   MatDialogModule,
   MatCheckboxModule,

@@ -24,6 +24,7 @@ export class RegStep3Component implements OnInit {
   public buildings: Observable<BaseResponse>;
 
   private selectedRegion: BaseModel | string;
+  private selectedStreet: BaseModel | string;
   public form: FormGroup;
   // tslint:disable-next-line:no-output-on-prefix
   @Output('onNavigate')
@@ -46,7 +47,7 @@ export class RegStep3Component implements OnInit {
           return this.service$.getRegions(value);
         })
       );
-    this.findInResponse(this.regions, this.form.get('region') as FormControl);
+    this.findInResponse(this.regions, 'region', 'locality');
     this.cities = this.form.get('locality').valueChanges
       .pipe(
         takeUntil(this.ngUnsubscribe),
@@ -60,7 +61,7 @@ export class RegStep3Component implements OnInit {
           }
         })
       );
-    this.findInResponse(this.cities, this.form.get('locality') as FormControl);
+    this.findInResponse(this.cities, 'locality', 'street');
     this.streets = this.form.get('street').valueChanges
       .pipe(
         takeUntil(this.ngUnsubscribe),
@@ -68,7 +69,7 @@ export class RegStep3Component implements OnInit {
         switchMap(value => {
           const arr = typeof value === 'string' ? value.split(/[^A-Za-zА-Яа-я]/i) : null;
           value = arr && arr.length > 1 ? arr[arr.length - 1] : value;
-          this.selectedRegion = value;
+          this.selectedStreet = value;
           const city = this.form.get('locality').value;
           if (city.id) {
             return this.service$.getStreets(value, city.id);
@@ -77,7 +78,7 @@ export class RegStep3Component implements OnInit {
           }
         })
       );
-    this.findInResponse(this.streets, this.form.get('street') as FormControl);
+    this.findInResponse(this.streets, 'street', 'buildingNumber');
     this.buildings = this.form.get('buildingNumber').valueChanges
       .pipe(
         takeUntil(this.ngUnsubscribe),
@@ -91,7 +92,7 @@ export class RegStep3Component implements OnInit {
           }
         })
       );
-    this.findInResponse(this.buildings, this.form.get('buildingNumber') as FormControl);
+    this.findInResponse(this.buildings, 'buildingNumber', null);
   }
 
   setError(control: string) {
@@ -100,29 +101,55 @@ export class RegStep3Component implements OnInit {
     });
   }
 
-  findInResponse(list: Observable<BaseResponse>, control: FormControl) {
-    list.subscribe((response: BaseResponse) => {
-      if (typeof control.value === 'string') { // если человек еще вводит, не нажав на предложенный список
-        if (response.searchContext.contentType === ContentType.building) { // если дома, то можно выбрать первый совпадающий полностью номер
-          const found = response.result.find(x => x.name === control.value); // ищем, есть ли совпадение
-          if (found) { // ура, нашли, можно присвоить
-            control.setValue(found);
-            return;
+  findInResponse(list: Observable<BaseResponse>, controlName: string, childName: string) {
+    const control = this.form.get(controlName);
+    const child = this.form.get(childName);
+    list
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe((response: BaseResponse) => {
+        if (typeof child !== 'undefined' && child && child.value) {
+          switch (childName) {
+            case 'region':
+              child.setValue(null);
+              this.form.get('street').setValue(null);
+              this.form.get('buildingNumber').setValue(null);
+              break;
+            case 'locality':
+              child.setValue(null);
+              this.form.get('buildingNumber').setValue(null);
+              break;
+            case 'street':
+              child.setValue(null);
+              break;
+            default:
+              break;
+          }
+          this.form.get('apartment').setValue(null);
+        }
+        if (typeof control.value === 'string') { // если человек еще вводит, не нажав на предложенный список
+          // tslint:disable-next-line:max-line-length
+          if (response.searchContext.contentType === ContentType.building) { // если дома, то можно выбрать первый совпадающий полностью номер
+            const found = response.result.find(x => x.name === control.value); // ищем, есть ли совпадение
+            if (found) { // ура, нашли, можно присвоить
+              control.setValue(found);
+              return;
+            }
+          }
+          if (response.result.length === 1) { // если остался один результат
+            const selected = response.result[0];
+            if (selected.contentType === ContentType.region || selected.contentType === ContentType.street) {
+              selected.name = `${selected.type} ${selected.name}`;
+            }
+            control.setValue(selected);
+          } else if (response.result.length === 0) { // ввел несуществующий элемент
+            control.setErrors({
+              notExist: true
+            }); // ошибка, такого не существует
           }
         }
-        if (response.result.length === 1) { // если остался один результат
-          const selected = response.result[0];
-          if (selected.contentType === ContentType.region || selected.contentType === ContentType.street) {
-            selected.name = `${selected.type} ${selected.name}`;
-          }
-          control.setValue(selected);
-        } else if (response.result.length === 0) { // ввел несуществующий элемент
-          control.setErrors({
-            notExist: true
-          }); // ошибка, такого не существует
-        }
-      }
-    });
+      });
   }
 
   displayFn(item: BaseModel) {

@@ -14,10 +14,10 @@ import { ComponentsModule } from '../components/components.module';
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    // BrowserModule,
     RouterModule.forRoot(routes, { useHash: true }),
     RegistrationModule,
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     // AuthModule,
     ComponentsModule
   ],

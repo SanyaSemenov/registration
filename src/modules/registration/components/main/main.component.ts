@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationState, State, LocationStateService } from '../../lib';
 import { RegistrationService } from '../../registration.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -11,12 +12,14 @@ export class MainComponent implements OnInit {
 
   constructor(
     public location: LocationStateService,
-    public $service: RegistrationService
+    public service$: RegistrationService,
+    private route: ActivatedRoute
   ) { }
 
   isFilled = false;
 
   ngOnInit() {
+    this.service$.setToken(this.route.snapshot.data['token']);
     console.log(this.location.currentLocation);
   }
 
