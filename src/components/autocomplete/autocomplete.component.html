@@ -1,9 +1,0 @@
-<mat-form-field class="example-full-width">
-  <input type="text" placeholder="{{placeholder}}" matInput [formControl]="formControl" name="{{controlName}}" id="{{controlName}}"
-    [matAutocomplete]="auto">
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-    <mat-option *ngFor="let option of regions" [value]="option">
-      {{option.name}}
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>

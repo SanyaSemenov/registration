@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RegistrationService } from '../../registration.service';
 // import { BaseModel, BaseResponse } from '../../lib';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, throwError } from 'rxjs';
 import { takeUntil, debounceTime, switchMap } from 'rxjs/operators';
 import { BaseResponse, BaseModel, ContentType } from 'angular-kladr';
 
@@ -18,8 +18,21 @@ export class RegStep3Component implements OnInit {
     this.form = service$.registrationPassportForm;
   }
   private ngUnsubscribe = new Subject<void>();
-  public regions: Observable<BaseResponse>;
-  public cities: Observable<BaseResponse>;
+  get regions() {
+    return this._regions;
+  }
+  set regions(value) {
+    this._regions = value;
+  }
+  public _regions: Observable<BaseResponse>;
+
+  get cities() {
+    return this._cities;
+  }
+  set cities(value) {
+    this._cities = value;
+  }
+  public _cities: Observable<BaseResponse>;
   public streets: Observable<BaseResponse>;
   public buildings: Observable<BaseResponse>;
 
@@ -54,10 +67,11 @@ export class RegStep3Component implements OnInit {
         debounceTime(DEBOUNCE_TIME),
         switchMap(value => {
           const region = this.form.get('region').value;
-          if (region.id) {
+          if (typeof region !== 'undefined' && region && region.id) {
             return this.service$.getCities(value, region.id ? region.id : null);
           } else {
             this.setError('locality');
+            return this.cities;
           }
         })
       );
@@ -71,10 +85,11 @@ export class RegStep3Component implements OnInit {
           value = arr && arr.length > 1 ? arr[arr.length - 1] : value;
           this.selectedStreet = value;
           const city = this.form.get('locality').value;
-          if (city.id) {
+          if (typeof city !== 'undefined' && city && city.id) {
             return this.service$.getStreets(value, city.id);
           } else {
             this.setError('street');
+            return this.streets;
           }
         })
       );
@@ -85,10 +100,11 @@ export class RegStep3Component implements OnInit {
         debounceTime(DEBOUNCE_TIME),
         switchMap(value => {
           const street = this.form.get('street').value;
-          if (street.id) {
+          if (typeof street !== 'undefined' && street && street.id) {
             return this.service$.getBuildings(value, street.id);
           } else {
             this.setError('buildingNumber');
+            return this.buildings;
           }
         })
       );
@@ -112,21 +128,21 @@ export class RegStep3Component implements OnInit {
         if (typeof child !== 'undefined' && child && child.value) {
           switch (childName) {
             case 'region':
-              child.setValue(null);
-              this.form.get('street').setValue(null);
-              this.form.get('buildingNumber').setValue(null);
+              child.setValue('');
+              this.form.get('street').setValue('');
+              this.form.get('buildingNumber').setValue('');
               break;
             case 'locality':
-              child.setValue(null);
-              this.form.get('buildingNumber').setValue(null);
+              child.setValue('');
+              this.form.get('buildingNumber').setValue('');
               break;
             case 'street':
-              child.setValue(null);
+              child.setValue('');
               break;
             default:
               break;
           }
-          this.form.get('apartment').setValue(null);
+          this.form.get('apartment').setValue('');
         }
         if (typeof control.value === 'string') { // если человек еще вводит, не нажав на предложенный список
           // tslint:disable-next-line:max-line-length
@@ -149,7 +165,9 @@ export class RegStep3Component implements OnInit {
             }); // ошибка, такого не существует
           }
         }
-      });
+      },
+        (error: any) => { return; }
+      );
   }
 
   displayFn(item: BaseModel) {
