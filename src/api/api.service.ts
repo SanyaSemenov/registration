@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RequestParameter } from './request-parameter';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
 
 const rootUrl = 'https://ch.invend.ru/api';
 
@@ -26,5 +27,14 @@ export class ApiService {
   postRegula(body) {
     const reqHeader = new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'No-Auth': 'True' });
     return this.http.post(rootUrl + '/regula/', body, { headers: reqHeader });
+  }
+
+  sendFile(body, file: File) {
+    const reqHeader = new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    const formData = new FormData();
+    formData.append(file.name, file);
+    const request = this.http.post(rootUrl + '/file', formData);
+
+    return forkJoin([this.postRegula(body), request]);
   }
 }

@@ -5,7 +5,7 @@ import { MainPassportData } from './lib';
 import { FakeApiService } from '../../api/fake-api.service';
 import { ApiService } from '../../api/api.service';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
-import { takeUntil, debounceTime, switchMap } from 'rxjs/operators';
+import { takeUntil, debounceTime, switchMap, map } from 'rxjs/operators';
 import { KladrService, BaseResponse, ContentType, SearchContext } from 'angular-kladr';
 
 export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
@@ -123,13 +123,21 @@ export class RegistrationService {
     return this.apiService.getPaymentAmount();
   }
 
-  postRegula() {
+  sendFile(file) {
     this.loading = true;
     const body = {
       base64Image: this.mainPassportUrl,
       imageExtension: 'png'
     };
-    return this.api.postRegula(body);
+    return this.api.sendFile(body, file)
+      .pipe(
+        map(results => {
+          return {
+            ...results[0],
+            ...results[1]
+          };
+        })
+      );
   }
 
   getCode(phoneNumber) {

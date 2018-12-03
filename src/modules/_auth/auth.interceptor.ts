@@ -34,6 +34,9 @@ export class AuthInterceptor implements HttpInterceptor {
     //   );
     // }
 
+    if (req.headers.get('No-Auth') === 'True') {
+      return;
+    }
     const storageToken = localStorage.getItem(this.tokenKey);
 
     if (storageToken !== null) {
@@ -54,7 +57,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 // this.router.navigateByUrl('/login');
               }
 
-              localStorage.removeItem(this.tokenKey);
+              // localStorage.removeItem(this.tokenKey);
               // localStorage.removeItem('userRoles');
             }
           )
@@ -66,7 +69,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   Logout() {
     // this.router.navigateByUrl('/login');
-    localStorage.removeItem(this.tokenKey);
+    // localStorage.removeItem(this.tokenKey);
     // localStorage.removeItem('userRoles');
   }
 }

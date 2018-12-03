@@ -48,13 +48,14 @@ export class RegStep1Component implements OnInit {
 
   onMainChange(e) {
     if (e.target.files && e.target.files[0]) {
-      const filename = e.target.files[0].name;
+      const file = e.target.files[0];
+      const filename = file.name;
       this.form.controls['mainPassport'].patchValue(filename);
       const reader = new FileReader();
 
       if (this.$service.ALLOWED_EXTENSIONS.filter(x => filename.indexOf(x) > -1).length > 0) {
         this.isMainLoading = true;
-        reader.readAsDataURL(e.target.files[0]);
+        reader.readAsDataURL(file);
       } else {
         this.$service.mainPassportUrl = '';
       }
@@ -63,18 +64,18 @@ export class RegStep1Component implements OnInit {
         this.$service.mainPassportUrl = event.target.result;
         this.isMainLoading = false;
         this.$service.recognitionError = false;
-        this.$service.postRegula()
+        this.$service.sendFile(file)
           .pipe(
             takeUntil(this.ngUnsubscribe)
           )
           .subscribe((data: any) => {
             this.$service.recognitionError = false;
             this.$service.mainPassportData = {
-              name: data.firstName.toLowerCase(),
-              surname: data.surName.toLowerCase(),
-              patronymic: data.patronymic.toLowerCase(),
+              name: data.firstName ? data.firstName.toLowerCase() : '',
+              surname: data.surName ? data.surName.toLowerCase() : '',
+              patronymic: data.patronymic ? data.patronymic.toLowerCase() : '',
               dateOfBirth: this.convertDate(data.dateOfBirth),
-              gender: data.gender.toLowerCase(),
+              gender: data.gender ? data.gender.toLowerCase() : '',
               serialNumber: data.serialNumber,
               dateOfIssue: this.convertDate(data.dateOfIssue),
               placeOfIssue: data.placeOfIssue,
