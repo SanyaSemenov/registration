@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from '../../../../validators';
 import { RegistrationService } from '../../registration.service';
-import { Subject, } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LocationStateService } from '../../lib';
+import { LocationStateService, MainPassportData } from '../../lib';
 
 @Component({
   selector: 'app-reg-step1',
@@ -14,12 +14,11 @@ import { LocationStateService } from '../../lib';
   styleUrls: ['./reg-step1.component.less']
 })
 export class RegStep1Component implements OnInit {
-
   constructor(
     private fb: FormBuilder,
     public $service: RegistrationService,
     private location: LocationStateService
-  ) { }
+  ) {}
 
   // tslint:disable-next-line:no-output-on-prefix
   @Output('onNavigate')
@@ -53,7 +52,10 @@ export class RegStep1Component implements OnInit {
       this.form.controls['mainPassport'].patchValue(filename);
       const reader = new FileReader();
 
-      if (this.$service.ALLOWED_EXTENSIONS.filter(x => filename.indexOf(x) > -1).length > 0) {
+      if (
+        this.$service.ALLOWED_EXTENSIONS.filter(x => filename.indexOf(x) > -1)
+          .length > 0
+      ) {
         this.isMainLoading = true;
         reader.readAsDataURL(file);
       } else {
@@ -64,29 +66,45 @@ export class RegStep1Component implements OnInit {
         this.$service.mainPassportUrl = event.target.result;
         this.isMainLoading = false;
         this.$service.recognitionError = false;
-        this.$service.sendFile(file)
-          .pipe(
-            takeUntil(this.ngUnsubscribe)
-          )
+        this.$service
+          .sendFile(file)
+          .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe((data: any) => {
-            this.$service.recognitionError = false;
-            this.$service.mainPassportData = {
-              name: data.firstName ? data.firstName.toLowerCase() : '',
-              surname: data.surName ? data.surName.toLowerCase() : '',
-              patronymic: data.patronymic ? data.patronymic.toLowerCase() : '',
-              dateOfBirth: this.convertDate(data.dateOfBirth),
-              gender: data.gender ? data.gender.toLowerCase() : '',
-              serialNumber: data.serialNumber,
-              dateOfIssue: this.convertDate(data.dateOfIssue),
-              placeOfIssue: data.placeOfIssue,
-              issuerCode: data.issuerCode
-            };
-            if (this.$service.loading) {
-              this.$service.mainPassportForm.patchValue(this.$service.mainPassportData);
-            }
-            this.$service.loading = false;
-            console.log(this.$service.mainPassportData);
-          },
+            this.$service.PAGE1KEY = data.filename;
+          });
+        this.$service
+          .postRegula()
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(
+            (data: any) => {
+              this.$service.recognitionError = false;
+              if (!this.$service.mainPassportData) {
+                this.$service.mainPassportData = {} as MainPassportData;
+              }
+              Object.keys(data).forEach(key => {
+                if (data[key] !== null && typeof data[key] !== 'undefined') {
+                  this.$service.mainPassportData[key] = typeof data[key] === 'string' ? data[key].toLowercase() : data[key];
+                }
+              });
+              // {
+              //   name: data.firstName ? data.firstName.toLowerCase() : '',
+              //   surname: data.surName ? data.surName.toLowerCase() : '',
+              //   patronymic: data.patronymic ? data.patronymic.toLowerCase() : '',
+              //   dateOfBirth: this.convertDate(data.dateOfBirth),
+              //   gender: data.gender ? data.gender.toLowerCase() : '',
+              //   serialNumber: data.serialNumber,
+              //   dateOfIssue: this.convertDate(data.dateOfIssue),
+              //   placeOfIssue: data.placeOfIssue,
+              //   issuerCode: data.issuerCode
+              // };
+              if (this.$service.loading) {
+                this.$service.mainPassportForm.patchValue(
+                  this.$service.mainPassportData
+                );
+              }
+              this.$service.loading = false;
+              console.log(this.$service.mainPassportData);
+            },
             (error: HttpErrorResponse) => {
               this.$service.recognitionError = true;
               this.$service.behaviorRecognitionError.next(true);
@@ -113,7 +131,10 @@ export class RegStep1Component implements OnInit {
       this.form.controls['secondPassport'].patchValue(filename);
       const reader = new FileReader();
 
-      if (this.$service.ALLOWED_EXTENSIONS.filter(x => filename.indexOf(x) > -1).length > 0) {
+      if (
+        this.$service.ALLOWED_EXTENSIONS.filter(x => filename.indexOf(x) > -1)
+          .length > 0
+      ) {
         this.isSecondLoading = true;
         reader.readAsDataURL(e.target.files[0]);
       } else {

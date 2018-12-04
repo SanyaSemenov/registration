@@ -35,7 +35,9 @@ export class AuthInterceptor implements HttpInterceptor {
     // }
 
     if (req.headers.get('No-Auth') === 'True') {
-      return;
+      const clonedreq = req.clone();
+      console.log('no-auth-headers', clonedreq.headers.getAll('No-Auth'));
+      return next.handle(clonedreq).pipe(tap(succ => {}, err => {}));
     }
     const storageToken = localStorage.getItem(this.tokenKey);
 

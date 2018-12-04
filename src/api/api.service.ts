@@ -29,12 +29,10 @@ export class ApiService {
     return this.http.post(rootUrl + '/regula/', body, { headers: reqHeader });
   }
 
-  sendFile(body, file: File) {
+  sendFile(file: File) {
     const reqHeader = new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     const formData = new FormData();
-    formData.append(file.name, file);
-    const request = this.http.post(rootUrl + '/file', formData);
-
-    return forkJoin([this.postRegula(body), request]);
+    formData.append('file', file);
+    return this.http.post(rootUrl + '/file', formData);
   }
 }

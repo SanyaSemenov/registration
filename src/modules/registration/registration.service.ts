@@ -23,6 +23,9 @@ export class RegistrationService {
   public mainPassportData: MainPassportData;
   public mainPassportDataFilled = false;
   public recognitionError = false;
+  public PAGE1KEY: string;
+  public PAGE2KEY: string;
+  public PAGE3KEY: string;
   public behaviorRecognitionError = new BehaviorSubject<boolean>(false);
   public readonly SMS_STATE_RECIEVED = 'SMS_STATE_RECIEVED';
   public readonly SMS_STATE_INIT = 'SMS_STATE_INIT';
@@ -125,19 +128,15 @@ export class RegistrationService {
 
   sendFile(file) {
     this.loading = true;
+    return this.api.sendFile(file);
+  }
+
+  postRegula(){
     const body = {
       base64Image: this.mainPassportUrl,
       imageExtension: 'png'
     };
-    return this.api.sendFile(body, file)
-      .pipe(
-        map(results => {
-          return {
-            ...results[0],
-            ...results[1]
-          };
-        })
-      );
+    return this.api.postRegula(body);
   }
 
   getCode(phoneNumber) {
