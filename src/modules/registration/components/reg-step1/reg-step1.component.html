@@ -5,25 +5,11 @@
     </div>
     <div class="regStep1__upload">
       <div class="regStep1__uploadTitle">
-        Главный разворот паспорта
+        Первая страница главного разворота паспорта
       </div>
       <div class="regStep1__uploadImage" [class.empty]="!mainUrl">
         <ng-container *ngIf="isMainLoading">
-          <div class="preloader-container">
-            <div class="preloader-wrapper big active">
-              <div class="spinner-layer spinner-blue-only">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div>
-                <div class="gap-patch">
-                  <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-loader></app-loader>
         </ng-container>
         <ng-container *ngIf="!isMainLoading">
           <img [src]="mainUrl ? mainUrl : ''" alt="">
@@ -31,46 +17,56 @@
       </div>
       <div class="regStep1__uploadInput">
         <div class="validationMessage red-text" *ngIf="form.controls['mainPassport'].errors?.wrongExtension">
-          {{validationMessages.wrongExtension}}{{$service.ALLOWED_EXTENSIONS.join(', ')}}
+          {{validationMessages.wrongExtension}}{{service$.ALLOWED_EXTENSIONS.join(', ')}}
         </div>
         <label class="waves-effect waves-light btn btn__primary regstep1__uploadBtn" for="mainPassport">Прикрепить...</label>
-        <input type="file" id="mainPassport" (change)="onMainChange($event)" hidden>
+        <input type="file" name="mainPassport" id="mainPassport" (change)="onMainChange($event)" hidden>
         <input type="text" formControlName="mainPassport" hidden>
       </div>
     </div>
+    <!-- .regStep1__upload --> <!-- первая страница -->
     <div class="regStep1__upload">
       <div class="regStep1__uploadTitle">
-        Регистрация
+        Вторая страница (Персональная информация)
       </div>
       <div class="regStep1__uploadImage" [class.empty]="!secondUrl">
         <ng-container *ngIf="isSecondLoading">
-          <div class="preloader-container">
-            <div class="preloader-wrapper big active">
-              <div class="spinner-layer spinner-blue-only">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div>
-                <div class="gap-patch">
-                  <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-loader></app-loader>
         </ng-container>
         <ng-container *ngIf="!isSecondLoading">
           <img [src]="secondUrl ? secondUrl : ''" alt="">
         </ng-container>
       </div>
+      <!-- .regStep1__uploadImage -->
       <div class="regStep1__uploadInput">
         <div class="validationMessage red-text" *ngIf="form.controls['secondPassport'].errors?.wrongExtension">
-          {{validationMessages.wrongExtension}}{{$service.ALLOWED_EXTENSIONS.join(', ')}}
+          {{validationMessages.wrongExtension}}{{service$.ALLOWED_EXTENSIONS.join(', ')}}
         </div>
         <label class="waves-effect waves-light btn btn__primary regstep1__uploadBtn" for="secondPassport">Прикрепить...</label>
-        <input type="file" id="secondPassport" (change)="onSecondChange($event)" hidden>
-        <input type="text" formControlName="secondPassport" hidden="hidden">
+        <input type="file" name="secondPassport" id="secondPassport" (change)="onSecondChange($event)" hidden>
+        <input type="text" formControlName="secondPassport" hidden>
+      </div>
+    </div>
+    <!-- .regStep1__upload --> <!-- вторая страница -->
+    <div class="regStep1__upload">
+      <div class="regStep1__uploadTitle">
+        Регистрация
+      </div>
+      <div class="regStep1__uploadImage" [class.empty]="!registrationUrl">
+        <ng-container *ngIf="isRegLoading">
+          <app-loader></app-loader>
+        </ng-container>
+        <ng-container *ngIf="!isRegLoading">
+          <img [src]="registrationUrl ? registrationUrl : ''" alt="">
+        </ng-container>
+      </div>
+      <div class="regStep1__uploadInput">
+        <div class="validationMessage red-text" *ngIf="form.controls['registrationPage'].errors?.wrongExtension">
+          {{validationMessages.wrongExtension}}{{service$.ALLOWED_EXTENSIONS.join(', ')}}
+        </div>
+        <label class="waves-effect waves-light btn btn__primary regstep1__uploadBtn" for="registrationPage">Прикрепить...</label>
+        <input type="file" name="registrationPage" id="registrationPage" (change)="onRegChange($event)" hidden>
+        <input type="text" formControlName="registrationPage" hidden="hidden">
       </div>
     </div>
   </form>

@@ -6,7 +6,12 @@ import { FakeApiService } from '../../api/fake-api.service';
 import { ApiService } from '../../api/api.service';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { takeUntil, debounceTime, switchMap, map } from 'rxjs/operators';
-import { KladrService, BaseResponse, ContentType, SearchContext } from 'angular-kladr';
+import {
+  KladrService,
+  BaseResponse,
+  ContentType,
+  SearchContext
+} from 'angular-kladr';
 
 export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
 
@@ -17,6 +22,7 @@ export class RegistrationService {
   public loading = false;
   public mainPassportUrl;
   public secondPassportUrl;
+  public registrationPageUrl;
   public passportImageForm: FormGroup;
   public mainPassportForm: FormGroup;
   public registrationPassportForm: FormGroup;
@@ -41,11 +47,7 @@ export class RegistrationService {
   private readonly attempts_factor = 9913;
   private readonly attempts_add = 76712;
 
-  readonly ALLOWED_EXTENSIONS = [
-    'jpg',
-    'png',
-    'jpeg'
-  ];
+  readonly ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg'];
 
   private ngUnsubscribe = new Subject<void>();
 
@@ -57,13 +59,22 @@ export class RegistrationService {
   ) {
     this.passportImageForm = this.fb.group({
       mainPassport: [
-        '', [
+        '',
+        [
           Validators.required,
           CustomValidators.imageExtensions(this.ALLOWED_EXTENSIONS)
         ]
       ],
       secondPassport: [
-        '', [
+        '',
+        [
+          Validators.required,
+          CustomValidators.imageExtensions(this.ALLOWED_EXTENSIONS)
+        ]
+      ],
+      registrationPage: [
+        '',
+        [
           Validators.required,
           CustomValidators.imageExtensions(this.ALLOWED_EXTENSIONS)
         ]
@@ -75,23 +86,13 @@ export class RegistrationService {
       patronymic: ['', Validators.required],
       gender: ['', Validators.required],
       dateOfBirth: [new Date(), Validators.required],
-      serialNumber: [
-        '', [
-          Validators.required,
-          Validators.minLength(10),
-        ]
-      ],
+      serialNumber: ['', [Validators.required, Validators.minLength(10)]],
       placeOfIssue: ['', Validators.required],
       dateOfIssue: ['', Validators.required],
-      issuerCode: [
-        '', [
-          Validators.required,
-          Validators.minLength(6)
-        ]
-      ]
+      issuerCode: ['', [Validators.required, Validators.minLength(6)]]
     });
 
-    this.mainPassportForm.valueChanges.subscribe((data) => {
+    this.mainPassportForm.valueChanges.subscribe(data => {
       console.log(this.mainPassportForm);
     });
 
@@ -110,7 +111,9 @@ export class RegistrationService {
 
   public getToken(): string {
     const token = localStorage.getItem(this.USER_TOKEN_KEY);
-    return typeof token !== 'undefined' && token && token !== 'undefined' ? token : '';
+    return typeof token !== 'undefined' && token && token !== 'undefined'
+      ? token
+      : '';
   }
 
   getMainRecognizedData() {
@@ -131,7 +134,7 @@ export class RegistrationService {
     return this.api.sendFile(file);
   }
 
-  postRegula(){
+  postRegula() {
     const body = {
       base64Image: this.mainPassportUrl,
       imageExtension: 'png'
@@ -161,7 +164,10 @@ export class RegistrationService {
   }
 
   setExpiringSeconds(seconds) {
-    localStorage.setItem(this.SMS_EXPIRING_TIME_KEY, (new Date().getTime() + seconds * 1000).toString());
+    localStorage.setItem(
+      this.SMS_EXPIRING_TIME_KEY,
+      (new Date().getTime() + seconds * 1000).toString()
+    );
   }
 
   getExpiringSeconds(): number {
@@ -176,7 +182,10 @@ export class RegistrationService {
   }
 
   getAttempts(): number {
-    const attempts = (Number(localStorage.getItem(this.SMS_ATTEMPTS_KEY)) - this.attempts_add) / this.attempts_factor;
+    const attempts =
+      (Number(localStorage.getItem(this.SMS_ATTEMPTS_KEY)) -
+        this.attempts_add) /
+      this.attempts_factor;
     return attempts;
   }
 
