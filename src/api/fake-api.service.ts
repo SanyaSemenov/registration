@@ -37,7 +37,7 @@ export class FakeApiService {
         const seconds = Math.floor(Math.random() * 50 + 30);
         const response: SmsResponse = {
           attempts: 5,
-          expiringSeconds: seconds
+          // expiringSeconds: seconds
         };
         resolve(response);
       }, 2000);

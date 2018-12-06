@@ -1,5 +1,5 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpUserEvent, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -37,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (req.headers.get('No-Auth') === 'True') {
       const clonedreq = req.clone();
       console.log('no-auth-headers', clonedreq.headers.getAll('No-Auth'));
-      return next.handle(clonedreq).pipe(tap(succ => {}, err => {}));
+      return next.handle(clonedreq).pipe(tap(succ => { }, err => { }));
     }
     const storageToken = localStorage.getItem(this.tokenKey);
 
@@ -50,15 +50,15 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(clonedreq)
         .pipe(
           tap(
-            succ => { },
+            succ => { this.service$.behaviorSmsError.next(null); },
             err => {
+              this.service$.behaviorSmsError.next(err);
               if (err.status === 401) {
                 // this.router.navigateByUrl('/login');
               }
               if (err.status === 403) {
                 // this.router.navigateByUrl('/login');
               }
-
               // localStorage.removeItem(this.tokenKey);
               // localStorage.removeItem('userRoles');
             }

@@ -1,4 +1,4 @@
 export class SmsResponse {
-  expiringSeconds: number;
-  attempts: number;
+  expiringDate?: string;
+  attempts?: number;
 }

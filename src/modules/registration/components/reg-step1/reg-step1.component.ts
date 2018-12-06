@@ -19,7 +19,7 @@ export class RegStep1Component implements OnInit {
     private fb: FormBuilder,
     public service$: RegistrationService,
     private location: LocationStateService
-  ) {}
+  ) { }
 
   // tslint:disable-next-line:no-output-on-prefix
   @Output('onNavigate')
@@ -74,6 +74,9 @@ export class RegStep1Component implements OnInit {
   }
 
   convertDate(date: string): string {
+    if (!date) {
+      return null;
+    }
     const components = date.split('/');
     const output = [];
     output.push(components[2]);
@@ -148,16 +151,34 @@ export class RegStep1Component implements OnInit {
             (data: any) => {
               this.service$.recognitionError = false;
               if (!this.service$.mainPassportData) {
-                this.service$.mainPassportData = {} as MainPassportData;
+                this.service$.mainPassportData = new MainPassportData();
               }
-              Object.keys(data).forEach(key => {
-                if (data[key] !== null && typeof data[key] !== 'undefined') {
-                  this.service$.mainPassportData[key] =
-                    typeof data[key] === 'string'
-                      ? data[key].toLowercase()
-                      : data[key];
+              const obj = {
+                name: data.firstName ? data.firstName.toLowerCase() : '',
+                surname: data.surName ? data.surName.toLowerCase() : '',
+                patronymic: data.patronymic ? data.patronymic.toLowerCase() : '',
+                dateOfBirth: this.convertDate(data.dateOfBirth),
+                gender: data.gender ? data.gender.toLowerCase() : '',
+                serialNumber: data.serialNumber,
+                dateOfIssue: this.convertDate(data.dateOfIssue),
+                placeOfIssue: data.placeOfIssue,
+                issuerCode: data.issuerCode
+              };
+              Object.keys(obj).forEach(key => {
+                if (!obj[key]) {
+                  delete obj[key];
                 }
               });
+              this.service$.mainPassportData = Object.assign<MainPassportData, any>(this.service$.mainPassportData, obj);
+              // Object.keys(data).forEach(key => {
+              //   if (data[key] !== null && typeof data[key] !== 'undefined') {
+              //     this.service$.mainPassportData[key] =
+              //       typeof data[key] === 'string'
+              //         ? data[key].toLowercase()
+              //         : data[key];
+              //   }
+              // });
+              this.service$.setPassportDataIntoStorage();
               if (this.service$.loading) {
                 this.service$.mainPassportForm.patchValue(
                   this.service$.mainPassportData
@@ -170,8 +191,7 @@ export class RegStep1Component implements OnInit {
               this.service$.recognitionError = true;
               this.service$.behaviorRecognitionError.next(true);
               this.service$.loading = false;
-            }
-          );
+            });
       };
     }
     console.log(this.form);

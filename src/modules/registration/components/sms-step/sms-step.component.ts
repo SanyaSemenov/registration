@@ -2,7 +2,9 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { RegistrationService } from '../../registration.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
+import { SmsResponse } from '../../../../api/sms-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-sms-step',
@@ -41,6 +43,7 @@ export class SmsStepComponent implements OnInit {
   private readonly ERROR_SMS_ATTEMPTS = 'Количество попыток ввода израсходовано';
   private readonly ERROR_SMS_WRONG = 'Неверно введенный код';
   private readonly ERROR_SMS_INTERNAL = 'Произошла ошибка при попытке отправить введенный код';
+  private readonly ERROR_SMS_NOT_ALLOWED = 'Вы ввели неверный код, либо он более не действителен';
 
   set isCodeRecieved(value: boolean) {
     this._isCodeRecieved = value;
@@ -62,6 +65,18 @@ export class SmsStepComponent implements OnInit {
     if (!this.service$.getSmsState()) {
       this.service$.setSmsState(this.service$.SMS_STATE_INIT);
     }
+    this.service$.behaviorSmsError
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((error: HttpErrorResponse) => {
+        console.log(error);
+        if (error) {
+          if (error.status === 400) {
+            this.error = this.ERROR_SMS_NOT_ALLOWED;
+          } else {
+            this.error = this.ERROR_SMS_INTERNAL;
+          }
+        }
+      })
     // this.isCodeRecieved = this.service$.getSmsState();
     this.leftSeconds = this.service$.getExpiringSeconds();
     this.attempts = this.service$.getAttempts();
@@ -98,50 +113,78 @@ export class SmsStepComponent implements OnInit {
     //   }, (error: any) => {
     //     this.isLoading = false;
     //   });
+    // this.service$.getCode(this.phoneForm.value.phoneNumber)
+    //   .then(resolve => {
+    //     // this.expiringSeconds = resolve.expiringSeconds;
+    //     this.leftSeconds = resolve.expiringSeconds;
+    //     this.attempts = resolve.attempts;
+    //     this.service$.setAttempts(this.attempts);
+    //     this.service$.setExpiringSeconds(this.leftSeconds);
+    //     // this.isCodeRecieved = true;
+    //     this.service$.setSmsState(this.service$.SMS_STATE_RECIEVED);
+    //     this.isLoading = false;
+    //     this.setTimer();
+    //   }, reject => {
+    //     this.isLoading = false;
+    //   });
     this.service$.getCode(this.phoneForm.value.phoneNumber)
-      .then(resolve => {
-        // this.expiringSeconds = resolve.expiringSeconds;
-        this.leftSeconds = resolve.expiringSeconds;
-        this.attempts = resolve.attempts;
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe((data: SmsResponse) => {
+        if (data.expiringDate) {
+          this.service$.setExpiringSeconds(data.expiringDate);
+          this.leftSeconds = this.service$.getExpiringSeconds();
+          this.setTimer();
+        }
+        this.attempts = data.attempts;
         this.service$.setAttempts(this.attempts);
-        this.service$.setExpiringSeconds(this.leftSeconds);
         // this.isCodeRecieved = true;
         this.service$.setSmsState(this.service$.SMS_STATE_RECIEVED);
         this.isLoading = false;
-        this.setTimer();
-      }, reject => {
-        this.isLoading = false;
-      });
+      },
+        (error: any) => {
+          this.isLoading = false;
+        });
   }
 
   sendCode(event) {
-    if (this.attempts) {
-      this.attempts--;
-      this.service$.setAttempts(this.attempts);
-      if (this.attempts < 1) {
-        this.service$.setSmsState(this.service$.SMS_STATE_ATTEMPTS_WASTED);
-        this.update();
-        this.error = this.ERROR_SMS_ATTEMPTS;
-      } else {
-        this.isLoading = true;
-        this.service$.sendCode(this.codeForm.value.code)
-          .pipe(
-            takeUntil(this.ngUnsubscribe)
-          )
-          .subscribe((success: any) => {
+    // if (this.attempts) {
+    // this.attempts--;
+    // this.service$.setAttempts(this.attempts);
+    this.attempts = 4;
+    if (this.attempts < 1) {
+      this.service$.setSmsState(this.service$.SMS_STATE_ATTEMPTS_WASTED);
+      this.update();
+      this.error = this.ERROR_SMS_ATTEMPTS;
+    } else {
+      this.isLoading = true;
+      this.service$.sendCode(this.codeForm.value.code)
+        .pipe(
+          takeUntil(this.ngUnsubscribe)
+        )
+        .subscribe((response: any) => {
+          if (response.correct) {
             this.isLoading = false;
             this.update();
             this.onNavigate.emit(true);
-          }, (error: any) => {
+          } else {
             this.isLoading = false;
-            if (error.code === 400) {
-              this.error = this.ERROR_SMS_WRONG;
-            } else {
-              this.error = this.ERROR_SMS_INTERNAL;
-            }
-          });
-      }
+            this.error = this.ERROR_SMS_NOT_ALLOWED;
+          }
+        }, err => console.log(err));
+      // }, (error: any) => {
+      //   console.log(error);
+      //   this.isLoading = false;
+      //   if (error.code === 400) {
+      //     this.error = this.ERROR_SMS_WRONG;
+      //     console.log(error);
+      //   } else {
+      //     this.error = this.ERROR_SMS_INTERNAL;
+      //   }
+      // });
     }
+    // }
   }
 
   setTimer() {

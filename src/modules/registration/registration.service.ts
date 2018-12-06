@@ -12,6 +12,7 @@ import {
   ContentType,
   SearchContext
 } from 'angular-kladr';
+import { SmsResponse } from '../../api/sms-response';
 
 export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
 
@@ -33,6 +34,7 @@ export class RegistrationService {
   public PAGE2KEY: string;
   public PAGE3KEY: string;
   public behaviorRecognitionError = new BehaviorSubject<boolean>(false);
+  public behaviorSmsError = new BehaviorSubject<any>(null);
   public readonly SMS_STATE_RECIEVED = 'SMS_STATE_RECIEVED';
   public readonly SMS_STATE_INIT = 'SMS_STATE_INIT';
   public readonly SMS_STATE_EXPIRED = 'SMS_STATE_EXPIRED';
@@ -41,6 +43,7 @@ export class RegistrationService {
   public readonly SMS_EXPIRING_TIME_KEY = 'SMS_EXPIRING_TIME_KEY';
   public readonly SMS_ATTEMPTS_KEY = 'SMS_ATTEMPTS_KEY';
   public readonly USER_TOKEN_KEY = 'USER_TOKEN_KEY';
+  public readonly PASSPORT_KEY = 'PASSPORT_KEY';
 
   public readonly DEBOUNCE_TIME = 100;
 
@@ -142,13 +145,15 @@ export class RegistrationService {
     return this.api.postRegula(body);
   }
 
-  getCode(phoneNumber) {
+  getCode(phoneNumber): Observable<SmsResponse> {
     // TODO: заменить на реальную апишку
-    return this.apiService.getCode(phoneNumber);
+    // return this.apiService.getCode(phoneNumber);
+    return this.api.getCode(phoneNumber);
   }
 
   sendCode(code) {
-    return this.apiService.sendCode(code);
+    // return this.apiService.sendCode(code);
+    return this.api.sendCode(code);
   }
 
   setSmsState(state: string) {
@@ -163,10 +168,10 @@ export class RegistrationService {
     return localStorage.getItem(this.SMS_STATE_KEY) === this.SMS_STATE_INIT;
   }
 
-  setExpiringSeconds(seconds) {
+  setExpiringSeconds(date) {
     localStorage.setItem(
       this.SMS_EXPIRING_TIME_KEY,
-      (new Date().getTime() + seconds * 1000).toString()
+      (new Date(date).getTime()).toString()
     );
   }
 
@@ -187,6 +192,16 @@ export class RegistrationService {
         this.attempts_add) /
       this.attempts_factor;
     return attempts;
+  }
+
+  setPassportDataIntoStorage() {
+    const json = JSON.stringify(this.mainPassportData);
+    localStorage.setItem(this.PASSPORT_KEY, json);
+  }
+
+  getPassportDataFromStorage() {
+    const data = JSON.parse(localStorage.getItem(this.PASSPORT_KEY));
+    return data;
   }
 
   // KLADR API

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RequestParameter } from './request-parameter';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 const rootUrl = 'https://ch.invend.ru/api';
 
@@ -34,5 +34,19 @@ export class ApiService {
     const formData = new FormData();
     formData.append('file', file);
     return this.http.post(rootUrl + '/file', formData);
+  }
+
+  getCode(phoneNumber): Observable<any> {
+    const body = {
+      phoneNumber: phoneNumber
+    };
+    return this.http.post(rootUrl + '/confirmation', body);
+  }
+
+  sendCode(code) {
+    const body = {
+      code: code
+    };
+    return this.http.put(rootUrl + '/confirmation', body);
   }
 }

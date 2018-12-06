@@ -1,6 +1,6 @@
 import { MainPassportData, Gender } from '../modules/registration/lib/models';
 
-export const mainPassportData: MainPassportData = {
+export const mainPassportData: MainPassportData = Object.assign(new MainPassportData(), {
   name: 'Константин',
   surname: 'Константинов',
   patronymic: 'Константинович',
@@ -11,4 +11,4 @@ export const mainPassportData: MainPassportData = {
   dateOfIssue: new Date(2010, 2, 1, 0, 0, 0, 0).toISOString().substring(0, 10),
   placeOfIssue: 'ГУ МВД России по г.Москве',
   issuerCode: '210-098'
-};
+});
