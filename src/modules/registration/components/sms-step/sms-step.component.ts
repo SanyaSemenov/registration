@@ -1,10 +1,11 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { RegistrationService } from '../../registration.service';
-import { takeUntil, map } from 'rxjs/operators';
-import { SmsResponse } from '../../../../api/sms-response';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { SmsResponse } from 'src/api/sms-response';
+import { RegistrationService } from '../../registration.service';
 
 @Component({
   selector: 'app-sms-step',
@@ -12,11 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./sms-step.component.less']
 })
 export class SmsStepComponent implements OnInit {
-
-  constructor(
-    private fb: FormBuilder,
-    private service$: RegistrationService
-  ) {
+  constructor(private fb: FormBuilder, private service$: RegistrationService) {
     this.phoneForm = this.fb.group({
       phoneNumber: ['', [Validators.required, Validators.minLength(10)]]
     });
@@ -36,19 +33,22 @@ export class SmsStepComponent implements OnInit {
   public leftSeconds: number;
   public attempts: number;
   public _isCodeRecieved = false;
-  public error: string;
+  public _error: string;
   private secondsInterval;
 
   private readonly ERROR_SMS_EXPIRED = 'Время действия кода истекло';
-  private readonly ERROR_SMS_ATTEMPTS = 'Количество попыток ввода израсходовано';
+  private readonly ERROR_SMS_ATTEMPTS =
+    'Количество попыток ввода израсходовано';
   private readonly ERROR_SMS_WRONG = 'Неверно введенный код';
-  private readonly ERROR_SMS_INTERNAL = 'Произошла ошибка при попытке отправить введенный код';
-  private readonly ERROR_SMS_NOT_ALLOWED = 'Вы ввели неверный код, либо он более не действителен';
+  private readonly ERROR_SMS_INTERNAL =
+    'Произошла ошибка при попытке отправить введенный код';
+  private readonly ERROR_SMS_NOT_ALLOWED =
+    'Вы ввели неверный код, либо он более не действителен';
 
   set isCodeRecieved(value: boolean) {
     this._isCodeRecieved = value;
     if (!this.isCodeRecieved) {
-      this.error = '';
+      // this.error = '';
     }
   }
 
@@ -56,9 +56,20 @@ export class SmsStepComponent implements OnInit {
     // return this._isCodeRecieved;
     const isRecieved = this.service$.getSmsState();
     if (this.service$.isInit() || this.service$.getSmsState()) {
-      this.error = '';
+      // this.error = '';
     }
     return isRecieved;
+  }
+
+  set error(value: string) {
+    if(value) {
+      // TODO: написать хрень, которая стирает номер телефона
+    }
+    this._error = value;
+  }
+
+  get error(): string {
+    return this._error;
   }
 
   ngOnInit() {
@@ -76,7 +87,7 @@ export class SmsStepComponent implements OnInit {
             this.error = this.ERROR_SMS_INTERNAL;
           }
         }
-      })
+      });
     // this.isCodeRecieved = this.service$.getSmsState();
     this.leftSeconds = this.service$.getExpiringSeconds();
     this.attempts = this.service$.getAttempts();
@@ -89,6 +100,13 @@ export class SmsStepComponent implements OnInit {
       }
       this.setTimer();
     }
+    this.phoneForm.controls.phoneNumber.valueChanges
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(val => {
+        if (this.error) {
+          this.error = '';
+        }
+      });
   }
 
   update() {
@@ -127,25 +145,26 @@ export class SmsStepComponent implements OnInit {
     //   }, reject => {
     //     this.isLoading = false;
     //   });
-    this.service$.getCode(this.phoneForm.value.phoneNumber)
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe((data: SmsResponse) => {
-        if (data.expiringDate) {
-          this.service$.setExpiringSeconds(data.expiringDate);
-          this.leftSeconds = this.service$.getExpiringSeconds();
-          this.setTimer();
-        }
-        this.attempts = data.attempts;
-        this.service$.setAttempts(this.attempts);
-        // this.isCodeRecieved = true;
-        this.service$.setSmsState(this.service$.SMS_STATE_RECIEVED);
-        this.isLoading = false;
-      },
+    this.service$
+      .getCode(this.phoneForm.value.phoneNumber)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (data: SmsResponse) => {
+          if (data.expiringDate) {
+            this.service$.setExpiringSeconds(data.expiringDate);
+            this.leftSeconds = this.service$.getExpiringSeconds();
+            this.setTimer();
+          }
+          this.attempts = data.attempts;
+          this.service$.setAttempts(this.attempts);
+          // this.isCodeRecieved = true;
+          this.service$.setSmsState(this.service$.SMS_STATE_RECIEVED);
+          this.isLoading = false;
+        },
         (error: any) => {
           this.isLoading = false;
-        });
+        }
+      );
   }
 
   sendCode(event) {
@@ -159,20 +178,22 @@ export class SmsStepComponent implements OnInit {
       this.error = this.ERROR_SMS_ATTEMPTS;
     } else {
       this.isLoading = true;
-      this.service$.sendCode(this.codeForm.value.code)
-        .pipe(
-          takeUntil(this.ngUnsubscribe)
-        )
-        .subscribe((response: any) => {
-          if (response.correct) {
-            this.isLoading = false;
-            this.update();
-            this.onNavigate.emit(true);
-          } else {
-            this.isLoading = false;
-            this.error = this.ERROR_SMS_NOT_ALLOWED;
-          }
-        }, err => console.log(err));
+      this.service$
+        .sendCode(this.codeForm.value.code)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (response: any) => {
+            if (response.correct) {
+              this.isLoading = false;
+              this.update();
+              this.onNavigate.emit(true);
+            } else {
+              this.isLoading = false;
+              this.error = this.ERROR_SMS_NOT_ALLOWED;
+            }
+          },
+          err => console.log(err)
+        );
       // }, (error: any) => {
       //   console.log(error);
       //   this.isLoading = false;

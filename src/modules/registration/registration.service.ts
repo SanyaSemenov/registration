@@ -43,6 +43,7 @@ export class RegistrationService {
   public readonly SMS_EXPIRING_TIME_KEY = 'SMS_EXPIRING_TIME_KEY';
   public readonly SMS_ATTEMPTS_KEY = 'SMS_ATTEMPTS_KEY';
   public readonly USER_TOKEN_KEY = 'USER_TOKEN_KEY';
+  public readonly RESERVATION_ID_KEY = 'RESERVATION_ID_KEY';
   public readonly PASSPORT_KEY = 'PASSPORT_KEY';
 
   public readonly DEBOUNCE_TIME = 100;
@@ -117,6 +118,15 @@ export class RegistrationService {
     return typeof token !== 'undefined' && token && token !== 'undefined'
       ? token
       : '';
+  }
+
+  public setReservationId(id: number){
+    localStorage.setItem(this.RESERVATION_ID_KEY, id.toString());
+  }
+
+  public getReservationId(): number{
+    return +localStorage.getItem(this.RESERVATION_ID_KEY);
+    // TODO: сделать проверку и выкидывать пользователя без айдишника
   }
 
   getMainRecognizedData() {

@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
-import { RegStep1Component, RegStep2Component, RegStep3Component, MainComponent } from './components';
-import { TokenResolver } from 'src/resolvers/token.resolver';
+import { DecodeResolver, TokenResolver } from 'src/resolvers';
+
 import { AuthGuard } from '../_auth/auth.guard';
+import { MainComponent } from './components';
 
 
 export const routes: Routes = [
@@ -23,7 +24,8 @@ export const routes: Routes = [
     path: 'registration/:token',
     component: MainComponent,
     resolve: {
-      token: TokenResolver
+      token: TokenResolver,
+      decoded: DecodeResolver
     }
   },
   {
