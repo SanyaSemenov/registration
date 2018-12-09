@@ -25,7 +25,7 @@ export const routes: Routes = [
     component: MainComponent,
     resolve: {
       token: TokenResolver,
-      decoded: DecodeResolver
+      // decoded: DecodeResolver
     }
   },
   {

@@ -40,6 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KladrModule } from 'angular-kladr';
 import { TokenResolver } from 'src/resolvers/token.resolver';
 import { AuthModule } from '../_auth/auth.module';
+import { DecodeResolver } from '../../resolvers';
 
 @NgModule({
   imports: [
@@ -84,7 +85,8 @@ import { AuthModule } from '../_auth/auth.module';
     LocationStateService,
     FakeApiService,
     ApiService,
-    TokenResolver
+    TokenResolver,
+    DecodeResolver
   ],
   entryComponents: [
     SignatureDialogComponent,

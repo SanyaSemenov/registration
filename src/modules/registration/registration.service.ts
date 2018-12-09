@@ -44,6 +44,7 @@ export class RegistrationService {
   public readonly SMS_ATTEMPTS_KEY = 'SMS_ATTEMPTS_KEY';
   public readonly USER_TOKEN_KEY = 'USER_TOKEN_KEY';
   public readonly RESERVATION_ID_KEY = 'RESERVATION_ID_KEY';
+  public readonly TOKEN_EXPIRING_KEY = 'TOKEN_EXPIRING_KEY';
   public readonly PASSPORT_KEY = 'PASSPORT_KEY';
 
   public readonly DEBOUNCE_TIME = 100;
@@ -120,13 +121,20 @@ export class RegistrationService {
       : '';
   }
 
-  public setReservationId(id: number){
+  public setReservationId(id: number) {
     localStorage.setItem(this.RESERVATION_ID_KEY, id.toString());
   }
 
-  public getReservationId(): number{
+  public getReservationId(): number {
     return +localStorage.getItem(this.RESERVATION_ID_KEY);
-    // TODO: сделать проверку и выкидывать пользователя без айдишника
+  }
+
+  public setExiringDate(time: number) {
+    localStorage.setItem(this.TOKEN_EXPIRING_KEY, time.toString());
+  }
+
+  public getExiringDate(): number {
+    return +localStorage.getItem(this.TOKEN_EXPIRING_KEY);
   }
 
   getMainRecognizedData() {
@@ -156,13 +164,10 @@ export class RegistrationService {
   }
 
   getCode(phoneNumber): Observable<SmsResponse> {
-    // TODO: заменить на реальную апишку
-    // return this.apiService.getCode(phoneNumber);
     return this.api.getCode(phoneNumber);
   }
 
   sendCode(code) {
-    // return this.apiService.sendCode(code);
     return this.api.sendCode(code);
   }
 
