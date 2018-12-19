@@ -142,44 +142,45 @@ export class SmsStepComponent implements OnInit {
   }
 
   sendCode(event) {
-    if (this.attempts) {
-      this.attempts--;
-      this.service$.setAttempts(this.attempts);
-      this.attempts = 4;
-      if (this.attempts < 1) {
-        this.service$.setSmsState(this.service$.SMS_STATE_ATTEMPTS_WASTED);
-        this.update();
-        this.error = this.ERROR_SMS_ATTEMPTS;
-      } else {
-        this.isLoading = true;
-        this.service$
-          .sendCode(this.codeForm.value.code)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe(
-            (response: any) => {
-              if (response.correct) {
-                this.isLoading = false;
-                this.update();
-                this.onNavigate.emit(true);
-              } else {
-                this.isLoading = false;
-                this.error = this.ERROR_SMS_NOT_ALLOWED;
-              }
-            },
-            err => console.log(err)
-          );
-        // }, (error: any) => {
-        //   console.log(error);
-        //   this.isLoading = false;
-        //   if (error.code === 400) {
-        //     this.error = this.ERROR_SMS_WRONG;
-        //     console.log(error);
-        //   } else {
-        //     this.error = this.ERROR_SMS_INTERNAL;
-        //   }
-        // });
-      }
-    }
+    // if (this.attempts) {
+    //   this.attempts--;
+    //   this.service$.setAttempts(this.attempts);
+    //   this.attempts = 4;
+    //   if (this.attempts < 1) {
+    //     this.service$.setSmsState(this.service$.SMS_STATE_ATTEMPTS_WASTED);
+    //     this.update();
+    //     this.error = this.ERROR_SMS_ATTEMPTS;
+    //   } else {
+    this.isLoading = true;
+    this.service$
+      .sendCode(this.codeForm.value.code)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (response: any) => {
+          if (response.correct) {
+            this.isLoading = false;
+            this.update();
+            this.onNavigate.emit(true);
+          } else {
+            this.isLoading = false;
+            this.error = this.ERROR_SMS_NOT_ALLOWED;
+          }
+        },
+        err => console.log(err)
+      );
+    // }, (error: any) => {
+    //   console.log(error);
+    //   this.isLoading = false;
+    //   if (error.code === 400) {
+    //     this.error = this.ERROR_SMS_WRONG;
+    //     console.log(error);
+    //   } else {
+    //     this.error = this.ERROR_SMS_INTERNAL;
+    //   }
+    // });
+
+    //   }
+    // }
   }
 
   setTimer() {
