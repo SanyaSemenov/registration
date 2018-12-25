@@ -1,40 +1,22 @@
-<ng-container *ngIf="$service.loading">
-  <!-- <div class="preloader-container">
-
-    <div class="preloader-wrapper big active">
-
-      <div class="spinner-layer spinner-blue-only">
-        <div class="circle-clipper left">
-          <div class="circle"></div>
-        </div>
-        <div class="gap-patch">
-          <div class="circle"></div>
-        </div>
-        <div class="circle-clipper right">
-          <div class="circle"></div>
-        </div>
-      </div>
-
-    </div>
-
-  </div> -->
+<ng-container *ngIf="service$.loading">
   <app-loader></app-loader>
 </ng-container>
-<div class="regStep2" *ngIf="!$service.loading">
+<div class="regStep2" *ngIf="!service$.loading">
   <form [formGroup]="form" class="regStep2__wrapper">
     <div class="regStep2__title demibold">
       {{heading}}
     </div>
     <div class="input-field regStep2__inputGroup">
-      <input type="text" formControlName="name" name="name" id="name" class="regStep2__input" autofocus>
-      <label for="name" class="regStep2__label" [class.active]="isFilled">Имя<span class="text-red">*</span></label>
+      <input type="text" formControlName="firstName" name="firstName" id="firstName" class="regStep2__input text--capitalize"
+        autofocus>
+      <label for="firstName" class="regStep2__label" [class.active]="isFilled">Имя<span class="text-red">*</span></label>
     </div>
     <div class="input-field regStep2__inputGroup">
-      <input type="text" formControlName="surname" name="surname" id="surname" class="regStep2__input">
+      <input type="text" formControlName="surname" name="surname" id="surname" class="regStep2__input  text--capitalize">
       <label for="surname" class="regStep2__label" [class.active]="isFilled">Фамилия<span class="text-red">*</span></label>
     </div>
     <div class="input-field regStep2__inputGroup">
-      <input type="text" formControlName="patronymic" name="patronymic" id="patronymic" class="regStep2__input">
+      <input type="text" formControlName="patronymic" name="patronymic" id="patronymic" class="regStep2__input text--capitalize">
       <label for="middlNname" class="regStep2__label" [class.active]="isFilled">Отчество<span class="text-red">*</span></label>
     </div>
     <mat-form-field [class.label-active]="form.controls['gender']?.value">
@@ -50,14 +32,18 @@
       <label for="dateOfBirth" class="regStep2__label active">Дата рождения<span class="text-red">*</span></label>
     </div>
     <div class="input-field regStep2__inputGroup">
+      <input type="text" class="regStep2__input" formControlName="placeOfBirth" name="placeOfBirth" id="placeOfBirth">
+      <label for="placeOfBirth" class="regStep2__label" [class.active]="isFilled">Место рождения<span class="text-red">*</span></label>
+    </div>
+    <div class="input-field regStep2__inputGroup">
       <input type="text" formControlName="serialNumber" name="serialNumber" id="serialNumber" [showMaskTyped]="showPassportMaskType"
         mask='0000 000000' class="regStep2__input" (focus)="showPassportMaskType = true" (blur)="showPassportMaskType = false">
       <label for="serialNumber" class="regStep2__label" [class.active]="isFilled">Серия и номер паспорта<span class="text-red">*</span></label>
     </div>
 
     <div class="input-field regStep2__inputGroup">
-      <input type="text" formControlName="placeOfIssue" name="placeOfIssue" id="placeOfIssue" class="regStep2__input">
-      <label for="placeOfIssue" class="regStep2__label" [class.active]="isFilled">Кем выдан<span class="text-red">*</span></label>
+      <input type="text" formControlName="issuedBy" name="issuedBy" id="issuedBy" class="regStep2__input">
+      <label for="issuedBy" class="regStep2__label" [class.active]="isFilled">Кем выдан<span class="text-red">*</span></label>
     </div>
     <div class="input-field regStep2__inputGroup">
       <input type="date" class="regStep2__input regStep2__dateInput" formControlName="dateOfIssue" name="dateOfIssue"

@@ -5,7 +5,6 @@ import { MainPassportData } from './lib';
 import { FakeApiService } from '../../api/fake-api.service';
 import { ApiService } from '../../api/api.service';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
-import { takeUntil, debounceTime, switchMap, map } from 'rxjs/operators';
 import {
   KladrService,
   BaseResponse,
@@ -13,6 +12,7 @@ import {
   SearchContext
 } from 'angular-kladr';
 import { SmsResponse } from '../../api/sms-response';
+import { takeUntil } from 'rxjs/operators';
 
 export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
 
@@ -20,7 +20,6 @@ export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
   providedIn: 'root'
 })
 export class RegistrationService {
-  public loading = false;
   public mainPassportUrl;
   public secondPassportUrl;
   public registrationPageUrl;
@@ -30,9 +29,14 @@ export class RegistrationService {
   public mainPassportData: MainPassportData;
   public mainPassportDataFilled = false;
   public recognitionError = false;
-  public PAGE1KEY: string;
-  public PAGE2KEY: string;
-  public PAGE3KEY: string;
+  private _PAGE1KEY: string;
+  private _PAGE2KEY: string;
+  private _PAGE3KEY: string;
+  public isMainLoading = false;
+  public isSecondLoading = false;
+  public isMainRequestLoading = false;
+  public isSecondRequestLoading = false;
+  public isRegRequestLoading = false;
   public behaviorRecognitionError = new BehaviorSubject<boolean>(false);
   public behaviorSmsError = new BehaviorSubject<any>(null);
   public readonly SMS_STATE_RECIEVED = 'SMS_STATE_RECIEVED';
@@ -52,7 +56,7 @@ export class RegistrationService {
   private readonly attempts_factor = 9913;
   private readonly attempts_add = 76712;
 
-  readonly ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg'];
+  readonly ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg', 'bpm'];
 
   private ngUnsubscribe = new Subject<void>();
 
@@ -62,6 +66,7 @@ export class RegistrationService {
     private api: ApiService,
     private kladr$: KladrService
   ) {
+    this.mainPassportData = { ...this.getPassportDataFromStorage() };
     this.passportImageForm = this.fb.group({
       mainPassport: [
         '',
@@ -86,19 +91,16 @@ export class RegistrationService {
       ]
     });
     this.mainPassportForm = this.fb.group({
-      name: ['', Validators.required],
+      firstName: ['', Validators.required],
       surname: ['', Validators.required],
       patronymic: ['', Validators.required],
       gender: ['', Validators.required],
       dateOfBirth: [new Date(), Validators.required],
+      placeOfBirth: ['', Validators.required],
       serialNumber: ['', [Validators.required, Validators.minLength(10)]],
-      placeOfIssue: ['', Validators.required],
+      issuedBy: ['', Validators.required],
       dateOfIssue: ['', Validators.required],
       issuerCode: ['', [Validators.required, Validators.minLength(6)]]
-    });
-
-    this.mainPassportForm.valueChanges.subscribe(data => {
-      console.log(this.mainPassportForm);
     });
 
     this.registrationPassportForm = this.fb.group({
@@ -108,6 +110,46 @@ export class RegistrationService {
       buildingNumber: ['', Validators.required],
       apartment: ['']
     });
+  }
+
+  get PAGE1KEY(): string {
+    return this._PAGE1KEY;
+  }
+
+  set PAGE1KEY(value: string) {
+    this._PAGE1KEY = value;
+    if (!this.mainPassportData) {
+      this.mainPassportData = new MainPassportData();
+    }
+    this.mainPassportData.page1 = value;
+  }
+
+  get PAGE2KEY(): string {
+    return this._PAGE2KEY;
+  }
+
+  set PAGE2KEY(value: string) {
+    this._PAGE2KEY = value;
+    if (!this.mainPassportData) {
+      this.mainPassportData = new MainPassportData();
+    }
+    this.mainPassportData.page2 = value;
+  }
+
+  get PAGE3KEY(): string {
+    return this._PAGE3KEY;
+  }
+
+  set PAGE3KEY(value: string) {
+    this._PAGE3KEY = value;
+    if (!this.mainPassportData) {
+      this.mainPassportData = new MainPassportData();
+    }
+    this.mainPassportData.page3 = value;
+  }
+
+  get loading() {
+    return this.isMainRequestLoading || this.isSecondRequestLoading;
   }
 
   public setToken(token) {
@@ -146,12 +188,20 @@ export class RegistrationService {
     this.mainPassportForm.reset();
   }
 
+  sendPassportData(): Observable<any> {
+    const registrationAddress = Object.keys(this.registrationPassportForm).join(',');
+    this.mainPassportData = { ...this.mainPassportData, ...this.mainPassportForm.value, registrationAddress: registrationAddress };
+    return this.api.sendPassport(this.mainPassportData);
+  }
+
   getPaymentAmount() {
     return this.apiService.getPaymentAmount();
   }
 
-  sendFile(file) {
-    this.loading = true;
+  sendFile(file, loader?) {
+    if (loader === true || loader === false) {
+      loader = true;
+    }
     return this.api.sendFile(file);
   }
 
@@ -226,7 +276,9 @@ export class RegistrationService {
       contentType: ContentType.region,
       query: query
     };
-    this.kladr$.api(context).subscribe(data => console.log(data));
+    this.kladr$.api(context)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => console.log(data));
     return this.kladr$.api(context);
   }
 

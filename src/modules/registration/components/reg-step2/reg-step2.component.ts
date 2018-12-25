@@ -1,10 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { RegistrationService } from '../../registration.service';
-import { MainPassportData } from '../../lib';
-import { M } from 'materialize-css';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reg-step2',
@@ -15,9 +13,9 @@ export class RegStep2Component implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public $service: RegistrationService
+    public service$: RegistrationService
   ) {
-    this.form = $service.mainPassportForm;
+    this.form = service$.mainPassportForm;
   }
 
   showPassportMaskType = false;
@@ -41,12 +39,12 @@ export class RegStep2Component implements OnInit {
   ];
   ngOnInit() {
     if (this.isFilled) {
-      if (this.$service.recognitionError) {
+      if (this.service$.recognitionError) {
         this.isFilled = false;
         alert('Не удалось распонать данные паспорта');
       }
     } else {
-      this.$service.clearMainPassportForm();
+      this.service$.clearMainPassportForm();
       this.form.reset();
     }
   }

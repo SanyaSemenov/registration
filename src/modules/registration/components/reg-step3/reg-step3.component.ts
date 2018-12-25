@@ -190,6 +190,17 @@ export class RegStep3Component implements OnInit {
 
   submitForm(event) {
     console.log(this.form.value);
-    this.onNavigate.emit(true);
+    this.service$.isMainRequestLoading = true;
+    this.service$.sendPassportData()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((data) => {
+        this.service$.isMainRequestLoading = false;
+        this.onNavigate.emit(true);
+      },
+        (error) => {
+          this.service$.isMainRequestLoading = false;
+          alert('Произошла ошибка при отправке данных');
+        }
+      );
   }
 }

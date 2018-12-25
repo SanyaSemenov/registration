@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocationState, State } from './location-state.model';
 import { RegistrationService } from '../registration.service';
+import { BehaviorSubject } from 'rxjs';
 
 const NAVIGATION_STATE_KEY = 'NAVIGATION_STATE_KEY';
 
@@ -8,12 +9,11 @@ const NAVIGATION_STATE_KEY = 'NAVIGATION_STATE_KEY';
   providedIn: 'root'
 })
 export class LocationStateService {
-  constructor(
-    private service$: RegistrationService
-  ) {
+  constructor() {
     this.updateLocation(false);
   }
   private location: LocationState;
+  public onInit = new BehaviorSubject<boolean>(false);
 
   public updateLocation(isInit: boolean) {
     if (isInit) {
@@ -28,7 +28,8 @@ export class LocationStateService {
   }
 
   private init() {
-    this.service$.setSmsState(this.service$.SMS_STATE_INIT);
+    this.onInit.next(true);
+
     this.location = new LocationState(State.sms);
     localStorage.setItem(NAVIGATION_STATE_KEY, this.currentLocation.state.toString());
   }

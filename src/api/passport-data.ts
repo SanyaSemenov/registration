@@ -9,6 +9,6 @@ export const mainPassportData: MainPassportData = Object.assign(new MainPassport
   // dateOfBirth: new Date(1990, 1, 1, 0, 0, 0, 0).toISOString().substring(0, 10),
   serialNumber: '7903555788',
   dateOfIssue: new Date(2010, 2, 1, 0, 0, 0, 0).toISOString().substring(0, 10),
-  placeOfIssue: 'ГУ МВД России по г.Москве',
+  issuedBy: 'ГУ МВД России по г.Москве',
   issuerCode: '210-098'
 });

@@ -2,20 +2,20 @@ import { Gender } from './gender.enum';
 
 export class MainPassportData {
   constructor() { }
-  name: string;
+  firstName: string;
   surname: string;
   patronymic: string;
   dateOfBirth: string;
-  // dateOfBirth: Date;
+  placeOfBirth: string;
   gender: Gender;
   serialNumber: string;
   dateOfIssue: string;
-  // dateOfIssue: Date;
-  placeOfIssue: string;
+  issuedBy: string;
   issuerCode: string;
   page1?: string;
   page2?: string;
   page3?: string;
+  registrationAddress: string;
 
   toDto() {
     const dto = Object.assign({}, this);

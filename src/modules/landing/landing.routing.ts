@@ -8,7 +8,10 @@ export const route: Routes = [
   {
     path: '',
     component: LandingComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      token: TokenResolver
+    }
   },
   {
     path: '404',

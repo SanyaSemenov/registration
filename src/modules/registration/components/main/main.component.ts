@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LocationState, State, LocationStateService } from '../../lib';
 import { RegistrationService } from '../../registration.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -17,12 +19,22 @@ export class MainComponent implements OnInit {
   ) { }
 
   isFilled = false;
+  private ngUnsubscribe = new Subject<void>();
 
   ngOnInit() {
     this.service$.setToken(this.route.snapshot.data['token']);
     // const decoded = this.route.snapshot.data['decoded'];
     // this.service$.setReservationId(decoded.ReservationId);
     // this.service$.setExiringDate(decoded.exp);
+    this.location.onInit
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe((data) => {
+        if (data === true) {
+          this.service$.setSmsState(this.service$.SMS_STATE_INIT);
+        }
+      });
     console.log(this.location.currentLocation);
   }
 

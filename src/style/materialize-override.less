@@ -49,7 +49,9 @@ input[type=tel]:not(.browser-default),
 input[type=number]:not(.browser-default),
 input[type=search]:not(.browser-default), 
 textarea.materialize-textarea{
-  text-transform: capitalize;
+  &.text--capitalize {
+    text-transform: capitalize;
+  }
 }
 
 input:not([type]):focus:not([readonly]),

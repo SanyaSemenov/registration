@@ -32,14 +32,16 @@ export class RegStep1Component implements OnInit {
     controlName: 'mainPassport',
     url: 'mainPassportUrl',
     pageKey: 'PAGE1KEY',
-    loader: 'isMainLoading'
+    loader: 'isMainLoading',
+    requestLoader: 'isMainRequestLoading'
   };
 
   readonly secondPassportConfig: PassportConfig = {
     controlName: 'secondPassport',
     url: 'secondPassportUrl',
     pageKey: 'PAGE2KEY',
-    loader: 'isSecondLoading'
+    loader: 'isSecondLoading',
+    requestLoader: 'isSecondRequestLoading'
   };
 
   ngUnsubscribe = new Subject<void>();
@@ -86,7 +88,8 @@ export class RegStep1Component implements OnInit {
   }
 
   onRegChange(e) {
-    if (e.target.files && e.target.files[0]) {
+    const file = e.target.files && e.target.files.length > 0 ? e.target.files[0] : null;
+    if (file) {
       const filename = e.target.files[0].name;
       this.form.controls['registrationPage'].patchValue(filename);
       const reader = new FileReader();
@@ -102,6 +105,12 @@ export class RegStep1Component implements OnInit {
       }
       reader.onload = (event: any) => {
         this.service$.registrationPageUrl = event.target.result;
+        this.service$
+          .sendFile(file, this.service$.isRegRequestLoading)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe((data: any) => {
+            this.service$.PAGE3KEY = data.filename;
+          });
         this.isRegLoading = false;
       };
     }
@@ -110,7 +119,6 @@ export class RegStep1Component implements OnInit {
 
   submitForm(e) {
     console.log(this.form.value);
-    // this.router.navigate(['step2']);
     if (this.service$.loading === false && this.service$.mainPassportData) {
       this.service$.mainPassportForm.patchValue(this.service$.mainPassportData);
     }
@@ -139,7 +147,7 @@ export class RegStep1Component implements OnInit {
         this[config.loader] = false;
         this.service$.recognitionError = false;
         this.service$
-          .sendFile(file)
+          .sendFile(file, this.service$[config.requestLoader])
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe((data: any) => {
             this.service$[config.pageKey] = data.filename;
@@ -154,14 +162,14 @@ export class RegStep1Component implements OnInit {
                 this.service$.mainPassportData = new MainPassportData();
               }
               const obj = {
-                name: data.firstName ? data.firstName.toLowerCase() : '',
+                firstName: data.firstName ? data.firstName.toLowerCase() : '',
                 surname: data.surName ? data.surName.toLowerCase() : '',
                 patronymic: data.patronymic ? data.patronymic.toLowerCase() : '',
                 dateOfBirth: this.convertDate(data.dateOfBirth),
                 gender: data.gender ? data.gender.toLowerCase() : '',
                 serialNumber: data.serialNumber,
                 dateOfIssue: this.convertDate(data.dateOfIssue),
-                placeOfIssue: data.placeOfIssue,
+                issuedBy: data.issuedBy,
                 issuerCode: data.issuerCode
               };
               Object.keys(obj).forEach(key => {
@@ -184,13 +192,16 @@ export class RegStep1Component implements OnInit {
                   this.service$.mainPassportData
                 );
               }
-              this.service$.loading = false;
+              this.service$.isMainRequestLoading = false;
+              this.service$[config.requestLoader] = false;
+              // this.service$.loading = false;
               console.log(this.service$.mainPassportData);
             },
             (error: HttpErrorResponse) => {
               this.service$.recognitionError = true;
               this.service$.behaviorRecognitionError.next(true);
-              this.service$.loading = false;
+              this.service$[config.requestLoader] = false;
+              // this.service$.loading = false;
             });
       };
     }
@@ -198,7 +209,9 @@ export class RegStep1Component implements OnInit {
   }
 
   skipStep(e) {
-    this.service$.loading = false;
+    this.service$.isMainRequestLoading = false;
+    this.service$.isSecondRequestLoading = false;
+    // this.service$.loading = false;
     this.onNavigate.emit(false);
   }
 }

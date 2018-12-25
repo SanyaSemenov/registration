@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RequestParameter } from './request-parameter';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
+import { MainPassportData } from '../modules/registration/lib';
 
 const rootUrl = 'https://ch.invend.ru/api';
 
@@ -48,5 +49,9 @@ export class ApiService {
       code: code
     };
     return this.http.put(rootUrl + '/confirmation', body);
+  }
+
+  sendPassport(data: MainPassportData): Observable<any> {
+    return this.http.post(rootUrl + '/document/passport', data);
   }
 }

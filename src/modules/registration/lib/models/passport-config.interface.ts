@@ -3,4 +3,5 @@ export interface PassportConfig {
   url: string;
   pageKey: string;
   loader: string;
+  requestLoader: string;
 }
