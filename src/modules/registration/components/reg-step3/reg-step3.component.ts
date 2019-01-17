@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RegistrationService } from '../../registration.service';
 // import { BaseModel, BaseResponse } from '../../lib';
@@ -11,7 +11,7 @@ import { BaseResponse, BaseModel, ContentType } from 'angular-kladr';
   templateUrl: './reg-step3.component.html',
   styleUrls: ['./reg-step3.component.less']
 })
-export class RegStep3Component implements OnInit {
+export class RegStep3Component implements OnInit, OnDestroy {
   constructor(
     public service$: RegistrationService
   ) {
@@ -202,5 +202,10 @@ export class RegStep3Component implements OnInit {
           alert('Произошла ошибка при отправке данных');
         }
       );
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

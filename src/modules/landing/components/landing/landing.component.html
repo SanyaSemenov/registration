@@ -30,7 +30,7 @@
             </a>
           </div>
           <div class="row text-center" *ngIf="!qrcode">
-            <a href="javascript:void(0)" class="register-link" routerLink="/registration/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJSb2xlIjoiVXNlciIsIlVzZXJJZCI6IjYiLCJSZXNlcnZhdGlvbklkIjoiNSIsImV4cCI6MTU0ODg3NTU1MCwiaXNzIjoiaW52ZW5kLnJ1In0.ucv3V662MAa_G3XPbRYn8sxnI_STGpoNqwCScSsACUs">
+            <a href="javascript:void(0)" class="register-link" routerLink="{{'/registration/' + token}}">
               Пройти регистрацию
             </a>
           </div>
@@ -255,7 +255,7 @@
             <h2 class="h2">Отсканируйте ваш QR-код <br>для самостоятельной регистрации</h2>
           </div>
           <div class="row text-center" *ngIf="!qrcode">
-            <a href="javascript:void(0)" class="register-link" routerLink="/registration">
+            <a href="javascript:void(0)" class="register-link" routerLink="{{'/registration/' + token}}">
               Пройти регистрацию
             </a>
           </div>

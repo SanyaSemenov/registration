@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { LocationState, State, LocationStateService } from '../../lib';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { LocationStateService } from '../../lib';
 import { RegistrationService } from '../../registration.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 
   constructor(
     public location: LocationStateService,
@@ -22,10 +22,6 @@ export class MainComponent implements OnInit {
   private ngUnsubscribe = new Subject<void>();
 
   ngOnInit() {
-    this.service$.setToken(this.route.snapshot.data['token']);
-    // const decoded = this.route.snapshot.data['decoded'];
-    // this.service$.setReservationId(decoded.ReservationId);
-    // this.service$.setExiringDate(decoded.exp);
     this.location.onInit
       .pipe(
         takeUntil(this.ngUnsubscribe)
@@ -47,4 +43,8 @@ export class MainComponent implements OnInit {
     this.location.navigate(e ? 1 : -1);
   }
 
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }

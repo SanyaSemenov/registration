@@ -9,7 +9,8 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.service$.getToken()) {
+    if (next.data['decoded']) {
+      this.service$.setToken(next.data['token']);
       return true;
     }
     this.router.navigate(['404']);

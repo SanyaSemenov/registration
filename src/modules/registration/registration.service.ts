@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidators } from '../../validators';
 import { MainPassportData } from './lib';
@@ -19,7 +19,7 @@ export const QRCODE_STATE_KEY = 'QRCODE_STATE_KEY';
 @Injectable({
   providedIn: 'root'
 })
-export class RegistrationService {
+export class RegistrationService implements OnDestroy {
   public mainPassportUrl;
   public secondPassportUrl;
   public registrationPageUrl;
@@ -221,6 +221,18 @@ export class RegistrationService {
     return this.api.sendCode(code);
   }
 
+  getSignatureDoc() {
+    return this.api.getSignatureDoc();
+  }
+
+  sendSignature(data): Observable<any> {
+    return this.api.sendSignature(data);
+  }
+
+  getDoc(name) {
+    return this.api.getDoc(name);
+  }
+
   setSmsState(state: string) {
     localStorage.setItem(this.SMS_STATE_KEY, state);
   }
@@ -310,5 +322,10 @@ export class RegistrationService {
       streetId: streetId
     };
     return this.kladr$.api(context);
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

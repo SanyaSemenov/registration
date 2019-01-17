@@ -3,6 +3,8 @@ import { RequestParameter } from './request-parameter';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
 import { MainPassportData } from '../modules/registration/lib';
+import { map, first } from 'rxjs/operators';
+import { ResponseContentType } from '@angular/http';
 
 const rootUrl = 'https://ch.invend.ru/api';
 
@@ -53,5 +55,26 @@ export class ApiService {
 
   sendPassport(data: MainPassportData): Observable<any> {
     return this.http.post(rootUrl + '/document/passport', data);
+  }
+
+  sendSignature(data: string) {
+    return this.http.put(rootUrl + '/reservation/signature', { signature: data });
+  }
+
+  getSignatureDoc() {
+    return this.http.get(rootUrl + '/reservation/signature')
+      .pipe(map((data: any) => data.files && data.files.length > 0 ? data.files[0].fileName : ''));
+  }
+
+  getDoc(name) {
+    return this.http.get(rootUrl + '/file/' + name, {
+      headers: {
+        'Accept': 'application/pdf'
+      },
+      responseType: 'arraybuffer'
+    })
+      .pipe(
+        map((file: ArrayBuffer) => new Uint8Array(file))
+      );
   }
 }

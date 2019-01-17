@@ -28,10 +28,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { RegistrationMaterialModule } from './registration.material.module';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { ApiService } from '../../api/api.service';
-import {
-  SignatureModalComponent,
-  SignatureDialogComponent
-} from './dialogs';
+import { SignatureModalComponent } from './dialogs';
 import { ComponentsModule } from '../../components';
 import { ModalDialogModule } from 'ngx-modal-dialog';
 import { DirectivesModule } from './lib/directives/directives.module';
@@ -73,7 +70,6 @@ import { DecodeResolver } from '../../resolvers';
     RegStep3Component,
     MainComponent,
     ConfirmStepComponent,
-    SignatureDialogComponent,
     SignatureModalComponent,
     PayStepComponent,
     FinishComponent,
@@ -89,7 +85,6 @@ import { DecodeResolver } from '../../resolvers';
     DecodeResolver
   ],
   entryComponents: [
-    SignatureDialogComponent,
     SignatureModalComponent
   ]
 })

@@ -21,14 +21,17 @@ export class LandingComponent implements OnInit {
   poster;
   isInitialized = false;
   qrcode = false;
+  public token;
 
   ngOnInit() {
-    const token = this.activatedRoute.snapshot.data['token'];
-    if (!token || typeof token === 'undefined') {
+    this.token = this.activatedRoute.snapshot.data['token'];
+    const decoded = this.activatedRoute.snapshot.data['decoded'];
+    if (!decoded) {
+      this.token = '';
       this.router.navigate(['']);
       return;
     }
-    this.service$.setToken(token);
+    this.service$.setToken(this.token);
     const received = localStorage.getItem(QRCODE_STATE_KEY);
     if (received === '1') {
       this.qrcode = true;

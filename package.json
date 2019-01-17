@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:prod": "ng build --prod --base-href=/registration/",
-    "publish": "ngh --dir=dist/registration"
+    "publish": "npm run build:prod && ngh --dir=dist/registration"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +36,7 @@
     "ng2-pdf-viewer": "^5.2.0",
     "ngx-mask": "^6.5.18",
     "ngx-modal-dialog": "^3.0.0",
+    "npm": "^6.5.0",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

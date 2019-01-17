@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from '../../../../validators';
@@ -14,7 +14,7 @@ import { PassportConfig } from '../../lib/models/passport-config.interface';
   templateUrl: './reg-step1.component.html',
   styleUrls: ['./reg-step1.component.less']
 })
-export class RegStep1Component implements OnInit {
+export class RegStep1Component implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     public service$: RegistrationService,
@@ -213,5 +213,10 @@ export class RegStep1Component implements OnInit {
     this.service$.isSecondRequestLoading = false;
     // this.service$.loading = false;
     this.onNavigate.emit(false);
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

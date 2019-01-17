@@ -20,7 +20,6 @@ export class RegStep2Component implements OnInit {
 
   showPassportMaskType = false;
   showissuerCodeaskType = false;
-  ngUnsubscribe = new Subject<void>();
 
   get heading() {
     return this.isFilled ? 'Проверьте распознанные данные вашего паспорта' : 'Введите ваши паспортные данные';

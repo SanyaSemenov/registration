@@ -1,48 +1,53 @@
-<div class="reg_stepConfirm">
-  <div class="reg_stepConfirm__wrapper">
-    <div class="reg_stepConfirm__title demibold">
-      Соглашение об обработке персональных данных
-    </div>
-    <div class="reg_stepConfirm__pdfViewer">
-      <div class="reg_stepConfirm__preloaderWrapper">
-        <div class="preloader-wrapper big active">
-          <div class="spinner-layer spinner-blue-only">
-            <div class="circle-clipper left">
-              <div class="circle"></div>
+<ng-container *ngIf="loading">
+  <app-loader></app-loader>
+</ng-container>
+<ng-container *ngIf="!loading">
+  <div class="reg_stepConfirm">
+    <div class="reg_stepConfirm__wrapper">
+      <div class="reg_stepConfirm__title demibold">
+        Соглашение об обработке персональных данных
+      </div>
+      <div class="reg_stepConfirm__pdfViewer">
+        <div class="reg_stepConfirm__preloaderWrapper">
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+              <!-- .circle-cliper -->
             </div>
-            <div class="gap-patch">
-              <div class="circle"></div>
-            </div>
-            <div class="circle-clipper right">
-              <div class="circle"></div>
-            </div>
-            <!-- .circle-cliper -->
+            <!-- .spinner-layer -->
           </div>
-          <!-- .spinner-layer -->
+          <!-- .preloader-wrapper -->
         </div>
-        <!-- .preloader-wrapper -->
+        <!-- .reg_stepConfirm__preloaderWrapper -->
+        <div class="reg_stepConfirm__pdfWrapper">
+          <pdf-viewer [src]="pdfSrc ? pdfSrc : ''" [original-size]="false" [fit-to-page]="true" [render-text]="true"
+            style="display: block;"></pdf-viewer>
+        </div>
       </div>
-      <!-- .reg_stepConfirm__preloaderWrapper -->
-      <div class="reg_stepConfirm__pdfWrapper">
-        <pdf-viewer [src]="pdfSrc ? pdfSrc : ''" [original-size]="false" [fit-to-page]="true" [render-text]="true"
-          style="display: block;"></pdf-viewer>
+      <mat-checkbox [(ngModel)]="agreed">Прочитал и согласен на обработку моих персональных данных</mat-checkbox>
+    </div>
+    <div class="row next">
+      <div class="col s6">
+        <a href="javascript:void(0)" (click)="back($event)" class="waves-effect waves-light btn btn__next btn__skip">
+          Назад
+        </a>
       </div>
+      <!-- !.col.s6 -->
+      <div class="col s6">
+        <button class="waves-effect waves-light btn btn__next pull-right" [disabled]="!enabled" (click)="next($event)">
+          Далее
+        </button>
+      </div>
+      <!-- !.col.s6 -->
     </div>
-    <mat-checkbox [(ngModel)]="agreed">Прочитал и согласен на обработку моих персональных данных</mat-checkbox>
   </div>
-  <div class="row next">
-    <div class="col s6">
-      <a href="javascript:void(0)" (click)="back($event)" class="waves-effect waves-light btn btn__next btn__skip">
-        Назад
-      </a>
-    </div>
-    <!-- !.col.s6 -->
-    <div class="col s6">
-      <button class="waves-effect waves-light btn btn__next pull-right" [disabled]="!enabled" (click)="next($event)">
-        Далее
-      </button>
-    </div>
-    <!-- !.col.s6 -->
-  </div>
-</div>
-<app-signature-modal [open]="isDialogOpened" (onClose)="onDialogClose($event)"></app-signature-modal>
+  <app-signature-modal [open]="isDialogOpened" (onClose)="onDialogClose($event)"></app-signature-modal>
+</ng-container>
