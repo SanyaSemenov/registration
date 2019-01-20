@@ -102,6 +102,9 @@ export class RegistrationService implements OnDestroy {
       dateOfIssue: ['', Validators.required],
       issuerCode: ['', [Validators.required, Validators.minLength(6)]]
     });
+    if(this.mainPassportData) {
+      this.mainPassportForm.patchValue(this.mainPassportData);
+    }
 
     this.registrationPassportForm = this.fb.group({
       region: ['', Validators.required],
@@ -189,7 +192,7 @@ export class RegistrationService implements OnDestroy {
   }
 
   sendPassportData(): Observable<any> {
-    const registrationAddress = Object.keys(this.registrationPassportForm).join(',');
+    const registrationAddress = Object.values(this.registrationPassportForm.value).join(',');
     this.mainPassportData = { ...this.mainPassportData, ...this.mainPassportForm.value, registrationAddress: registrationAddress };
     return this.api.sendPassport(this.mainPassportData);
   }

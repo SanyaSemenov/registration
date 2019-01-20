@@ -68,6 +68,8 @@
       font-size: @btn_fontSize__next;
       background-color: @btn_bgColor__next;
       color: @btn_color__next;
+      display: block;
+      margin-left: auto;
       @media (max-width: 600px){
         width: 100%;
       }
@@ -91,6 +93,7 @@
     &__skip{
       background-color: @btn_bgColor__skip;
       color: @btn_color__skip;
+      display: inline-block;
   
       &:hover{
         background-color: darken(@btn_bgColor__skip, 20%);

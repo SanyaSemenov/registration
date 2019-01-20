@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { LocationStateService } from '../../../registration/lib';
 import { QRCODE_STATE_KEY, RegistrationService } from '../../../registration/registration.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { API_CONFIG, ApiInjection, MOCK_API, REMOTE_API } from 'src/api';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-landing',
@@ -14,23 +16,29 @@ export class LandingComponent implements OnInit {
     private location$: LocationStateService,
     private activatedRoute: ActivatedRoute,
     public service$: RegistrationService,
-    private router: Router
-  ) { }
+    private router: Router,
+    @Inject(API_CONFIG) config: BehaviorSubject<ApiInjection>
+  ) {
+    this.token = activatedRoute.snapshot.data['token'];
+    this.decoded = this.activatedRoute.snapshot.data['decoded'];
+    if (!this.decoded) {
+      console.log('api config changed');
+      config.next(MOCK_API);
+      this.token = '';
+      this.router.navigate(['']);
+      return;
+    }
+    config.next(REMOTE_API);
+  }
 
   video;
   poster;
   isInitialized = false;
   qrcode = false;
   public token;
+  private decoded;
 
   ngOnInit() {
-    this.token = this.activatedRoute.snapshot.data['token'];
-    const decoded = this.activatedRoute.snapshot.data['decoded'];
-    if (!decoded) {
-      this.token = '';
-      this.router.navigate(['']);
-      return;
-    }
     this.service$.setToken(this.token);
     const received = localStorage.getItem(QRCODE_STATE_KEY);
     if (received === '1') {

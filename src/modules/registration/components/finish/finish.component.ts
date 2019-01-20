@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { QRCODE_STATE_KEY } from '../../registration.service';
 
 @Component({
@@ -10,7 +10,8 @@ import { QRCODE_STATE_KEY } from '../../registration.service';
 export class FinishComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   // tslint:disable-next-line:no-output-on-prefix
@@ -21,8 +22,9 @@ export class FinishComponent implements OnInit {
   }
 
   finish(e: boolean) {
+    const token = this.activatedRoute.snapshot.data['token'];
     localStorage.setItem(QRCODE_STATE_KEY, '1');
-    this.router.navigate(['']);
+    this.router.navigate(['/' + token]);
     // alert('returned');
   }
 }

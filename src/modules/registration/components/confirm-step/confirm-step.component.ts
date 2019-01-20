@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Inject } from '@angular/core';
 import { RegistrationService } from '../../registration.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { API_CONFIG, ApiInjection } from 'src/api';
 
 @Component({
   selector: 'app-confirm-step',
@@ -11,21 +12,29 @@ import { Subject } from 'rxjs';
 export class ConfirmStepComponent implements OnInit, OnDestroy {
 
   constructor(
-    private service$: RegistrationService
+    private service$: RegistrationService,
+    @Inject(API_CONFIG) config: BehaviorSubject<ApiInjection>
   ) {
-    this.service$.getSignatureDoc()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((filename) => {
-        this.service$.getDoc(filename)
+    config.subscribe((config: ApiInjection) => {
+      if (config.mock === false) {
+        this.service$.getSignatureDoc()
           .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe((data: any) => {
-            this.pdfSrc = data;
+          .subscribe((filename) => {
+            this.service$.getDoc(filename)
+              .pipe(takeUntil(this.ngUnsubscribe))
+              .subscribe((data: any) => {
+                this.pdfSrc = data;
+              });
           });
-      });
+      }
+      else {
+        this.pdfSrc = '/assets/document.pdf';
+      }
+    })
   }
 
-  private rootUrl = 'https://ch.invend.ru/api';
-  public readonly url = `${this.rootUrl}/file/`;
+  // private rootUrl = 'https://ch.invend.ru/api';
+  // public readonly url = `${this.rootUrl}/file/`;
 
   isDialogOpened = false;
   imageData: any;

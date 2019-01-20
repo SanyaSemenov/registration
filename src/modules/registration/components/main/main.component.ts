@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { LocationStateService } from '../../lib';
 import { RegistrationService } from '../../registration.service';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { API_CONFIG, ApiInjection, REMOTE_API } from 'src/api';
 
 @Component({
   selector: 'app-main',
@@ -15,8 +16,15 @@ export class MainComponent implements OnInit, OnDestroy {
   constructor(
     public location: LocationStateService,
     public service$: RegistrationService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
+    @Inject(API_CONFIG) config: BehaviorSubject<ApiInjection>
+  ) {
+    const decoded = this.activatedRoute.snapshot.data['decoded'];
+    if(decoded) {
+      config.next(REMOTE_API);
+    }
+  }
 
   isFilled = false;
   private ngUnsubscribe = new Subject<void>();

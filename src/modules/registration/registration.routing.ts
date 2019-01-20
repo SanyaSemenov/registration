@@ -14,9 +14,8 @@ export const routes: Routes = [
     },
     // canActivate: [AuthGuard]
   },
-  // {
-  //   path: 'registration',
-  //   component: MainComponent,
-  //   // canActivate: [AuthGuard]
-  // }
+  {
+    path: 'registration',
+    component: MainComponent
+  }
 ];

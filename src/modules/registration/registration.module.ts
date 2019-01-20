@@ -38,6 +38,8 @@ import { KladrModule } from 'angular-kladr';
 import { TokenResolver } from 'src/resolvers/token.resolver';
 import { AuthModule } from '../_auth/auth.module';
 import { DecodeResolver } from '../../resolvers';
+import { API_CONFIG, REMOTE_API, ApiInjection, MOCK_API } from 'src/api';
+import { BehaviorSubject } from 'rxjs';
 
 @NgModule({
   imports: [
@@ -82,7 +84,11 @@ import { DecodeResolver } from '../../resolvers';
     FakeApiService,
     ApiService,
     TokenResolver,
-    DecodeResolver
+    DecodeResolver,
+    {
+      provide: API_CONFIG,
+      useValue: new BehaviorSubject<ApiInjection>(MOCK_API)
+    }
   ],
   entryComponents: [
     SignatureModalComponent
